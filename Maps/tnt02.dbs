@@ -1,0 +1,73 @@
+type = "Doom Builder Map Settings Configuration";
+gameconfig = "GZDoom_DoomHexen.cfg";
+strictpatches = 0;
+
+maps
+{
+	
+	TNT02
+	{
+		scriptcompiler = "zdoom_acs.cfg";
+		defaultfloortexture = "CEIL5_2";
+		overrideceilheight = false;
+		
+		resources
+		{
+			
+			resource0
+			{
+				type = 1;
+				location = "C:\\Other Stuff\\ZdooM\\DV-DS-CompatPacks\\TUTNT";
+				option1 = 0;
+				option2 = 0;
+				notfortesting = 0;
+			}
+		}
+		defaulttoptexture = "ASHWALL2";
+		overridemiddletexture = false;
+		viewpositionx = 4333.271f;
+		viewpositiony = -3681.431f;
+		viewscale = 1.179789f;
+		overridefloortexture = false;
+		customceilheight = 128;
+		customfloorheight = 0;
+		
+		grid
+		{
+			background = "";
+			backoffsetx = 0;
+			backoffsety = 0;
+			backscalex = 100;
+			backscaley = 100;
+			backsource = 0;
+			gridsize = 4f;
+		}
+		defaultceiltexture = "CEIL5_2";
+		overridebrightness = false;
+		uselongtexturenames = false;
+		useresourcesinreadonlymode = false;
+		overridebottomtexture = false;
+		overridefloorheight = false;
+		overridetoptexture = false;
+		custombrightness = 196;
+		overrideceiltexture = false;
+		defaultwalltexture = "ASHWALL2";
+		defaultbottomtexture = "ASHWALL2";
+		
+		scriptdocuments
+		{
+			
+			document0
+			{
+				filename = "SCRIPTS";
+				hash = 3469170009;
+				resource;
+				tabtype = 0;
+				scripttype = 1;
+				caretposition = 40347;
+				firstvisibleline = 1497;
+				activetab = true;
+			}
+		}
+	}
+}

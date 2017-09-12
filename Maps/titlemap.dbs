@@ -1,0 +1,57 @@
+type = "Doom Builder Map Settings Configuration";
+gameconfig = "GZDoom_DoomHexen.cfg";
+strictpatches = 0;
+
+maps
+{
+	
+	TITLEMAP
+	{
+		scriptcompiler = "zdoom_acs.cfg";
+		defaultfloortexture = "CEIL4_1";
+		overrideceilheight = false;
+		
+		resources
+		{
+			
+			resource0
+			{
+				type = 1;
+				location = "C:\\Other Stuff\\ZdooM\\DV-DS-CompatPacks\\TUTNT";
+				option1 = 0;
+				option2 = 0;
+				notfortesting = 0;
+			}
+		}
+		defaulttoptexture = "CEIL4_1";
+		overridemiddletexture = false;
+		viewpositionx = -908.7067f;
+		viewpositiony = -2208.51f;
+		viewscale = 3.446117f;
+		overridefloortexture = false;
+		customceilheight = 128;
+		customfloorheight = 0;
+		
+		grid
+		{
+			backoffsety = 0;
+			backoffsetx = 0;
+			backscalex = 100;
+			gridsize = 32f;
+			background = "";
+			backsource = 0;
+			backscaley = 100;
+		}
+		defaultceiltexture = "CEIL4_1";
+		overridebrightness = false;
+		uselongtexturenames = false;
+		useresourcesinreadonlymode = false;
+		overridebottomtexture = false;
+		overridefloorheight = false;
+		overridetoptexture = false;
+		custombrightness = 196;
+		overrideceiltexture = false;
+		defaultwalltexture = "CEIL4_1";
+		defaultbottomtexture = "CEIL4_1";
+	}
+}

@@ -1,0 +1,139 @@
+type = "Doom Builder Map Settings Configuration";
+gameconfig = "GZDoom_DoomHexen.cfg";
+strictpatches = 0;
+
+maps
+{
+	
+	TNTLE
+	{
+		scriptcompiler = "zdoom_acs.cfg";
+		defaultfloortexture = "CEIL5_2";
+		overrideceilheight = false;
+		
+		resources
+		{
+			
+			resource0
+			{
+				type = 1;
+				location = "C:\\Other Stuff\\ZdooM\\DV-DS-CompatPacks\\TUTNT";
+				option1 = 0;
+				option2 = 0;
+				notfortesting = 0;
+			}
+		}
+		defaulttoptexture = "BRICK9";
+		overridemiddletexture = false;
+		viewpositionx = 5935.587f;
+		viewpositiony = -592.687f;
+		viewscale = 0.04544857f;
+		overridefloortexture = false;
+		customceilheight = 128;
+		customfloorheight = 0;
+		
+		grid
+		{
+			background = "";
+			backoffsetx = 0;
+			backoffsety = 0;
+			backscalex = 100;
+			backscaley = 100;
+			backsource = 0;
+			gridsize = 32f;
+		}
+		defaultceiltexture = "CEIL5_2";
+		overridebrightness = false;
+		uselongtexturenames = false;
+		useresourcesinreadonlymode = false;
+		overridebottomtexture = false;
+		overridefloorheight = false;
+		overridetoptexture = false;
+		custombrightness = 196;
+		overrideceiltexture = false;
+		defaultwalltexture = "BRICK9";
+		defaultbottomtexture = "BRICK9";
+		
+		scriptdocuments
+		{
+			
+			document0
+			{
+				filename = "SCRIPTS";
+				hash = 3469170009;
+				resource;
+				tabtype = 0;
+				scripttype = 1;
+				caretposition = 15052;
+				firstvisibleline = 631;
+				activetab = true;
+			}
+		}
+	}
+	
+	TNTLEEND
+	{
+		scriptcompiler = "zdoom_acs.cfg";
+		defaultfloortexture = "CEIL5_2";
+		overrideceilheight = false;
+		
+		resources
+		{
+			
+			resource0
+			{
+				type = 1;
+				location = "C:\\Other Stuff\\ZdooM\\DV-DS-CompatPacks\\TUTNT";
+				option1 = 0;
+				option2 = 0;
+				notfortesting = 0;
+			}
+		}
+		defaulttoptexture = "QROCK3";
+		overridemiddletexture = false;
+		viewpositionx = 12418.08f;
+		viewpositiony = -845.0142f;
+		viewscale = 0.07757548f;
+		overridefloortexture = false;
+		customceilheight = 128;
+		customfloorheight = 0;
+		
+		grid
+		{
+			backoffsety = 0;
+			backoffsetx = 0;
+			backscalex = 100;
+			gridsize = 8f;
+			background = "";
+			backsource = 0;
+			backscaley = 100;
+		}
+		defaultceiltexture = "CEIL5_2";
+		overridebrightness = false;
+		uselongtexturenames = false;
+		useresourcesinreadonlymode = false;
+		overridebottomtexture = false;
+		overridefloorheight = false;
+		overridetoptexture = false;
+		custombrightness = 196;
+		overrideceiltexture = false;
+		defaultwalltexture = "QROCK3";
+		defaultbottomtexture = "QROCK3";
+		
+		scriptdocuments
+		{
+			
+			document0
+			{
+				filename = "SCRIPTS";
+				hash = 3469170009;
+				resource;
+				tabtype = 0;
+				scripttype = 1;
+				caretposition = 4349;
+				firstvisibleline = 146;
+				activetab = true;
+			}
+		}
+	}
+}
