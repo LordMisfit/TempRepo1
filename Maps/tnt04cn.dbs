@@ -25,9 +25,9 @@ maps
 		}
 		defaulttoptexture = "F_SKY1";
 		overridemiddletexture = false;
-		viewpositionx = 10366.84f;
-		viewpositiony = -406.5429f;
-		viewscale = 14.15563f;
+		viewpositionx = -822.3711f;
+		viewpositiony = -2759.706f;
+		viewscale = 0.2765532f;
 		overridefloortexture = false;
 		customceilheight = 128;
 		customfloorheight = 0;
@@ -37,7 +37,7 @@ maps
 			backoffsety = 0;
 			backoffsetx = 0;
 			backscalex = 100;
-			gridsize = 2f;
+			gridsize = 4f;
 			background = "";
 			backsource = 0;
 			backscaley = 100;
@@ -64,8 +64,8 @@ maps
 				resource;
 				tabtype = 0;
 				scripttype = 1;
-				caretposition = 25851;
-				firstvisibleline = 962;
+				caretposition = 12132;
+				firstvisibleline = 499;
 				activetab = true;
 			}
 		}

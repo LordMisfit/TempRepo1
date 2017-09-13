@@ -25,9 +25,9 @@ maps
 		}
 		defaulttoptexture = "ADEL_C04";
 		overridemiddletexture = false;
-		viewpositionx = 1237.896f;
-		viewpositiony = -273.6347f;
-		viewscale = 0.2955307f;
+		viewpositionx = 3764.583f;
+		viewpositiony = -8065.014f;
+		viewscale = 1.854411f;
 		overridefloortexture = false;
 		customceilheight = 128;
 		customfloorheight = 0;
@@ -64,8 +64,8 @@ maps
 				resource;
 				tabtype = 0;
 				scripttype = 1;
-				caretposition = 1746;
-				firstvisibleline = 64;
+				caretposition = 19580;
+				firstvisibleline = 757;
 				activetab = true;
 			}
 		}

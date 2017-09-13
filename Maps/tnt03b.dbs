@@ -25,9 +25,9 @@ maps
 		}
 		defaulttoptexture = "ICEY";
 		overridemiddletexture = false;
-		viewpositionx = -1466.087f;
-		viewpositiony = 3760.658f;
-		viewscale = 0.7229205f;
+		viewpositionx = -3560f;
+		viewpositiony = 7568f;
+		viewscale = 1.3869f;
 		overridefloortexture = false;
 		customceilheight = 128;
 		customfloorheight = 0;
@@ -64,8 +64,8 @@ maps
 				resource;
 				tabtype = 0;
 				scripttype = 1;
-				caretposition = 2057;
-				firstvisibleline = 64;
+				caretposition = 4226;
+				firstvisibleline = 185;
 				activetab = true;
 			}
 		}

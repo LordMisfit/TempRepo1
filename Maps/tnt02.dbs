@@ -25,9 +25,9 @@ maps
 		}
 		defaulttoptexture = "ASHWALL2";
 		overridemiddletexture = false;
-		viewpositionx = 4333.271f;
-		viewpositiony = -3681.431f;
-		viewscale = 1.179789f;
+		viewpositionx = -4998.48f;
+		viewpositiony = 938.803f;
+		viewscale = 0.6980998f;
 		overridefloortexture = false;
 		customceilheight = 128;
 		customfloorheight = 0;
@@ -64,8 +64,8 @@ maps
 				resource;
 				tabtype = 0;
 				scripttype = 1;
-				caretposition = 40347;
-				firstvisibleline = 1497;
+				caretposition = 23144;
+				firstvisibleline = 758;
 				activetab = true;
 			}
 		}

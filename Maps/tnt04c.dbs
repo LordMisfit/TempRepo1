@@ -25,9 +25,9 @@ maps
 		}
 		defaulttoptexture = "QROCK3";
 		overridemiddletexture = false;
-		viewpositionx = 1162.327f;
-		viewpositiony = 13812.02f;
-		viewscale = 0.4739974f;
+		viewpositionx = 706.6855f;
+		viewpositiony = 9262.82f;
+		viewscale = 0.607358f;
 		overridefloortexture = false;
 		customceilheight = 128;
 		customfloorheight = 0;
@@ -64,8 +64,8 @@ maps
 				resource;
 				tabtype = 0;
 				scripttype = 1;
-				caretposition = 9736;
-				firstvisibleline = 336;
+				caretposition = 8051;
+				firstvisibleline = 309;
 				activetab = true;
 			}
 		}

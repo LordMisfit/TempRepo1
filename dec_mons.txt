@@ -4,8 +4,8 @@
 ACTOR SourceGuardian : AetheriusBossZSC 16999 
 {
   SpawnID 239
-  Health 6000 // 1200
-  Mass 40000 // 8000
+  Health 4800 // 1200
+  Mass 3200 // 8000
   Radius 40
   Height 140
   Scale 1.1
@@ -14,8 +14,8 @@ ACTOR SourceGuardian : AetheriusBossZSC 16999
   Painchance "Fist", 24 // Fist attacks have a +50% chance of stunning an enemy
   Painchance "Kick", 40 // Kick attacks have a +150% chance of stunning an enemy
   Painchance "Gauntlets", 24 // Fist attacks have a +50% chance of stunning an enemy
-  DamageFactor "Fire", 0.75
-  Painchance "Fire", 12
+  DamageFactor "Fire", 0.25
+  Painchance "Fire", 4
   DamageFactor "Holy", 1.333
   Painchance "Holy", 21
   MONSTER 
@@ -26,21 +26,30 @@ ACTOR SourceGuardian : AetheriusBossZSC 16999
   PainSound "cycloid/pain"
   DeathSound "cycloid/death"
   ActiveSound "cycloid/active"
-  Obituary "%o was shredded to pieces by a Source Guardian."
-  DropItem "SourceLifeSeed"
+  Obituary "%o was burned to cinders by a Source Guardian."
   Species "SourceGuardian"
+  DropItem "SourceLifeSeed"
+  DropItem "DoomSpellMana" 16
+  DropItem "DiarisArrow" 8
+  DropItem "DoomSpellMana2" 4
+  DropItem "DoomSpellMana3" 1
 
   States
   {
   Pain.Charm: goto See
   Spawn:
-	CYCL AAAABBBB 5 A_Look
+	CYCL AAAABBBB 5
+	{
+     user_nolegendarytrans == 1;
+	 A_Look;
+	}
 	Loop
   See:
     CYCL A 0
 	{ 
 	 ACS_NamedExecuteAlways("RefreshStealthInfo",0,0);
-	 A_SetUserVar("user_shotsfired",0);	 
+	 user_shotsfired == 0;	 
+     user_nolegendarytrans == 1;
 	}
 	CYCL AAAABBBBCCCCDDDD 3 
 	{
@@ -75,7 +84,10 @@ ACTOR SourceGuardian : AetheriusBossZSC 16999
      else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 120) { A_SetTics(6); }
      else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 60) { A_SetTics(7); }
 	 A_FaceTarget;
-	 A_CustomMissile("SourceGuardianDetonator", 64, 0, 16, 0);
+
+	 A_MonsterCrisisCheck;
+     A_CrisisSpawnProjectile("SourceGuardianDetonator", "SourceGuardianDetonatorCrisis", 64, 0, 16, 0);
+     if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 150) { A_CrisisSpawnProjectile("SourceGuardianDetonator", "SourceGuardianDetonatorCrisis", 64, 0, 0, 0); }
 	}
     CYCL E 12
 	{
@@ -94,7 +106,10 @@ ACTOR SourceGuardian : AetheriusBossZSC 16999
      else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 120) { A_SetTics(6); }
      else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 60) { A_SetTics(7); }
 	 A_FaceTarget;
-	 A_CustomMissile("SourceGuardianDetonator", 64, 0, -16, 0);
+
+	 A_MonsterCrisisCheck;
+     A_CrisisSpawnProjectile("SourceGuardianDetonator", "SourceGuardianDetonatorCrisis", 64, 0, -16, 0);
+     if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 150) { A_CrisisSpawnProjectile("SourceGuardianDetonator", "SourceGuardianDetonatorCrisis", 64, 0, 0, 0); }
 	}
     CYCL E 12
 	{
@@ -113,8 +128,13 @@ ACTOR SourceGuardian : AetheriusBossZSC 16999
      else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 120) { A_SetTics(6); }
      else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 60) { A_SetTics(7); }
 	 A_FaceTarget;
-	 A_CustomMissile("SourceGuardianDetonator", 64, 0, 0, 0);
+	 
+	 A_MonsterCrisisCheck;
+     A_CrisisSpawnProjectile("SourceGuardianDetonator", "SourceGuardianDetonatorCrisis", 64, 0, 0, 0);
+     if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 150) { A_CrisisSpawnProjectile("SourceGuardianDetonator", "SourceGuardianDetonatorCrisis", 64, 0, 8, 0); }
+     if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 150) { A_CrisisSpawnProjectile("SourceGuardianDetonator", "SourceGuardianDetonatorCrisis", 64, 0, -8, 0); }
 	}
+	CYCL F 0 BRIGHT A_Jump(64, "Missile1")
     goto See
   Missile2:
     CYCL G 12
@@ -132,8 +152,21 @@ ACTOR SourceGuardian : AetheriusBossZSC 16999
 	 if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 120) { A_SetTics(4); }
 	 else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 60) { A_SetTics(5); }
 	 A_FaceTarget;
-     A_CustomMissile("CatharsiBall", 70, 20,  0, 1);
-     A_CustomMissile("CatharsiBall", 70, -20, 0, 1);
+
+	 A_MonsterCrisisCheck;
+     A_CrisisSpawnProjectile("CatharsiBall", "CatharsiBallCrisis", 70, 0, 0, 1);	
+     A_CrisisSpawnProjectile("CatharsiBall", "CatharsiBallCrisis", 70, -8, 8, 1);	
+     A_CrisisSpawnProjectile("CatharsiBall", "CatharsiBallCrisis", 70, 8, -8, 1);
+	 if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 150) 
+	 {
+      A_CrisisSpawnProjectile("CatharsiBall", "CatharsiBallCrisis", 70, -16, 16, 1);	
+      A_CrisisSpawnProjectile("CatharsiBall", "CatharsiBallCrisis", 70, 16, -16, 1);	
+	 }
+	 if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 300) 
+	 {
+      A_CrisisSpawnProjectile("CatharsiBall", "CatharsiBallCrisis", 70, -24, 24, 1);	
+      A_CrisisSpawnProjectile("CatharsiBall", "CatharsiBallCrisis", 70, 24, -24, 1);	
+	 }
 	}
     goto See
   Missile3:
@@ -143,28 +176,37 @@ ACTOR SourceGuardian : AetheriusBossZSC 16999
 	 else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 60) { A_SetTics(5); }
 	 A_FaceTarget;
 	}
-	CYCL FFFFFFFFFFFFFFFFF 1 BRIGHT
+  Missile3Loop:
+	CYCL FFFFFFFFFFFFFFFFFFFF 1 BRIGHT
     {
 	 A_FaceTarget;
-	 if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 300) { A_CustomMissile("FlameBreath", random(42,46), 0, 2*random(-4,4)); }
-	 else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 150) { A_CustomMissile("FlameBreath", random(42,46), 0, 2*random(-4,4)); }
-	 A_CustomMissile("FlameBreath", random(42,46), 0, 2*random(-4,4));
+	 A_MonsterCrisisCheck;
+	 if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 300) 
+	 { 
+	  A_CrisisSpawnProjectile("SGuardianFlameBreath", "SGuardianFlameBreathCrisis", random(42,46), 0, 2*random(-4,4));
+	 }
+	 else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 150) 
+	 { 
+	  A_CrisisSpawnProjectile("SGuardianFlameBreath", "SGuardianFlameBreathCrisis", random(42,46), 0, 2*random(-4,4));
+	 }
+	 A_CrisisSpawnProjectile("SGuardianFlameBreath", "SGuardianFlameBreathCrisis", random(42,46), 0, 2*random(-4,4));
 	}
+	CYCL F 0 BRIGHT A_Jump(64, "See")
 	CYCL F 0 BRIGHT A_SpidRefire
-	Goto See
+	loop
   Pain:
-	CYCL E 6
-	CYCL E 6 A_Pain
+	CYCL I 6
+	CYCL I 6 A_Pain
 	Goto See
   Pain.Fist:
-	CYCL E 6
-	CYCL E 6 A_Pain
-	CYCL EE 6
+	CYCL I 6
+	CYCL I 6 A_Pain
+	CYCL II 6
     Goto See
   Pain.Kick:
-	CYCL E 6
-	CYCL E 6 A_Pain
-	CYCL EEEE 6
+	CYCL I 6
+	CYCL I 6 A_Pain
+	CYCL IIII 6
     Goto See
   Ice:
   XDeath:
@@ -185,8 +227,73 @@ ACTOR SourceGuardian : AetheriusBossZSC 16999
   }
 }
 
-ACTOR SourceGuardianDetonator
+ACTOR SGuardianFlameBreath : AetheriusProjectileZSC
 {
+   Damage (4)
+   Radius 32
+   Height 32
+   Speed 16
+   Projectile
+   RenderStyle ADD
+   ExplosionDamage 4
+   ExplosionRadius 64
+   DamageType "Fire"
+   Scale 1.5
+   Alpha 0.5
+   +RIPPER
+   +NODAMAGETHRUST
+   +DONTHARMSPECIES
+   +MTHRUSPECIES
+   DontHurtShooter
+   Species "SourceGuardian"
+   SeeSound "duke/flame"
+
+   States
+   {
+   Spawn:
+      FRFX ABCDEFGHIJKLMMNOP 3 BRIGHT 
+	  {
+	   A_Explode(4, 64, 0, 0, 32);
+	  }
+      Stop
+   }
+}
+actor SGuardianFlameBreathCrisisParticle : BaseCrisisParticle
+{
+ scale 1.0
+ ALPHA 0.334
+ 
+ States
+ {
+  Spawn:
+    FRFX A 0 NoDelay { A_SetUserVarFloat("user_basealpha",alpha*0.10); A_SetUserVarFloat("user_basescaleX",scaleX*0.10); A_SetUserVarFloat("user_basescaleY",scaleY*0.10); }
+	goto Idle
+  Idle:
+    "####" ABCDEFGHIJKLMMNOP 3 Bright { A_SetScale(scaleX-user_basescaleX,scaleY-user_basescaleY); if (scalex < 0.00 && scaley < 0.00) { A_FadeOut(2); } A_FadeOut(user_basealpha); }
+    loop
+ }
+}
+ACTOR SGuardianFlameBreathCrisis : SGuardianFlameBreath
+{
+   Damage (4 * CallACS("CrisisMultiplier"))
+   States
+   {
+   Spawn:
+      FRFX ABCDEFGHIJKLMMNOP 3 BRIGHT 
+	  {
+       A_SpawnItemEx("SGuardianFlameBreathCrisisParticle",0,0,0,0,0,1.28);
+	   A_Explode((4 * CallACS("CrisisMultiplier")), 64, 0, 0, 32);
+	  }
+      Stop
+   }
+}
+
+ACTOR SourceGuardianDetonator : AetheriusProjectileZSC
+{
+  var int user_angleshots;
+  var int user_angleshotsmax;
+  var int user_angleshotsangle;
+  var int user_detonationtimer;
   Radius 6
   Height 8
   Speed 20
@@ -200,57 +307,90 @@ ACTOR SourceGuardianDetonator
   states
   {
   Spawn:
-    THR2 A 4 A_PlaySound("catharsi/thermtick")
-    THR2 B 16 
-    THR2 A 4 A_PlaySound("catharsi/thermtick")
-    THR2 B 16
-    THR2 A 4 A_PlaySound("catharsi/thermtick")
-    THR2 B 16
-    THR2 A 4 A_PlaySound("catharsi/thermtick")  
-    THR2 B 16
-    THR2 A 4 A_PlaySound("catharsi/thermtick")  
-    THR2 B 16  
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 0)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 20)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 40)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 60)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 80)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 100)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 120)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 140)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 160)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 180)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 200)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 220)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 240)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 260)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 280)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 300)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 320)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 340)
-    SDFB BCDE 6 BRIGHT A_Die
-    loop
+    THR2 A 4 
+	{
+	 A_PlaySound("catharsi/thermtick");
+	}
+    THR2 BBBB 4
+	{
+	}
+    THR2 B 0
+	{
+	 user_detonationtimer + 1;
+	 if (user_detonationtimer >= 4) { return state("Death"); }
+	 return state("");
+	}
+	loop
   Death:
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 0)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 20)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 40)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 60)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 80)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 100)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 120)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 140)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 160)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 180)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 200)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 220)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 240)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 260)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 280)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 300)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 320)
-    SDFB B 0 A_CustomMissile("CatharsiBall", 4, 2, 340)
+    SDFB B 0 
+	{
+	 user_angleshots = 0;
+	 user_angleshotsmax = 36;
+	 user_angleshotsangle = 10;
+	}
+    SDFB B 0 
+	{
+	 for (A_SetUserVar(user_angleshots, 0); user_angleshots < user_angleshotsmax; A_SetUserVar(user_angleshots, user_angleshots + 1))
+	 {
+	  A_SpawnProjectile("CatharsiBall", 4, 0, user_angleshots*user_angleshotsangle, CMF_AIMOFFSET | CMF_TRACKOWNER | CMF_OFFSETPITCH | CMF_BADPITCH, 4);
+	 }
+	}
     SDFB BCDE 6 BRIGHT A_Die
-    Stop
+    stop
+  }
+}
+actor SourceGuardianDetonatorCrisisParticle : BaseCrisisParticle
+{
+ scale 0.67
+ ALPHA 0.67
+ 
+ States
+ {
+  Spawn:
+    THR2 A 0 NoDelay { A_SetUserVarFloat("user_basealpha",alpha*0.10); A_SetUserVarFloat("user_basescaleX",scaleX*0.10); A_SetUserVarFloat("user_basescaleY",scaleY*0.10); }
+	goto Idle
+  Idle:
+    "####" ABBBB 4 Bright { A_SetScale(scaleX-user_basescaleX,scaleY-user_basescaleY); if (scalex < 0.00 && scaley < 0.00) { A_FadeOut(2); } A_FadeOut(user_basealpha); }
+    loop
+ }
+}
+ACTOR SourceGuardianDetonatorCrisis : SourceGuardianDetonator
+{
+  states
+  {
+  Spawn:
+    THR2 A 4 
+	{
+     A_SpawnItemEx("SourceGuardianDetonatorCrisisParticle",0,0,0,0,0,1.28);
+	 A_PlaySound("catharsi/thermtick");
+	}
+    THR2 BBBB 4
+	{
+     A_SpawnItemEx("SourceGuardianDetonatorCrisisParticle",0,0,0,0,0,1.28);
+	}
+    THR2 B 0
+	{
+	 user_detonationtimer + 1;
+	 if (user_detonationtimer >= 4) { return state("Death"); }
+	 return state("");
+	}
+	loop
+  Death:
+    SDFB B 0 
+	{
+	 user_angleshots = 0;
+	 user_angleshotsmax = 36;
+	 user_angleshotsangle = 10;
+	}
+    SDFB B 0 
+	{
+	 for (A_SetUserVar(user_angleshots, 0); user_angleshots < user_angleshotsmax; A_SetUserVar(user_angleshots, user_angleshots + 1))
+	 {
+	  A_SpawnProjectile("CatharsiBallCrisis", 4, 0, user_angleshots*user_angleshotsangle, CMF_AIMOFFSET | CMF_TRACKOWNER | CMF_OFFSETPITCH | CMF_BADPITCH, 4);
+	 }
+	}
+    SDFB BCDE 6 BRIGHT A_Die
+    stop
   }
 }
 
@@ -314,30 +454,155 @@ actor TheSource : AetheriusBossZSC 24999
   {
   Pain.Charm: goto See
   Spawn:
-    SOUR A 10 A_Look
+    SOUR A 10
+	{
+     user_nolegendarytrans == 1;
+     A_Look;
+	}
     loop
   See:
-    SOUR A 10 A_Chase
+    SOUR A 10 
+	{
+     user_nolegendarytrans == 1;
+	 A_Chase;
+	}
     loop
   Missile:
     TNT1 A 0
+	{
+     user_nolegendarytrans == 1;
+	}
     SOUR A 0 A_Jump(256,"QuakeAttack","CometAttack","FireBreath")
   QuakeAttack:
-    SOUR A 350 
+    SOUR A 35
 	{
+     if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 240) { A_SetTics(18); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 228) { A_SetTics(19); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 216) { A_SetTics(20); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 204) { A_SetTics(21); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 192) { A_SetTics(22); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 180) { A_SetTics(23); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 168) { A_SetTics(24); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 156) { A_SetTics(25); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 144) { A_SetTics(26); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 132) { A_SetTics(27); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 120) { A_SetTics(28); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 108) { A_SetTics(29); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 96) { A_SetTics(30); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 84) { A_SetTics(31); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 72) { A_SetTics(32); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 60) { A_SetTics(33); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 48) { A_SetTics(34); }
+
 	 ACS_Execute(130,0,0,0,0);
+	}
+    SOUR AAAAAAAAA 35 
+	{
+     if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 240) { A_SetTics(18); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 228) { A_SetTics(19); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 216) { A_SetTics(20); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 204) { A_SetTics(21); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 192) { A_SetTics(22); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 180) { A_SetTics(23); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 168) { A_SetTics(24); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 156) { A_SetTics(25); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 144) { A_SetTics(26); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 132) { A_SetTics(27); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 120) { A_SetTics(28); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 108) { A_SetTics(29); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 96) { A_SetTics(30); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 84) { A_SetTics(31); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 72) { A_SetTics(32); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 60) { A_SetTics(33); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 48) { A_SetTics(34); }
 	}
     goto Missile
   CometAttack:
-    SOUR A 350 
+    SOUR A 35
 	{
+     if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 240) { A_SetTics(18); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 228) { A_SetTics(19); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 216) { A_SetTics(20); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 204) { A_SetTics(21); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 192) { A_SetTics(22); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 180) { A_SetTics(23); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 168) { A_SetTics(24); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 156) { A_SetTics(25); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 144) { A_SetTics(26); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 132) { A_SetTics(27); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 120) { A_SetTics(28); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 108) { A_SetTics(29); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 96) { A_SetTics(30); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 84) { A_SetTics(31); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 72) { A_SetTics(32); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 60) { A_SetTics(33); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 48) { A_SetTics(34); }
+
 	 ACS_Execute(131,0,0,0,0);
+	}
+    SOUR AAAAAAAAA 35 
+	{
+     if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 240) { A_SetTics(18); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 228) { A_SetTics(19); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 216) { A_SetTics(20); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 204) { A_SetTics(21); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 192) { A_SetTics(22); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 180) { A_SetTics(23); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 168) { A_SetTics(24); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 156) { A_SetTics(25); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 144) { A_SetTics(26); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 132) { A_SetTics(27); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 120) { A_SetTics(28); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 108) { A_SetTics(29); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 96) { A_SetTics(30); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 84) { A_SetTics(31); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 72) { A_SetTics(32); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 60) { A_SetTics(33); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 48) { A_SetTics(34); }
 	}
     goto Missile
   FireBreath:
-    SOUR A 350 
+    SOUR A 35
 	{
+     if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 240) { A_SetTics(18); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 228) { A_SetTics(19); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 216) { A_SetTics(20); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 204) { A_SetTics(21); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 192) { A_SetTics(22); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 180) { A_SetTics(23); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 168) { A_SetTics(24); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 156) { A_SetTics(25); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 144) { A_SetTics(26); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 132) { A_SetTics(27); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 120) { A_SetTics(28); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 108) { A_SetTics(29); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 96) { A_SetTics(30); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 84) { A_SetTics(31); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 72) { A_SetTics(32); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 60) { A_SetTics(33); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 48) { A_SetTics(34); }
+
 	 ACS_Execute(132,0,0,0,0);
+	}
+    SOUR AAAAAAAAA 35 
+	{
+     if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 240) { A_SetTics(18); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 228) { A_SetTics(19); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 216) { A_SetTics(20); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 204) { A_SetTics(21); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 192) { A_SetTics(22); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 180) { A_SetTics(23); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 168) { A_SetTics(24); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 156) { A_SetTics(25); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 144) { A_SetTics(26); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 132) { A_SetTics(27); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 120) { A_SetTics(28); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 108) { A_SetTics(29); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 96) { A_SetTics(30); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 84) { A_SetTics(31); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 72) { A_SetTics(32); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 60) { A_SetTics(33); }
+     else if (GetCVar("dvds_monsterlevelbehavior") > 0 && user_monsterlevel > 48) { A_SetTics(34); }
 	}
     goto Missile
   Pain:
@@ -473,8 +738,8 @@ ACTOR FlameBreathSource
    Scale 0.5
    DamageType "Fire"
    Projectile
-   Damage 2
-   ExplosionDamage 2
+   Damage (16)
+   ExplosionDamage 16
    ExplosionRadius 62
    +RIPPER
    +NODAMAGETHRUST
@@ -488,27 +753,13 @@ ACTOR FlameBreathSource
    States
    {
    Spawn:
-      XPLO A 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO B 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO C 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO D 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO E 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO F 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO G 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO H 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO I 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO J 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO K 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO L 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO M 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO N 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO O 3 BRIGHT
-      XPLO P 3 BRIGHT
-      XPLO Q 3 BRIGHT
-      XPLO R 3 BRIGHT
-      XPLO S 3 BRIGHT
-      XPLO T 3 BRIGHT
-      XPLO U 3 BRIGHT
+      XPLO ABCDEFGHIJKLMN 3 BRIGHT 
+	  {
+	   A_Explode (16, 62, 0, 0, 31);
+	  }
+      XPLO OPQRSTU 3 BRIGHT
+	  {
+	  }
       Stop
    }
 }
@@ -518,12 +769,12 @@ ACTOR FlameBreathSource
 
 
 
-ACTOR CatharsiBall
+ACTOR CatharsiBall : AetheriusProjectileZSC
 {
   Radius 6
   Height 8
   Speed 15
-  Damage 3
+  Damage (3 * random(1,8))
   RENDERSTYLE Add
   SEESOUND "catharsi/shotsit"
   DEATHSOUND "catharsi/shotdth"
@@ -532,61 +783,43 @@ ACTOR CatharsiBall
   states
   {
   Spawn:
-    SDFB A 4 BRIGHT
+    SDFB A 2 BRIGHT
     Loop
   Death:
-    SDFB BCDE 6 BRIGHT
+    SDFB BBCCDDEE 3 BRIGHT
     stop
   }
 }
-
-ACTOR FlameBreath 
+actor CatharsiBallCrisisParticle : BaseCrisisParticle
 {
-   Radius 16
-   Height 1
-   Speed 15
-   RenderStyle ADD
-   Scale 0.5
-   DamageType "Fire"
-   Projectile
-   Damage 2
-   ExplosionDamage 2
-   ExplosionRadius 62
-   +RIPPER
-   +NODAMAGETHRUST
-   +DONTHARMSPECIES
-   +MTHRUSPECIES
-   DontHurtShooter
-   Species "SourceGuardian"
-
-   SeeSound "duke/flame"
-
-   States
-   {
-   Spawn:
-      XPLO A 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO B 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO C 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO D 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO E 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO F 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO G 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO H 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO I 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO J 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO K 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO L 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO M 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO N 3 BRIGHT A_Explode (2, 62, 0)
-      XPLO O 3 BRIGHT
-      XPLO P 3 BRIGHT
-      XPLO Q 3 BRIGHT
-      XPLO R 3 BRIGHT
-      XPLO S 3 BRIGHT
-      XPLO T 3 BRIGHT
-      XPLO U 3 BRIGHT
-      Stop
-   }
+ scale 0.67
+ ALPHA 0.67
+ 
+ States
+ {
+  Spawn:
+    SDFB A 0 NoDelay { A_SetUserVarFloat("user_basealpha",alpha*0.10); A_SetUserVarFloat("user_basescaleX",scaleX*0.10); A_SetUserVarFloat("user_basescaleY",scaleY*0.10); }
+	goto Idle
+  Idle:
+    "####" A 2 Bright { A_SetScale(scaleX-user_basescaleX,scaleY-user_basescaleY); if (scalex < 0.00 && scaley < 0.00) { A_FadeOut(2); } A_FadeOut(user_basealpha); }
+    loop
+ }
+}
+ACTOR CatharsiBallCrisis : CatharsiBall
+{
+  Damage (3 * random(1,8) * CallACS("CrisisMultiplier"))
+  states
+  {
+  Spawn:
+    SDFB A 2 BRIGHT
+	{
+     A_SpawnItemEx("CatharsiBallCrisisParticle",0,0,0,0,0,1.28);
+	}
+    Loop
+  Death:
+    SDFB BBCCDDEE 3 BRIGHT
+    stop
+  }
 }
 
 actor Comet

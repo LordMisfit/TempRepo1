@@ -25,9 +25,9 @@ maps
 		}
 		defaulttoptexture = "QMET13";
 		overridemiddletexture = false;
-		viewpositionx = 5962.363f;
-		viewpositiony = -241.0707f;
-		viewscale = 1.074002f;
+		viewpositionx = 1847.836f;
+		viewpositiony = 4133.275f;
+		viewscale = 0.6355042f;
 		overridefloortexture = false;
 		customceilheight = 128;
 		customfloorheight = 0;
@@ -64,8 +64,8 @@ maps
 				resource;
 				tabtype = 0;
 				scripttype = 1;
-				caretposition = 14759;
-				firstvisibleline = 611;
+				caretposition = 7873;
+				firstvisibleline = 322;
 				activetab = true;
 			}
 		}

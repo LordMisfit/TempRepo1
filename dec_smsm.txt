@@ -100,7 +100,7 @@ Mario_Blubb2
 DoomEdNum 22261
 Sprite SM_S
 Frames "4:ABCDEFGHIJK"
-Radius 32
+Radius 20
 Height 32
 Solid
 }
@@ -112,7 +112,7 @@ ACTOR Mario_Yellow 22262
    Health 20 
    Speed 10  
    Mass 100
-   MeleeDamage 100
+   MeleeDamage 50
    +SOLID
    States
    {

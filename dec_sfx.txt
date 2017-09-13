@@ -4454,7 +4454,6 @@ ACTOR BaseLensflare
       +GHOST
       +NOCLIP
       +NOGRAVITY
-      +ISMONSTER
       - SHOOTABLE
       - COUNTKILL
    States
