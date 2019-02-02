@@ -28,12 +28,12 @@ actor TestWeapon : BaseWeapon
 			wait
 		fire:
 			PUNG D 1 A_GetSceptreDamage(0) // This will trigger the "weapons no longer able to bob" issue, if only one of the FrameValue vars in testweaponattempt.zc are commented out
-			// 1072693248 - "Flags/BitField" when this isn't changing the value [only one var commented out]
+			// 1072693248 (finalmeleedamagedealt) - "Flags/BitField" when this isn't changing the value [only one var commented out]
 			TNT1 A 0 A_Refire
 			goto ready
 		altfire:
-			PUNG C 1 A_SceptreTwirlFrameCheck(0) // This will trigger the "Walls/Doors/Grunts don't work for the 'use' key" issue, if both of the FrameValue vars in testweaponattempt.zc are commented out
-			// 1078984704 - "Flags/BitField" when this isn't changing the value [both vars commented out]
+			PUNG C 1 A_SceptreTwirlFrameCheck(random(1,16)) // This will trigger the "Walls/Doors/Grunts don't work for the 'use' key" issue, if both of the FrameValue vars in testweaponattempt.zc are commented out
+			// 1078984704 (FrameCount) - "Flags/BitField" when this isn't changing the value [both vars commented out]
 			TNT1 A 0 A_Refire
 			goto ready
 	}

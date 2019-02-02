@@ -82,7 +82,7 @@ class BaseWeapon : Weapon
 	// If you comment out just one of them, using the normal attack will prevent the player's weapons from bobbing. 
 	// If you comment out BOTH, if you then use the alt-fire of your weapon, you become unable to use walls/doors/lines and don't even make grunt noises.
 	// ************************************
-	int FrameValue;
+	//int FrameValue;
 	//int FrameValue2;
 	// ************************************
 
@@ -142,21 +142,6 @@ class BaseWeapon : Weapon
 		previousdamage = damage;
 		damage = (damage * (4 + stamdamagefactor) / 4);
 		if (debugmelee) Console.Printf("StaminaDmg: %d, StamUpgrades: %d - (Previous Dmg: %d)", damage, stamdamagefactor, previousdamage);
-		
-		// Strength Stat Check [7 pts = roughly double the character's base punch damage]
-		int PlayerSTR;
-		previousdamage = damage;
-		for (strengthcounter = 0; strengthcounter < PlayerSTR; strengthcounter++)
-		{
-			sceptrestrbase = ((SceptreActualLevel * (4 + (PlayerSTR / 32))) + (16 + (SceptreActualLevel * (2 + (PlayerSTR / 64)))));
-			sceptrestrmin = sceptrestrbase - (16 + (SceptreActualLevel * (2 + (PlayerSTR / 64))));
-			sceptrestrmax = sceptrestrbase + (16 + (SceptreActualLevel * (2 + (PlayerSTR / 64)))); 
-
-			if (debugmelee) Console.Printf("StrBase: %d, StrMin: %d, StrMax: %d", sceptrestrbase, sceptrestrmin, sceptrestrmax);
-
-			damage += random(sceptrestrmin,sceptrestrmax);
-		}
-		if (debugmelee) Console.Printf("StrDmg: %d - (Strength: %d) - (Previous Dmg: %d)", damage, PlayerSTR, previousdamage);
 		
 		if (attacktype == 1) damage = damage * 5 / 2; // If performing the Aireal Attack
 		if (attacktype == 2)
@@ -226,6 +211,9 @@ class BaseWeapon : Weapon
 			if (FrameNo > 16) FrameNo = 16;
 			if (FrameNo < 1) FrameNo = 1;
 			FrameCount += FrameNo;
+			
+			while (FrameCount < 1) { FrameCount += 32; } // Prevents Timer Underflow
+			while (FrameCount > 32) { FrameCount -= 32; } // Prevents Timer Overflow
 		}
 		Console.Printf("FrameCount: %d, FrameNo: %d", FrameCount, FrameNo);
 	}
