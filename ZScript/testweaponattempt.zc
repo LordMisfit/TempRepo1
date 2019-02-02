@@ -195,7 +195,10 @@ class BaseWeapon : Weapon
 
 		if (debugmelee) Console.Printf("FinalMeleeDmg: (Weapon: %s - Source: %s) %d - (Previous Dmg: %d) [Sceptre]", weaponname, actorname, damage, previousdamage);
 		finalmeleedamagedealt = damage;
-		Console.Printf("finalmeleedamagedealt: %d", finalmeleedamagedealt);
+		Console.Printf("FlameCount: %d, FrameCount: %d", FlameCount, FrameCount);
+		Console.Printf("SceptreTimer: %d, SceptreTimerLimit: %d", SceptreTimer, SceptreTimerLimit);
+		Console.Printf("finaldamagedealt: %d, finaldamagedealt2: %d, finaldamagedealt3: %d, finaldamagedealt4: %d", finaldamagedealt, finaldamagedealt2, finaldamagedealt3, finaldamagedealt4);
+		Console.Printf("finalmeleedamagedealt: %d, finalmeleedamagedealt2: %d, finalmeleedamagedealt3: %d, finalmeleedamagedealt4: %d", finalmeleedamagedealt, finalmeleedamagedealt2, finalmeleedamagedealt3, finalmeleedamagedealt4);
 	}
 
 	//Controls the Timer for both Sceptre Twirl sprite animation and for when to make the swinging noise. [Flora Only]
@@ -215,6 +218,9 @@ class BaseWeapon : Weapon
 			while (FrameCount < 1) { FrameCount += 32; } // Prevents Timer Underflow
 			while (FrameCount > 32) { FrameCount -= 32; } // Prevents Timer Overflow
 		}
-		Console.Printf("FrameCount: %d, FrameNo: %d", FrameCount, FrameNo);
+		Console.Printf("FlameCount: %d, FrameCount: %d", FlameCount, FrameCount);
+		Console.Printf("SceptreTimer: %d, SceptreTimerLimit: %d", SceptreTimer, SceptreTimerLimit);
+		Console.Printf("finaldamagedealt: %d, finaldamagedealt2: %d, finaldamagedealt3: %d, finaldamagedealt4: %d", finaldamagedealt, finaldamagedealt2, finaldamagedealt3, finaldamagedealt4);
+		Console.Printf("finalmeleedamagedealt: %d, finalmeleedamagedealt2: %d, finalmeleedamagedealt3: %d, finalmeleedamagedealt4: %d", finalmeleedamagedealt, finalmeleedamagedealt2, finalmeleedamagedealt3, finalmeleedamagedealt4);
 	}
 }
