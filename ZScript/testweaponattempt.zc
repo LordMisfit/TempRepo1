@@ -83,18 +83,18 @@ class BaseWeapon : Weapon
 	// If you comment out BOTH, if you then use the alt-fire of your weapon, you become unable to use walls/doors/lines and don't even make grunt noises.
 	// ************************************
 	//int FrameValue;
-	//int FrameValue2;
+	int FrameValue2;
 	// ************************************
 
 	int FlameCount;
-	int FrameCount;
+	int FrameCount; // This var is reporting a value it shouldn't [a player bitfield of some kind?] when BOTH of the "FrameValue" vars are commented out [as along as this var is in this position/order in the list]
 	int SceptreTimer;
 	int SceptreTimerLimit;
 	int finaldamagedealt;
 	int finaldamagedealt2;
 	int finaldamagedealt3;
 	int finaldamagedealt4;
-	int finalmeleedamagedealt;
+	int finalmeleedamagedealt; // This var is reporting a value it shouldn't [a player bitfield of some kind?] when one of the "FrameValue" vars are commented out [as along as this var is in this position/order in the list]
 	int finalmeleedamagedealt2;
 	int finalmeleedamagedealt3;
 	int finalmeleedamagedealt4;
