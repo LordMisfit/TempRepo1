@@ -1,0 +1,722 @@
+
+// MAPINFO for "Strange Aeons v.5"
+
+defaultmap {nojump}
+clearepisodes
+
+DoomEdNums
+{
+  30128 = Roach //New	
+}
+
+Gameinfo
+{
+  PlayerClasses = "TravelerPlayer"
+  titlemusic = "BGMINTRO"
+  intermissionmusic = "BGMINTER"
+}
+
+// Episodes
+Episode e1m1
+{
+    Name = "Shattered City"
+}
+
+Episode e2m1
+{
+    Name = "Stagnant Fortress"
+}
+
+Episode e3m1
+{
+    Name = "Land That Time Forgot"
+}
+
+Episode e4m1
+{
+    Name = "Plateau of Leng"
+}
+
+Episode e5m1
+{
+    Name = "Out of the Aeons"
+}
+
+map E1M1 "The Traveler"
+{
+	levelnum = 1
+	next = "E1M2"
+	secretnext = "E1M9"
+	sky1 = "SASKY1"
+	cluster = 1
+	par = 30
+	music = "BGME1M1"
+}
+
+map E1M2 "Resident Evil"
+{
+	levelnum = 2
+	next = "E1M3"
+	secretnext = "E1M9"
+	sky1 = "SASKY1"
+	cluster = 1
+	par = 75
+	music = "BGME1M2"
+}
+
+map E1M3 "Shooting Range"
+{
+	levelnum = 3
+	next = "E1M4"
+	secretnext = "E1M9"
+	sky1 = "SASKY1"
+	cluster = 1
+	par = 120
+	music = "BGME1M3"
+}
+
+map E1M4 "Cowboys and Indians"
+{
+	levelnum = 4
+	next = "E1M5"
+	secretnext = "E1M9"
+	sky1 = "SASKY1"
+	cluster = 1
+	par = 90
+	music = "BGME2M8"
+}
+
+map E1M5 "Highly Terminal"
+{
+	levelnum = 5
+	next = "E1M6"
+	secretnext = "E1M9"
+	sky1 = "SASKY1"
+	cluster = 1
+	par = 165
+	music = "BGME1M5"
+}
+
+map E1M6 "Island Hopping"
+{
+	levelnum = 6
+	next = "E1M7"
+	secretnext = "E1M9"
+	sky1 = "SASKY1"
+	cluster = 1
+	par = 180
+	music = "BGME1M6"
+}
+
+map E1M7 "Halls of Madness"
+{
+	levelnum = 7
+	next = "E1M8"
+	secretnext = "E1M9"
+	sky1 = "SASKY1"
+	cluster = 1
+	par = 180
+	music = "BGME1M7"
+}
+
+map E1M8 "Deathedral"
+{
+	levelnum = 8
+	next = "EndGame1"
+	secretnext = "E1M9"
+	sky1 = "SASKY1"
+	cluster = 1
+	par = 60
+	nointermission
+	nosoundclipping
+	baronspecial
+	specialaction_lowerfloor
+	music = "BGME1M8"
+}
+
+map E1M9 "Haunted Hospital"
+{
+	levelnum = 9
+	next = "E1M4"
+	secretnext = "E1M4"
+	sky1 = "SASKY1"
+	cluster = 1
+	par = 165
+	music = "BGME1M9"
+}
+
+// Registered/Retail Episode 2
+
+map E2M1 "Beast Depot"
+{
+	levelnum = 11
+	next = "E2M2"
+	secretnext = "E2M9"
+	sky1 = "SASKY2"
+	cluster = 2
+	par = 90
+	music = "BGME1M9"
+}
+
+map E2M2 "Power Station"
+{
+	levelnum = 12
+	next = "E2M3"
+	secretnext = "E2M9"
+	sky1 = "SASKY2"
+	cluster = 2
+	par = 90
+	music = "BGME1M5"
+}
+
+map E2M3 "Ore Devourer"
+{
+	levelnum = 13
+	next = "E2M4"
+	secretnext = "E2M9"
+	sky1 = "SASKY2"
+	cluster = 2
+	par = 90
+	music = "BGME1M7"
+}
+
+map E2M4 "The Marrow Engine"
+{
+	levelnum = 14
+	next = "E2M5"
+	secretnext = "E2M9"
+	sky1 = "SASKY2"
+	cluster = 2
+	par = 120
+	music = "BGME5M2"
+}
+
+map E2M5 "Juggernaut"
+{
+	levelnum = 15
+	next = "E2M6"
+	secretnext = "E2M9"
+	sky1 = "SASKY2"
+	cluster = 2
+	par = 90
+	music = "BGME1M2"
+}
+
+map E2M6 "Eldritch Research"
+{
+	levelnum = 16
+	next = "E2M7"
+	secretnext = "E2M9"
+	sky1 = "SASKY2"
+	cluster = 2
+	par = 360
+	music = "BGME2M8"
+}
+
+map E2M7 "Underworld Gate"
+{
+	levelnum = 17
+	next = "E2M8"
+	secretnext = "E2M9"
+	sky1 = "SASKY2"
+	cluster = 2
+	par = 240
+	music = "BGME1M8"
+}
+
+map E2M8 "Siege of Pnath"
+{
+	levelnum = 18
+	next = Endsequence,"E2End"
+	secretnext = "E2M9"
+	sky1 = "SASKY3"
+	cluster = 2
+	par = 30
+	nointermission
+	nosoundclipping
+	cyberdemonspecial
+	specialaction_lowerfloor
+	music = "BGME1M4"
+}
+
+map E2M9 "Petting Zoo"
+{
+	levelnum = 19
+	next = "E2M6"
+	secretnext = "E2M6"
+	sky1 = "SASKY1"
+	cluster = 2
+	par = 170
+	music = "BGME1M3"
+}
+
+// Registered/Retail Episode 3
+
+map E3M1 "Altar of Blood"
+{
+	levelnum = 21
+	next = "E3M2"
+	secretnext = "E3M9"
+	sky1 = "SASKY3"
+	cluster = 3
+	par = 90
+	music = "BGME5M5"
+}
+
+map E3M2 "Monster Manor"
+{
+	levelnum = 22
+	next = "E3M3"
+	secretnext = "E3M9"
+	sky1 = "SASKY3"
+	cluster = 3
+	par = 45
+	music = "BGME1M1"
+}
+
+map E3M3 "City of Lost Souls"
+{
+	levelnum = 23
+	next = "E3M4"
+	secretnext = "E3M9"
+	sky1 = "SASKY3"
+	cluster = 3
+	par = 90
+	music = "BGME1M5"
+}
+
+map E3M4 "The Gondola Grotto"
+{
+	levelnum = 24
+	next = "E3M5"
+	secretnext = "E3M9"
+	sky1 = "SASKY3"
+	cluster = 3
+	par = 150
+	music = "BGME5M2"
+}
+
+map E3M5 "Lions Den"
+{
+	levelnum = 25
+	next = "E3M6"
+	secretnext = "E3M9"
+	sky1 = "SASKY3"
+	cluster = 3
+	par = 90
+	music = "BGME1M2"
+}
+
+map E3M6 "The Vampire Trough"
+{
+	levelnum = 26
+	next = "E3M7"
+	secretnext = "E3M9"
+	sky1 = "SASKY3"
+	cluster = 3
+	par = 90
+	music = "BGME1M6"
+}
+
+map E3M7 "Proving Grounds"
+{
+	levelnum = 27
+	next = "E3M8"
+	secretnext = "E3M9"
+	sky1 = "SASKY3"
+	cluster = 3
+	par = 165
+	music = "BGME5M5"
+}
+
+map E3M8 "Flytrap"
+{
+	levelnum = 28
+	next = Endsequence,"E3End"
+	secretnext = "E3M9"
+	sky1 = "SASKY3"
+	cluster = 3
+	par = 30
+	nointermission
+	nosoundclipping
+	spidermastermindspecial
+	specialaction_lowerfloor
+	music = "BGME5M1"
+}
+
+map E3M9 "Tomb of the Dark Pharaoh"
+{
+	levelnum = 29
+	next = "E3M6"
+	secretnext = "E3M6"
+	sky1 = "SASKY3"
+	cluster = 3
+	par = 135
+	music = "BGMINTRO"
+}
+
+// Bonus Episode 4
+
+map E4M1 "Cold and Stranded"
+{
+	levelnum = 31
+	next = "E4M2"
+	secretnext = "E4M9"
+	sky1 = "SASKY4"
+	cluster = 4
+	music = "BGME5M6"
+}
+
+map E4M2 "Hell Frozen Over"
+{
+	levelnum = 32
+	next = "E4M3"
+	secretnext = "E4M9"
+	sky1 = "SASKY4"
+	cluster = 4
+	music = "BGME1M2"
+}
+
+map E4M3 "Twilight Meat Train"
+{
+	levelnum = 33
+	next = "E4M4"
+	secretnext = "E4M9"
+	sky1 = "SASKY4"
+	cluster = 4
+	music = "BGME2M8"
+}
+
+map E4M4 "The Biospherians"
+{
+	levelnum = 34
+	next = "E4M5"
+	secretnext = "E4M9"
+	sky1 = "SASKY4"
+	cluster = 4
+	music = "BGME1M5"
+}
+
+map E4M5 "The Salt Mines"
+{
+	levelnum = 35
+	next = "E4M6"
+	secretnext = "E4M9"
+	sky1 = "SASKY4"
+	cluster = 4
+	music = "BGME1M3"
+}
+
+map E4M6 "Alcatraz"
+{
+	levelnum = 36
+	next = "E4M7"
+	secretnext = "E4M9"
+	sky1 = "SASKY4"
+	cluster = 4
+	music = "BGME5M5"
+}
+
+map E4M7 "Devil Canyon"
+{
+	levelnum = 37
+	next = "E4M8"
+	secretnext = "E4M9"
+	sky1 = "SASKY4"
+	cluster = 4
+	music = "BGME1M7"
+}
+
+map E4M8 "The Crawling Chaos"
+{
+	levelnum = 38
+	next = Endsequence,"E4End"
+	secretnext = "E4M9"
+	sky1 = "SASKY4"
+	cluster = 4
+	nointermission
+	nosoundclipping
+	music = "BGMINTRO"
+}
+
+map E4M9 "Maniac Mansion"
+{
+	levelnum = 39
+	next = "E4M2"
+	secretnext = "E4M2"
+	sky1 = "SASKY5"
+	cluster = 4
+	music = "BGMLEG"
+}
+
+// Bonus Episode 5
+map E5M1 "Rigorous Mortis"
+{
+	levelnum = 1
+	next = "E5M2"
+	secretnext = "E5M9"
+	sky1 = "SASKY2"
+	cluster = 5
+	par = 30
+	music = "BGME5M1"
+}
+
+map E5M2 "Drought Station Acheron"
+{
+	levelnum = 2
+	next = "E5M3"
+	secretnext = "E5M9"
+	sky1 = "SASKY4"
+	cluster = 5
+	par = 75
+	music = "BGME5M2"
+}
+
+map E5M3 "The Vaults of Zin"
+{
+	levelnum = 3
+	next = "E5M4"
+	secretnext = "E5M9"
+	sky1 = "SASKY2"
+	cluster = 5
+	par = 165
+	music = "BGME5M5"
+}
+
+map E5M4 "Man Flesh Processing"
+{
+	levelnum = 4
+	next = "E5M5"
+	secretnext = "E5M9"
+	sky1 = "SASKY2"
+	cluster = 5
+	par = 90
+	music = "BGME2M8"
+}
+
+map E5M5 "Valley of Death"
+{
+	levelnum = 5
+	next = "E5M6"
+	secretnext = "E5M9"
+	sky1 = "SASKY2"
+	cluster = 5
+	par = 120
+	music = "BGME1M3"
+}
+
+map E5M6 "Cthonian Planet"
+{
+	levelnum = 6
+	next = "E5M7"
+	secretnext = "E5M9"
+	sky1 = "SASKY2"
+	cluster = 5
+	par = 180
+	music = "BGME5M6"
+}
+
+map E5M7 "The House of Dagon"
+{
+	levelnum = 7
+	next = "E5M8"
+	secretnext = "E5M9"
+	sky1 = "SASKY4"
+	cluster = 5
+	par = 180
+	music = "BGME1M2"
+}
+
+map E5M8 "R'lyeh Rising"
+{
+	levelnum = 8
+	next = Endsequence,"E5End"
+	secretnext = "E5M9"
+	sky1 = "SASKY4"
+	cluster = 5
+	par = 60
+	nointermission
+	nosoundclipping
+	baronspecial
+	specialaction_lowerfloor
+	music = "BGME5M8"
+}
+
+map E5M9 "Mysterious Island"
+{
+	levelnum = 9
+	next = "E5M4"
+	secretnext = "E5M4"
+	sky1 = "SASKY2"
+	cluster = 5
+	par = 10
+	music = "BGMLEG"
+}
+
+
+// Clusters (correspond with same-numbered episode)
+
+cluster 1
+{
+	flat = "ENDBACK1"
+	music = "BGMINTRO"
+        exittext = "The sailors agree to ferry you across the",
+                   "aether, to a small cluster of islands",
+                   "where dwell the only sane inhabitants of",
+                   "the shattered city.",
+                   " ",
+                   "During the week-long voyage you tell them",
+                   "about your harrowing encounter with the",
+                   "shadow beasts in what appeared to be pre-",
+                   "historic earth; and the garbled dream-",
+                   "vision you had there, of a dilapidated",
+                   "fortress of rusted metal.",
+                   " ",
+                   "The sailors warn you not to go there.",
+                   "It is best to leave the dead buried, one",
+                   "says sympathetically.",
+                   " ",
+                   "You don't hear them, lost in your thoughts",
+                   "of David, and of your next dream quest."
+}
+
+cluster 2
+{
+	flat = "ENDBACK2"
+	music = "BGMINTRO"
+        exittext = "Shaken by the sudden vision and your",
+                   "encounter with the loathesome dholes,",
+                   "you spend many days in the care of the",
+                   "ghouls, gripped by violent delirium.",
+                   " ",
+                   "You think a god of Kadath has finally",
+                   "answered your prayers, and is trying to",
+                   "guide you to places unknown. The ghouls",
+                   "say the vision was of a temple to a for-",
+                   "gotten god that once occupied the place",
+                   "where the Stagnant Fortress now stands.",
+                   " ",
+                   "Eventually you bid your undead friends fare-",
+                   "well and return to earth. Weeks of feverish",
+                   "research yields the site that the Fortress",
+                   "will eventually occupy -- atop the grave of",
+                   "your mysterious benefactor. You fall into an",
+                   "uneasy sleep and dream of ancient earth..."
+}
+
+cluster 3
+{
+	flat = "ENDBACK3"
+	music = "BGMINTRO"
+        exittext = "You barely survive against the hideous",
+                   "spider god that seduced you into its web with",
+                   "visions of your son and promises of paradise.",
+                   "Had you fallen to the abomination, it would",
+                   "have escaped to earth through your dreams,",
+                   "with the help of the very tablets it used to",
+                   "influence your sleep-visions.",
+                   " ",
+                   "Shattered by the realization that your son is",
+                   "gone forever, you step through the spider's",
+                   "slipgate and begin the return trip to reality.",
+                   " ",
+                   "You do not awaken on earth, however. Blue",
+                   "sky and human cityscape are replaced with",
+                   "black spires and hateful alien tundra. The",
+                   "spider god has had the last laugh after all.",
+                   " ",
+                   "You shiver as you gaze upon your new home,",
+                   "breathing in a harsh lungful of icy air."
+}
+
+cluster 4
+{
+	flat = "ENDBACK4"
+	music = "BGMINTRO"
+        exittext = "You collapse on the floor in the safety of",
+                   "your living room, the furious screams of",
+                   "Nyarlathotep ringing in your ears as his link",
+                   "to your universe is severed. You may never",
+                   "learn what malignant hand he had in your ill-",
+                   "fated dream quest, nor why he insisted that",
+                   "you remain in Leng.",
+                   " ",
+                   "None of that matters now. You have escaped a",
+                   "fate worse than death, with only your life",
+                   "and your disillusionment to show for it.",
+                   " ",
+                   "Hastily you gather up the tablets and drive",
+                   "to the lake, casting them into the murky",
+                   "waters with a quiet prayer that none shall",
+                   "ever gaze upon their hideous runes again.",
+                   "With the deed done, you return home alone,",
+                   "thankful that none of the horrors you faced",
+                   "could have come back with you..."
+}
+
+cluster 5
+{
+	flat = "ENDBACK5"
+	music = "BGMINTRO"
+        exittext = "Slaying the spawn of cthulhu released their",
+                   "telepathic grip on Daniel. Precious seconds",
+                   "tick by as you desperately shake the boy,",
+                   "trying to rouse him from his unnatural sleep",
+                   "while R'lyeh slowly sinks around you, re-",
+                   "turning its master to the abyss once more.",
+                   " ",
+                   "The boy's eyes open, and he smiles at you in",
+                   "surprise and relief. You think briefly of",
+                   "David, then Daniel is gone as he awakens back",
+                   "on earth.",
+                   " ",
+                   "You've defeated three Ancient Ones and saved",
+                   "a frantic parent from sharing your loss. Not",
+                   "a bad way to check out. Reflecting on this,",
+                   "you smile, allowing the icy waters to engulf",
+				   "you and reunite you with David at long last."
+}
+
+//E2 End
+Intermission E2End
+{
+  Image
+  {
+  Background = "VICTORY2"
+  Music = "BGMINTRO"
+  }
+}
+
+//E3 End
+Intermission E3End
+{
+  Image
+  {
+  Background = "PFUB2"
+  Music = "D_BUNNY"
+  }
+}
+
+//E4 End
+Intermission E4End
+{
+  Image
+  {
+  Background = "ENDPIC"
+  Music = "BGMINTRO"
+  }
+}
+
+//E5 End
+Intermission E5End
+{
+  Scroller
+  {
+  Background = "FINAL1"
+  Background2 = "FINAL2"
+  ScrollDirection = up
+  InitialDelay = 4
+  ScrollTime = 20
+  Music = "D_BUNNY"
+  }
+}

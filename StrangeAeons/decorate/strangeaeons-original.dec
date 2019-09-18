@@ -1,0 +1,4487 @@
+ACTOR TravelerPlayer : DoomPlayer
+{
+	Player.DisplayName "Traveler"
+	Player.StartItem "ScepterofSouls"
+	Player.StartItem "Fist"
+	//Player.StartItem ClassID 1
+	Player.Weaponslot 1, "Fist"
+	Player.Weaponslot 2, "ScepterofSouls","ImpalerXBow"
+	Player.Weaponslot 3, "Shotgun"
+	Player.Weaponslot 4, "AK47"
+	Player.Weaponslot 5, "RocketLauncher"
+	Player.Weaponslot 6, "Yithgun"
+	Player.Weaponslot 7, "BFG9000"
+}
+
+Actor ScepterOfSouls : Weapon 11111
+{
+	//$Category Weapons
+	Inventory.PickupMessage "You got the Scepter of Souls!"
+	Inventory.PickupSound "Misc/W_PkUp"
+	Obituary "%k sucked out %o's soul"
+	Weapon.SelectionOrder 2400
+	Weapon.Slotnumber 2
+	Weapon.SisterWeapon "ScepterOfSouls~Powered"
+	Weapon.KickBack 0
+	AttackSound "Weapons/SoulScepter/Hit"
+	States
+	{
+		Spawn:
+			SLSP A -1
+			Loop
+		Ready:
+			SLSP B 0 Bright A_StopSoundEx("SoundSlot7")
+			SLSP BBBBB 1 A_WeaponReady
+			SLSP CCCCC 1 A_WeaponReady
+			SLSP DDDDD 1 A_WeaponReady
+			SLSP EEEEE 1 A_WeaponReady
+			Loop
+		Deselect:
+			SLSP B 0 A_StopSoundEx("SoundSlot7")
+			SLSP B 1 A_Lower
+			Loop
+		Select:
+			SLSP B 1 A_Raise
+			Loop
+		Fire:
+			SLSP F 0 Bright A_PlaySoundEx("Weapons/SoulScepter/Fire1", "SoundSlot6", 0)
+			SLSP F 4 Bright
+			SLSP F 0 Bright A_PlaySoundEx("Weapons/SoulScepter/Loop", "SoundSlot7", 1)
+		Hold:
+			SLSP G 2 Bright A_CustomPunch(Random(3, 6), 1, 1, "SoulScepterPuff", 256)
+			SLSP H 2 Bright
+			SLSP I 2 Bright A_CustomPunch(Random(3, 6), 1, 1, "SoulScepterPuff", 256)
+			SLSP J 2 Bright
+			SLSP K 2 Bright A_CustomPunch(Random(3, 6), 1, 1, "SoulScepterPuff", 256)
+			SLSP K 0 Bright A_ReFire
+			SLSP L 0 Bright A_StopSoundEx("SoundSlot7")
+			SLSP L 0 Bright A_PlaySoundEx("Weapons/SoulScepter/Stop", "SoundSlot6", 0)
+			SLSP LM 4 Bright
+			Goto Ready
+	}
+}
+
+Actor ScepterOfSouls~Powered : ScepterOfSouls
+{
+	Weapon.SisterWeapon "ScepterOfSouls"
+	Weapon.AmmoUse 1
+	AttackSound "Weapons/SoulScepter/Hit"
+	+Weapon.Powered_Up
+	Obituary "%o's soul was consumed by %k"
+	States
+	{
+		Fire:
+			SLSP F 0 Bright A_PlaySoundEx("Weapons/SoulScepter/Fire1", "SoundSlot6", 0)
+			SLSP F 4 Bright
+			SLSP F 0 Bright A_PlaySoundEx("Weapons/SoulScepter/Loop", "SoundSlot7", 1)
+		Hold:
+			SLSP G 2 Bright A_CustomPunch(0, 1, 1, "SoulScepterPowerPuff", 256)
+			SLSP H 2 Bright
+			SLSP I 2 Bright A_CustomPunch(0, 1, 1, "SoulScepterPowerPuff", 256)
+			SLSP J 2 Bright
+			SLSP K 2 Bright A_CustomPunch(0, 1, 1, "SoulScepterPowerPuff", 256)
+			SLSP K 0 Bright A_ReFire
+			SLSP L 0 Bright A_StopSoundEx("SoundSlot7")
+			SLSP L 0 Bright A_PlaySoundEx("Weapons/SoulScepter/Stop", "SoundSlot6", 0)
+			SLSP LM 4 Bright
+			Goto Ready
+	}
+}
+
+Actor SoulScepterAmmo : Ammo
+{
+	Inventory.PickupMessage "Soul Sapphire"
+	Inventory.Amount 25
+	Inventory.MaxAmount 200
+	Ammo.BackpackAmount 25
+	Ammo.BackpackMaxAmount 400
+	Inventory.Icon "SSPAA0"
+	RenderStyle Add
+	Alpha 0.9
+	States
+	{
+		Spawn:
+			SSPA ABCD 6 Bright
+			Loop
+	}
+}
+
+Actor SoulScepterHefty : SoulScepterAmmo
+{
+	Inventory.PickupMessage "Soul Orb"
+	Inventory.Amount 100
+	States
+	{
+		Spawn:
+			SSPA E 1 Bright A_Jump(2, 1)
+			Loop
+			SSPA FGH 4 Bright
+			Loop
+	}
+}
+
+Actor SoulScepterPuff : BulletPuff
+{
+	Radius 3
+	Height 3
+	+NoClip
+	+AlwaysPuff
+	+PuffOnActors
+	+NoGravity
+	+BloodlessImpact
+	-BloodSplatter
+	+DontSplash
+	DamageType "SoulScepter"
+	States
+	{
+		Spawn:
+		Melee:
+			SSPF ABCD 3 Bright
+			Stop
+		Crash:
+			TNT1 A 1
+			Stop
+	}
+}
+
+Actor SoulScepterPuff2 : Bulletpuff
+{
+	Radius 1
+	Height 1
+	+NoInteraction
+	States
+	{
+		Spawn:
+			SSPF A 0 Bright
+			SSPF A 0 Bright ThrustThingZ(0, Random(2, 6), 0, 0)
+			SSPF ABCD 3 Bright
+			Stop
+	}
+}
+
+Actor SoulScepterPowerPuff
+{
+	Radius 3
+	Height 3
+	+NoClip
+	+AlwaysPuff
+	+PuffOnActors
+	+NoGravity
+	+BloodlessImpact
+	-BloodSplatter
+	+DontSplash
+	+PuffGetsOwner
+	DamageType "SoulScepter"
+	States
+	{
+		Spawn:
+			TNT1 A 0
+			TNT1 AAAA 0 A_SpawnItemEx("SoulScepterPuff2", Random(0, 72), 0, 0, 0, 0, 0, Random(0, 360), 128)
+			TNT1 A 1 A_Explode(Random(3, 6), 128, 0, 0, 128)
+			Stop
+		Crash:
+			TNT1 A 1
+			Stop
+	}
+}
+
+Actor SoulScepterHealthBonus : Health
+{
+	-CountItem
+	+Inventory.AutoActivate
+	Inventory.Amount 1
+	Inventory.MaxAmount 100
+	Inventory.PickupMessage ""
+	Inventory.PickupSound ""
+	States
+	{
+		Spawn:
+			TNT1 A 1
+			Stop
+	}
+}
+
+Actor SoulFragment
+{
+	Radius 1
+	Height 1
+	Damage (0)
+	Projectile
+	+DontSplash
+	+NoClip
+	RenderStyle Add
+	Alpha 0.15
+	Scale 0.7
+	States
+	{
+		Spawn:
+			SSPS AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 1 Bright A_SpawnItemEx("SoulFragmentTrail", 0, Random(-1, 1), Random(1, -1), 0, 0, 0, 0, 128)
+		FadeOut:
+			SSPS A 1 A_SpawnItemEx("SoulFragmentTrail", 0, Random(-1, 1), Random(1, -1), 0, 0, 0, 0, 128)
+			SSPS A 0 A_FadeOut(0.02)
+			Loop
+		Death:
+			TNT1 A 1
+			Stop
+	}
+}
+
+Actor SoulFragmentTrail
+{
+	Radius 1
+	Height 1
+	Damage (0)
+	Projectile
+	+DontSplash
+	+NoClip
+	RenderStyle Add
+	Alpha 0.15
+	Scale 0.7
+	States
+	{
+		Spawn:
+			SSPS BCD 3 Bright
+			Stop
+	}
+}
+
+Actor NewMummy : Mummy replaces Mummy //This is just a demo for the soul-sucking
+{
+	States
+	{
+		Death.SoulScepter: //Death state for the Scepter of Souls
+			MUMM I 5 A_GiveToTarget("SoulScepterHealthBonus", 5) //Gives a health bonus to the killer
+			MUMM J 5 A_Scream
+			MUMM KKKKKKKKKKKK 0 A_SpawnItemEx("SoulFragment", 0, 0, 38, Random(1, 2), 0, Random(1, 2), Random(0, 360), 128) //Decoration
+			MUMM K 5 A_SpawnItemEx("MummySoul", 0,0,10, 0,0,1)
+			MUMM L 5
+			MUMM M 5 A_NoBlocking
+			MUMM NO 5
+			MUMM P -1
+			Stop
+	}
+}
+
+Actor AK47 : Weapon replaces Chaingun
+{
+	obituary "%o was perforated by %k's AK47."
+	attacksound "Weapons/AK47FIR"
+	inventory.pickupmessage "You got the AK47 assault rifle!"
+	weapon.selectionorder 700
+	Weapon.SlotNumber 4
+	weapon.kickback 100
+	weapon.ammotype "Clip"
+	weapon.ammouse 1
+	weapon.ammogive 20
+	Decal "BulletChip"
+	States
+	{
+		Ready:
+			AK47 A 1 A_WeaponReady
+			Loop
+		Deselect:
+			AK47 A 1 A_Lower
+			Loop
+		Select:
+			AK47 A 1 A_Raise
+			Loop
+		Fire:
+			AK4F A 1 bright A_FireBullets (2,2.5,1,5,"BulletPuff")
+			AK47 B 2 Radius_Quake (1,2,0,1,0)
+		AK47 B 0 A_ReFire
+			Goto Ready
+		Flash:
+			TNT1 A 2 bright
+			Stop
+		Spawn:
+			AK4I A -1
+			Stop
+	}
+}
+
+actor YithGun : Weapon replaces PlasmaRifle
+{
+	Weapon.SelectionOrder 90
+	Weapon.AmmoUse 1
+	Weapon.AmmoGive 40
+	Weapon.AmmoType "Cell"
+	Weapon.SlotNumber 6
+	Inventory.PickupMessage "You got a Yithian Lightning Gun!"
+	States
+	{
+		Ready:
+			ETRG A 1 A_WeaponReady
+			Loop
+		Deselect:
+			ETRG A 1 A_Lower
+			Loop
+		Select:
+			ETRG A 1 A_Raise
+			Loop
+		Fire:
+		ETRG B 0 A_PlayWeaponSound("electrogun/charge")
+			ETRG A 2 A_GunFlash 
+			ETRF A 2 A_FireCustomMissile("ElectroBlast")
+			ETRG B 20 A_ReFire
+			Goto Ready
+		Flash:
+			ETRF A 2 Bright A_Light1
+			ETRF B 2 Bright A_Light1
+			Goto LightDone
+		Spawn:
+			ETRO A -1
+			Stop
+	}
+}
+
+actor ElectroBlast : FastProjectile
+{
+	Radius 13
+	Height 8
+	Speed 100
+	Damage 5
+	Projectile
+	DamageType Disintegrate
+	Scale .75
+	+RANDOMIZE
+	+BLOODLESSIMPACT
+	RenderStyle Add
+	Alpha 0.75
+	SeeSound "electrogun/shoot"
+	DeathSound "electrogun/hit"
+	Obituary "%o was shocked by %k's yithian lightning gun."
+	States
+	{
+		Spawn:
+			EBLT GH 0 bright A_SpawnItem("ElectroBlastTrail")
+			EBLT GH 2 bright
+			loop
+		Death:
+			EBLT IJK 3 bright
+			stop
+	}
+}
+
+actor ElectroBlastTrail
+{
+	Radius 13
+	Height 8
+	Speed 20
+	Damage 1
+	Projectile
+	+RANDOMIZE
+	RenderStyle Add
+	Alpha 0.75
+	States
+	{
+		Spawn:
+			EBLT ABC 3 bright A_BishopMissileWeave
+			goto death
+		Death:
+			EBLT DEF 4 bright A_FadeOut(0.5)
+			loop
+	}
+}
+
+ACTOR ImpalerXBow : Weapon replaces Chainsaw
+{
+	Inventory.PickupMessage "You got the Impaler!"
+	Weapon.UpSound "Weapon/XBowLoad"
+	Weapon.KickBack 20
+	Weapon.SelectionOrder 2500
+	Weapon.Slotnumber 2
+	States
+	{
+		Spawn:
+			CBOW Z -1
+			Stop
+		Select:
+			CBOW E 1 A_Raise
+			Loop
+		Deselect:
+			CBOW E 1 A_Lower
+			Loop
+		Ready:
+			CBOW E 0 A_JumpIfNoAmmo("FakeReady")
+			CBOW EF 5
+		RealReady:
+			CBOW A 1 A_WeaponReady
+			Loop
+		FakeReady:
+			CBOW E 1 A_WeaponReady
+			Loop
+		Fire:
+			CBOW B 6 A_FireCustomMissile("SonicNail",0)
+			CBOW B 0 A_Recoil(1)
+			CBOW C 8 A_PlaySound("Weapon/XBowLoad", CHAN_WEAPON)
+			CBOW D 5
+			CBOW E 5 A_CheckReload
+			CBOW F 5
+			CBOW A 12
+			Goto RealReady
+	}	
+}
+
+ACTOR SonicNail : MageWandMissile
+{
+	damage 3
+	Scale 0.7
+	Speed 75
+	radius 2
+	height 4
+	Seesound "Weapon/XBowFire"
+	deathsound "Nailhit"
+	Decal "RailScorchLower"
+	Missiletype ""
+	+NOPAIN
+	States
+	{
+		Spawn:
+			TNT1 A 0
+			TNT1 A 0 A_ChangeFlag("NOPAIN",Random(1,FRandom(0.25,2.0)))//otherwise the ripping would make it very OP
+		SpawnLoop:
+			BLAD AAAAAABBBBBB 1 Bright A_SpawnItemEX("SonicNailSmoke")
+			loop
+		Death:
+			TNT1 A 0 A_SpawnItemEX("NailSpark")
+			SPLS CDEFGHI 2 Bright A_SetTranslucent(0.85,1)
+			stop
+	}
+}
+
+ACTOR SonicNailSmoke : MageWandSmoke
+{
+	Alpha 0.5
+	Scale 0.25
+	States
+	{
+		Spawn:
+			SNIC BCDEF 2 A_Fadeout(0.016)
+			Stop
+	}
+}
+
+ACTOR NailSpark : MageWandSmoke
+{
+	Scale 0.7
+	States
+	{
+		Spawn:
+			FX57 ABCDEFGHIJ 2 bright A_SetTranslucent(0.85,1)
+			Stop
+	}
+}
+
+Actor DShambler 10077
+{
+	//$Category SEMonsters
+	HitObituary "%o was displaced by a dimensional shambler."
+	Health 250
+	Radius 22
+	Height 56
+	Mass 200
+	Speed 12
+	PainChance 64
+	MeleeDamage 4
+	SeeSound "Shambler/Sight"
+	PainSound "Shambler/Pain"
+	DeathSound "Shambler/Death"
+	ActiveSound "Shambler/Active"
+	MeleeSound "Imp/Melee"
+	Monster
+	+FloorClip
+	+MissileEvenMore
+	States
+	{
+		Spawn:
+			SHAM H 1
+			SHAM H 0 A_JumpIf(Args[0] > 0, "Spawn2")
+			SHAM H 0 A_JumpIfInventory("WraithTeleporting", 1, "StopTeleport")
+			SHAM H 1 A_Look
+			Goto Spawn+1
+		Spawn2:
+			SHAM H 0 A_JumpIfInventory("WraithTeleporting", 1, "StopTeleport")
+			SHAM H 1 A_LookEx(8, 0, 0, 0, 0, "Teleport")
+			Loop
+		StopTeleport:
+			SHAM A 0 A_ChangeFlag("Invulnerable", 0)
+			SHAM A 0 A_SetShootable
+			SHAM A 0 A_ChangeFlag("NonShootable", 0)
+			SHAM A 0 A_ChangeFlag("Shootable", 1)
+			SHAM A 0 A_ChangeFlag("NoTeleport", 0)
+			SHAM A 0 A_ChangeFlag("NoRadiusDMG", 0)
+			SHAM A 0 A_TakeInventory("WraithTeleporting", 1)
+			Goto Spawn
+		See:
+			SHAM A 2 A_Chase("", "", 0)
+			SHAM AABBBCCCDDD 2 A_Chase
+			SHAM B 0 A_JumpIf(Args[1] > 0, 1)
+			Goto See+1
+			SHAM B 0 A_Jump(16, "Missile")
+			Goto See+1
+		Melee:
+			SHAM H 0 A_JumpIfInventory("WraithTeleporting", 1, 5)
+			SHAM H 1 A_FaceTarget
+			SHAM H 1 A_FaceTarget
+			SHAM H 0 A_PlayWeaponSound("D3Wraith/Attack")
+			SHAM H 8 A_MeleeAttack
+			goto see
+			SHAM A 0 A_ChangeFlag("Invulnerable", 0)
+			SHAM A 0 A_SetShootable
+			SHAM A 0 A_ChangeFlag("NonShootable", 0)
+			SHAM A 0 A_ChangeFlag("Shootable", 1)
+			SHAM A 0 A_ChangeFlag("NoTeleport", 0)
+			SHAM A 0 A_ChangeFlag("NoRadiusDMG", 0)
+			SHAM A 0 A_ChangeFlag("DropOff", 0)
+			SHAM A 0 A_TakeInventory("WraithTeleporting", 1)
+			SHAM H 2 A_FaceTarget
+			SHAM H 0 A_PlayWeaponSound("D3Wraith/Attack")
+			SHAM H 8 A_MeleeAttack
+			Goto See
+		Missile:
+			SHAM A 0 A_JumpIfCloser(128, 2)
+			SHAM A 0 A_JumpIfCloser(1024, 2)
+			SHAM A 0
+			Goto See
+			SHAM A 0 A_Jump(128, "Teleport")
+			Goto See
+		Teleport:
+			SHAM A 3 A_FaceTarget
+			TNT1 A 0 A_GiveInventory("WraithTeleporting", 1)
+			TNT1 A 0 A_ChangeFlag("Invulnerable", 1)
+			TNT1 A 0 A_ChangeFlag("NonShootable", 1)
+			TNT1 A 0 A_ChangeFlag("NoTeleport", 1)
+			TNT1 A 0 A_ChangeFlag("NoRadiusDMG", 1)
+			TNT1 A 0 A_ChangeFlag("DropOff", 1)
+			TNT1 A 0 A_UnSetShootable
+			TNT1 AAAAAAAAAAAAAAAAAAAAAAAAA 0 A_ExtChase(1, 0, 0, 0)
+			TNT1 AAAAAAAAAAAAAAAAAAAAAAAAA 0 A_ExtChase(1, 0, 0, 0)
+			TNT1 A 1 A_ExtChase(1, 0, 0, 0)
+			SHAM A 0 A_ChangeFlag("Invulnerable", 0)
+			SHAM A 0 A_SetShootable
+			SHAM A 0 A_ChangeFlag("NonShootable", 0)
+			SHAM A 0 A_ChangeFlag("Shootable", 1)
+			SHAM A 0 A_ChangeFlag("NoTeleport", 0)
+			SHAM A 0 A_ChangeFlag("NoRadiusDMG", 0)
+			SHAM A 0 A_ChangeFlag("DropOff", 0)
+			SHAM A 0 A_TakeInventory("WraithTeleporting", 1)
+			SHAM A 3 A_FaceTarget
+			Goto See
+		Pain:
+			SHAM H 4
+			SHAM H 4 A_Pain
+			Goto See
+		Death:
+			SHAM I 8
+			SHAM J 8 A_Scream
+			SHAM K 6
+			SHAM L 6 A_NoBlocking
+			SHAM M 6
+			SHAM N 6
+			SHAM O 6
+			SHAM P -1
+			Stop
+		Raise:
+			TROO ONMLKJI 8
+			Goto See
+	}
+}
+
+Actor WraithTeleporting : Inventory
+{
+	Inventory.MaxAmount 3
+}
+
+//Vulgar
+actor Vulgar : DoomImp 30127
+{
+	//$Category SEMonsters
+	obituary "%o has the Innsmouth look."
+	health 60
+	radius 20
+	height 56
+	mass 120
+	speed 12
+	painchance 180
+	MeleeDamage 4
+	+DONTHURTSPECIES
+	seesound "monster/vulsit"
+	painsound "monster/vulpai"
+	deathsound "monster/vuldth"
+	activesound "monster/vulact"
+	meleesound "monster/vulhit"
+	MONSTER
+	+FLOORCLIP
+	states
+	{
+		Spawn:
+			VULG AB 10 A_Look
+			loop
+		See:
+			VULG AABBCCDD 3 A_Chase
+			loop
+		Melee:
+			Missile:
+			VULG E 8 A_FaceTarget
+			VULG F 1 A_PlaySound("monster/vulswg")
+			VULG F 7 A_FaceTarget
+			VULG G 6 A_MeleeAttack
+			goto See
+		Missile:
+			VULG EF 6 A_FaceTarget
+			VULG G 4 A_CustomMissile("VulgarShot",37,0,0,0,0)
+			goto See
+		Pain:
+			VULG H 2
+			VULG H 2 A_Pain
+			goto See
+		Death:
+			VULG I 8
+			VULG J 8 A_Scream
+			VULG KL 6
+			VULG M 6 A_NoBlocking
+			VULG N -1
+			stop
+		XDeath:
+			VULG O 5
+			VULG P 5 A_XScream
+			VULG Q 5
+			VULG R 5 A_NoBlocking
+			VULG STU 5
+			VULG V -1
+			stop
+		Raise:
+			VULG ML 8
+			VULG KJI 6
+			goto See
+	}
+}
+
+ACTOR VulgarShot
+{
+	Radius 8
+	Height 16
+	Speed 10
+	Damage 4
+	PoisonDamage 32
+	RENDERSTYLE ADD
+	ALPHA 0.67
+	PROJECTILE
+	+THRUGHOST
+	Seesound "monster/vulsh1"
+	DeathSound "monster/vulsh2"
+	Decal "DoomImpScorch"
+	States
+	{
+		Spawn:
+			FVUL AAABBB 1 Bright A_SpawnItemEx("BarbTrail",0,0,0,0,0,0,0,128,0)
+			loop
+		Death:
+			FVUL CDEF 4 Bright
+			stop
+	}
+}
+
+/*
+Actor Roach 30128
+{
+	//$Category SEMonsters
+	Health 150
+	GibHealth 250
+	Radius 19
+	Height 48
+	Speed 12
+	PainChance 64
+	Mass 200
+	BloodColor "DarkGreen"
+	Monster
+	+DontHurtSpecies
+	SeeSound "Roach/Sight"
+	PainSound "Roach/Pain"
+	DeathSound "Roach/Death"
+	ActiveSound "Roach/Active"
+	MeleeDamage 4
+	Obituary "%o has the Innsmouth look."
+	States
+	{
+		Spawn:
+			ROAC A 0
+			ROAC A 0 A_JumpIf(Args[0] == 1, "Spawn2")
+			ROAC A 0 A_JumpIf(Args[0] > 1, "Spawn3")
+			ROAC AAAAAA 1 A_Look
+			ROAC A 0 HealThing(2)
+			Loop
+		Spawn2:
+			ROAC AAAAAA 1 A_LookEx(8, 0, 0, 0, 0, "See")
+			ROAC A 0 HealThing(2)
+			Loop
+		Spawn3:
+			ROAC AAAAAA 1 A_LookEx(0, 0, 0, 0, 0, "SeeAlert")
+			ROAC A 0 HealThing(2)
+			Loop
+		SeeAlert:
+			ROAC A 0 A_AlertMonsters
+			Goto See
+		See:
+			ROAC B 0 A_JumpIfInventory("RoachScared", 1, 2)
+			ROAC B 0 A_Jump(32, "Stand")
+			ROAC B 0 A_JumpIfInventory("RoachScared", 1, 1)
+			Goto See+4
+			ROAC B 0 A_JumpIfHealthLower(120, 1)
+			Goto HealthHigh
+			ROAC B 0 A_JumpIfInventory("RoachScared", 1, 2)
+			ROAC B 0 A_JumpIfHealthLower(40, "HealthLow")
+			ROAC BB 2 A_Chase("Melee", "", 2)
+			ROAC B 2 A_Chase
+			ROAC C 0 HealThing(2)
+			ROAC C 0 A_JumpIfInventory("RoachScared", 1, 1)
+			Goto See+12
+			ROAC C 0 A_JumpIfHealthLower(120, 1)
+			Goto HealthHigh
+			ROAC C 0 A_JumpIfInventory("RoachScared", 1, 2)
+			ROAC C 0 A_JumpIfHealthLower(40, "HealthLow")
+			ROAC CC 2 A_Chase("Melee", "", 2)
+			ROAC C 2 A_Chase
+			ROAC D 0 HealThing(2)
+			ROAC D 0 A_JumpIfInventory("RoachScared", 1, 1)
+			Goto See+20
+			ROAC D 0 A_JumpIfHealthLower(120, 1)
+			Goto HealthHigh
+			ROAC D 0 A_JumpIfInventory("RoachScared", 1, 2)
+			ROAC D 0 A_JumpIfHealthLower(40, "HealthLow")
+			ROAC DD 2 A_Chase("Melee", "", 2)
+			ROAC D 2 A_Chase
+			ROAC E 0 HealThing(2)
+			ROAC E 0 A_JumpIfInventory("RoachScared", 1, 1)
+			Goto See+28
+			ROAC E 0 A_JumpIfHealthLower(120, 1)
+			Goto HealthHigh
+			ROAC E 0 A_JumpIfInventory("RoachScared", 1, 2)
+			ROAC E 0 A_JumpIfHealthLower(40, "HealthLow")
+			ROAC EE 2 A_Chase("Melee", "", 2)
+			ROAC E 2 A_Chase
+			ROAC B 0 HealThing(2)
+			Loop
+		Stand:
+			ROAC A 0 A_Chase("Melee", "Missile", 18)
+			ROAC A 3 A_FaceTarget
+			ROAC A 0 HealThing(2)
+			ROAC A 0 A_Chase("Melee", "Missile", 18)
+			ROAC A 3 A_FaceTarget
+			ROAC A 0 HealThing(2)
+			ROAC A 0 A_Chase("Melee", "Missile", 18)
+			ROAC A 3 A_FaceTarget
+			ROAC A 0 HealThing(2)
+			ROAC A 0 A_Chase("Melee", "Missile", 18)
+			ROAC A 3 A_FaceTarget
+			ROAC A 0 HealThing(2)
+			ROAC A 0 A_Chase("Melee", "Missile", 18)
+			ROAC A 3 A_FaceTarget
+			ROAC A 0 HealThing(2)
+			ROAC A 0 A_Chase("Melee", "Missile", 18)
+			ROAC A 3 A_FaceTarget
+			ROAC A 0 HealThing(2)
+			ROAC A 0 A_Chase("Melee", "Missile", 18)
+			ROAC A 3 A_FaceTarget
+			ROAC A 0 HealThing(2)
+			ROAC A 0 A_Chase("Melee", "Missile", 18)
+			ROAC A 3 A_FaceTarget
+			ROAC A 0 HealThing(2)
+			ROAC A 0 A_Chase("Melee", "Missile", 18)
+			ROAC A 3 A_FaceTarget
+			ROAC A 0 HealThing(2)
+			ROAC A 0 A_Jump(192, 1)
+			Goto See+1
+			ROAC A 0
+			Loop
+		HealthLow:
+			ROAC A 0 A_GiveInventory("RoachScared", 1)
+			ROAC A 0 A_ChangeFlag("Frightened", 1)
+			Goto See+4
+		HealthHigh:
+			ROAC A 0 A_TakeInventory("RoachScared", 1)
+			ROAC A 0 A_ChangeFlag("Frightened", 0)
+			Goto See+4
+		Melee:
+		Missile:
+			ROAC AA 3 A_FaceTarget
+			ROAC A 0 HealThing(2)
+			ROAC AA 3 A_FaceTarget
+			ROAC A 0 HealThing(2)
+			ROAC FF 3 A_FaceTarget
+			ROAC F 0 HealThing(2)
+			ROAC G 0 A_CustomMissile("RoachBall", 32, -4, 1)
+			ROAC G 6 A_CustomMissile("RoachBall", 32, 4, -1)
+			ROAC G 0 HealThing(2)
+			Goto See
+		Pain:
+			ROAC H 3
+			ROAC H 3 A_Pain
+			ROAC H 0 HealThing(2)
+			Goto See
+		Death:
+			ROAC I 8 A_ScreamAndUnblock
+			ROAC JKL 6
+			ROAC M 0 A_Jump(18, 2)
+			ROAC M -1
+			Loop
+			ROAC MMMMM 70
+			ROAC MMMMM 70
+			ROAC MMMMM 70
+			ROAC M -1 Thing_Raise(0)
+			Wait
+		XDeath:
+			ROAC I 4 A_XScream
+			ROAC NOP 6
+			ROAC Q 6 A_NoBlocking
+			ROAC RS 6
+			ROAC T -1
+			Stop
+		Raise:
+			ROAC MLKJI 5
+			Goto See
+	}
+}
+
+Actor RoachScared : Inventory { Inventory.MaxAmount 1 }
+
+Actor RoachBall : DoomImpBall
+{
+	Damage (Random(5, 8))
+	Height 5
+	Radius 3
+	Scale 0.6
+	Speed 30
+	Decal PlasmaScorchLower
+	SeeSound "Roach/Fire"
+	DeathSound "Roach/Hit"
+	States
+	{
+	Spawn:
+		RCHB AAAABBBB 1 Bright A_SpawnItemEx("RoachBallTrail", -(MomX/1.2), -(MomY/1.2), (MomZ/1.2*-1), (MomX/1.2), (MomY/1.2), (MomZ/1.2), -Angle, 138)
+		Loop
+	Death:
+		RCHB C 0 Bright A_Explode(5, 32, 0)
+		RCHB CDEFG 3 Bright
+		Stop
+	}
+}
+
+Actor RoachBallTrail
+{
+	Projectile
+	RenderStyle Add
+	Alpha 0.5
+	Scale 0.6
+	States
+	{
+		Spawn:
+			RCHB AABB 2 Bright A_FadeOut(0.05)
+			Loop
+	}
+}
+*/
+
+
+//==========Mapper notes
+
+//The Roach is a fairly annoying monster that can regenerate 1 health every
+//6 tics (almost 6 health per second, and can fully heal itself in under 30
+//seconds).
+
+//When it is under 40 health, it will switch on the Frightened flag and run
+//away. When it hits 120 health, it'll turn the flag off and attack again.
+
+//If the first argument is 1, it won't play a see sound.
+//If the first argument is 2, it will alert other monsters in the vicinity
+//when it sees a player.
+
+actor StarSpawn replaces BaronofHell 11300
+{
+	//$Category SEMonsters
+	obituary "%o was driven mad by the Spawn of Cthulhu."
+	hitobituary "%o was flayed by the Spawn of Cthulhu."
+	health 1500
+	radius 36
+	height 128
+	mass 1000
+	speed 20
+	scale 2.5
+	BloodColor "dark green"
+	painchance 50
+	meleedamage 50
+	meleerange 64
+	seesound "deepone/sight"
+	painsound "deepone/pain"
+	deathsound "deepone/death"
+	activesound "deepone/active"
+	meleesound "deepone/melee"
+	MONSTER
+	+FLOORCLIP
+	+BOSS
+	+BOSSDEATH
+	+MISSILEEVENMORE
+	+NORADIUSDMG
+	+NOTARGET
+	states
+	{
+		Spawn:
+			CUTH DD 6 A_Look
+			loop
+		See:
+			CUTH ABCD 6 A_VileChase
+			loop
+		Melee:
+			CUTH E 0 A_FaceTarget 
+			CUTH E 6 A_PlaySound ("deepone/meleegrowl") 
+			CUTH F 6 A_FaceTarget
+			CUTH G 2 A_MeleeAttack
+			CUTH HI 2
+			goto See
+		Missile:
+			CUTH J 0 A_JumpIfCloser (32,"Melee") 
+			CUTH J 0 A_Jump (20, "Hide") 
+			CUTH J 8 A_FaceTarget
+			CUTH K 0 A_CustomMissile("DeepOneBall",96,32)
+			CUTH K 8  bright A_CPosRefire
+			Goto Missile+1
+		Pain:
+			CUTH L 0 A_TakeInventory("squidinviso", 255)
+			CUTH L 2 A_ChangeFlag("STEALTH", 0)
+			CUTH L 2 A_Pain
+			goto See
+		Hide:
+			CUTH I 1 A_JumpIfInventory("squidinviso",1,"Unhide")
+			CUTH I 0 A_GiveInventory("squidinviso", 1)
+			CUTH I 2 A_PlaySound ("deepone/stealth")
+			CUTH I 10 A_ChangeFlag("STEALTH", 1)
+			goto See
+		Unhide:
+			CUTH D 0 A_TakeInventory("squidinviso", 255)
+			CUTH D 2 A_ChangeFlag("STEALTH", 0)
+			CUTH D 2 A_PlaySound ("deepone/stealth")
+			goto See
+		Heal:
+			CUTH I 10 Bright
+			Goto See
+		Death:
+			CUTH M 10
+			CUTH N 10 A_Scream
+			CUTH O 10
+			CUTH P 10 A_NoBlocking
+			CUTH P 0 A_BossDeath
+			CUTH Q -1
+			stop
+		Raise:
+			CUTH PONM 8
+			goto See
+	}
+}
+
+actor DeepOneBall
+{
+	Radius 13
+	Height 8
+	Speed 25
+	Damage 5
+	Health 5
+	Projectile
+	+RANDOMIZE
+	+ROCKETTRAIL
+	+SEEKERMISSILE
+	RenderStyle Add
+	Alpha 0.75
+	SeeSound "deepone/fire"
+	DeathSound "deepone/firehit"
+	States
+	{
+		Spawn:
+			OLDP A 0 A_Tracer
+			OLDP A 0 bright A_BishopMissileWeave
+			OLDP A 2 bright A_BishopMissileWeave
+			OLDP B 0 A_Tracer
+			OLDP B 0 bright A_BishopMissileWeave
+			OLDP B 2 bright A_BishopMissileWeave
+			loop
+			//OLDP A 2 bright A_Weave(-2, 2, 2.0, 1.0)
+			//OLDP B 2 bright A_Weave(-2, 2, 2.0, 1.0)
+			//goto spawn+3
+		Death:
+			OLDP C 0 A_Scream
+			OLDP CDEF 4 bright 
+			stop
+	}
+}
+
+ACTOR squidinviso : Inventory
+{
+	Inventory.amount 0
+	Inventory.maxamount 1
+}
+
+//Place the RainDropSpawner on your map, and use values set on the specials tab to modify it
+
+//The first argument controls it's area. 128, for example makes it a 256x256 square or 256-radius circle (See fourth argument)
+//The second argument controls it's frequency. The lower the number, the heavier the rainfall
+//The third argument controls whether or not it plays it's ambient sound. 0 will play the sound, 1 will not
+//The fourth argument controls the area type. 0 is a square, 1 is a circle
+
+
+Actor RainSpawner  30000
+{
+	//$Category Ambiance
+	Radius 1
+	Height 1
+	+NoClip
+	+ClientSideOnly
+	+SpawnCeiling
+	+NoGravity
+	States
+	{
+		Spawn:
+			TNT1 A 0
+			TNT1 A 0 A_JumpIf(Args[2] > 0, "NoSound")
+			TNT1 A 0 A_JumpIf(Args[3] > 0, "Circle")
+			TNT1 A 0 A_PlaySoundEx("Ambient/Rain", "SoundSlot7", 1)
+			TNT1 A 2 A_SpawnItemEx("RainDrop", Random(-Args[0], Args[0]), Random(-Args[0], Args[0]), -2, 0, 0, 0, 0, 128, Args[1])
+			TNT1 A 2 A_SpawnItemEx("RainDrop", Random(-Args[0], Args[0]), Random(-Args[0], Args[0]), -2, 0, 0, 0, 0, 128, Args[1])
+			TNT1 A 2 A_SpawnItemEx("RainDrop", Random(-Args[0], Args[0]), Random(-Args[0], Args[0]), -2, 0, 0, 0, 0, 128, Args[1])
+			TNT1 A 2 A_SpawnItemEx("RainDrop", Random(-Args[0], Args[0]), Random(-Args[0], Args[0]), -2, 0, 0, 0, 0, 128, Args[1])
+			Loop
+		Circle:
+			TNT1 A 2 A_SpawnItemEx("RainDrop", Random(-Args[0], Args[0]), 0, -2, 0, 0, 0, Random(0, 360), 128, Args[1])
+		NoSound:
+			TNT1 A 0 A_Jumpif(Args[3] > 0, "NoSoundCircle")
+			TNT1 A 2 A_SpawnItemEx("RainDrop", Random(-Args[0], Args[0]), Random(-Args[0], Args[0]), -2, 0, 0, 0, 0, 128, Args[1])
+			Loop
+		NoSoundCircle:
+			TNT1 A 2 A_SpawnItemEx("RainDrop", Random(-Args[0], Args[0]), 0, -2, 0, 0, 0, Random(0, 360), 128, Args[1])
+			Loop
+	}
+}
+
+Actor RainDrop 30001
+{
+	+Missile
+	+NoBlockMap
+	-NoGravity
+	Height 2
+	Radius 2
+	Renderstyle Translucent
+	Alpha 0.6
+	Scale 0.5
+	States
+	{
+		Spawn:
+			RNDR A 1 A_JumpIf(WaterLevel > 0, "Death")
+			Loop
+		Death:
+			RNDR BCDEFGH 3 A_FadeOut(0.15)
+			Stop
+	}
+}
+
+ACTOR RapidFireTrooper 3201
+{
+	//$Category SEMonsters
+	Health 30
+	Radius 20
+	Height 56
+	Speed 10
+	PainChance 200
+	MONSTER 
+	+FLOORCLIP
+	DropItem AK47
+	SeeSound "grunt/sight"
+	AttackSound "grunt/attack"
+	PainSound "grunt/pain"
+	DeathSound "grunt/death"
+	ActiveSound "grunt/active"
+	Obituary "%o was cut down by a maniac with a machinegun." 
+	Decal BulletChip
+	States 
+	{ 
+		Spawn: 
+			RFTR AB 10 A_Look 
+			Loop 
+		See: 
+			RFTR AABBCCDD 3 A_Chase 
+			Loop 
+		Missile: 
+			RFTR E 10 A_FaceTarget 
+			RFTR F 5 Bright A_PosAttack 
+			RFTR E 5 A_CPosRefire 
+			Goto Missile+1 
+		Pain: 
+			RFTR G 3 
+			RFTR G 3 A_Pain 
+			Goto See 
+		Death: 
+			RFTR H 5 
+			RFTR I 5 A_Scream 
+			RFTR J 5 A_Fall 
+			RFTR K 5 
+			RFTR L -1 
+			Stop
+		XDeath:
+			RFTR M 5
+			RFTR N 5 A_XScream
+			RFTR N 5
+			RFTR P 5 A_Fall
+			RFTR QRST 5
+			RFTR U -1
+			Stop
+		Raise: 
+			RFTR KJ 5 
+			RFTR IH 5 
+			Goto See 
+	} 
+}
+
+//=====================================================================
+//
+//     Undead Hunter
+//        -Icytux
+//
+//=====================================================================
+
+actor UndeadHunter 15489
+{
+	//$Category SEMonsters
+	obituary "%o was killed and stuffed by the Men of Leng."
+	health 30
+	radius 22
+	height 56
+	mass 100
+	speed 10
+	painchance 70
+	activesound "shotguy/active" //if use in something else than doom, you have to provide theese sounds yourself.
+	attacksound "shotguy/attack"
+	painsound "undeadhunter/pain"
+	deathsound "undeadhunter/death"
+	seesound "undeadhunter/activate"
+	dropitem "Shotgun" 256
+	MONSTER
+	+FLOORCLIP
+	+DONTHURTSPECIES
+	states
+	{
+		Spawn:
+			DEHU AB 10 A_Look
+			loop
+		See:
+			DEHU AABBCCDD 2 A_Chase
+			loop
+		Missile:
+			DEHU E 4 A_FaceTarget
+			DEHU F 4 bright A_SPosAttack
+			DEHU E 8
+			goto See
+		Pain:
+			DEHU G 2
+			DEHU G 2 A_Pain
+			goto See
+		Death:
+			DEHU H 5
+			DEHU I 5 A_Scream
+			DEHU J 5 A_NoBlocking
+			DEHU KLM 5
+			DEHU N -1
+			stop
+		XDeath:
+			DEHU O 5 A_XScream
+			DEHU P 5 A_PlaySound("undeadhunter/xdeath")
+			DEHU Q 5 A_NoBlocking
+			DEHU RSTUV 5
+			DEHU W -1
+			stop
+		Raise:
+			DEHU MLKJIH 3
+			goto See
+	}
+}
+
+actor Devil : DoomImp 30120
+{
+	//$Category SEMonsters
+	obituary "%o was fried by a Devil."
+	hitobituary "%o was flayed by a Devil."
+	health 60
+	radius 20
+	height 56
+	mass 120
+	speed 10
+	painchance 160
+	+DONTHURTSPECIES
+	seesound "monster/dvlsit"
+	painsound "monster/dvlpai"
+	deathsound "monster/dvldth"
+	activesound "monster/dvlact"
+	MONSTER
+	+FLOORCLIP
+	states
+	{
+		Spawn:
+			TRO2 AB 10 A_Look
+			loop
+		See:
+			TRO2 AABBCCDD 3 A_Chase
+			loop
+		Melee:
+		Missile:
+			TRO2 EF 6 A_FaceTarget
+			TRO2 G 4 A_TroopAttack
+			TRO2 B 2
+			TRO2 VW 6 A_FaceTarget
+			TRO2 X 4 A_TroopAttack
+			TRO2 E 0 A_Jump(200,9)
+			TRO2 D 2
+			TRO2 EF 6 A_FaceTarget
+			TRO2 G 4 A_TroopAttack
+			TRO2 B 2
+			TRO2 VW 6 A_FaceTarget
+			TRO2 X 4 A_TroopAttack
+			TRO2 B 0
+			goto See
+		Pain:
+			TRO2 H 2
+			TRO2 H 2 A_Pain
+			goto See
+		Death:
+			TRO2 I 8
+			TRO2 J 8 A_Scream
+			TRO2 K 6
+			TRO2 L 6 A_NoBlocking
+			TRO2 M -1
+			stop
+		XDeath:
+			TRO2 N 5
+			TRO2 O 5 A_XScream
+			TRO2 P 5
+			TRO2 Q 5 A_NoBlocking
+			TRO2 RST 5
+			TRO2 U -1
+			stop
+		Raise:
+			TRO2 ML 8
+			TRO2 KJI 6
+			goto See
+	}
+}
+
+// Grell -- by NMN (w/DECORATE by Xaser)
+
+actor Grell 10560
+{
+	//$Category SEMonsters
+	Tag "Grell"
+	health 150
+	radius 24
+	height 56
+	mass 400
+	speed 10
+	Obituary "%o was plagued by a grell." 
+	painchance 128
+	seesound "grell/sight"
+	painsound "grell/pain"
+	deathsound "grell/death"
+	activesound "grell/active"
+	Monster
+	+DROPOFF
+	+NOGRAVITY
+	+DONTHURTSPECIES
+	States
+	{
+		Spawn:
+			GREL A 10 A_Look
+			Loop
+		See:
+			GREL A 0 A_SentinelBob
+			GREL AAB 3 A_Chase
+			GREL B 0 A_SentinelBob
+			GREL BCC 3 A_Chase
+			Loop
+		Missile:
+			GREL D 0 A_PlaySound("grell/attack")
+			GREL D 4 A_FaceTarget
+			GREL E 4 Bright A_FaceTarget    
+			GREL F 4 Bright A_CustomMissile("GrellBall", 32, 0, 0) 
+			Goto See
+		Pain:
+			GREL G 3 
+			GREL G 3 A_Pain
+			Goto See
+		Death:
+			GREL H 5
+			GREL I 0 A_NoBlocking
+			GREL I -1 A_Scream
+		Crash:
+			GREL J 4 A_PlaySound("grell/thud", CHAN_AUTO)
+			GREL K 4 A_NoBlocking
+			GREL LM 4 A_SetFloorClip
+			GREL N -1 
+			Stop
+		Raise:
+			GREL M 5 A_UnSetFloorClip
+			GREL LKJIH 5
+			Goto See
+	}
+}
+
+ACTOR GrellBall
+{
+	Radius 8
+	Height 16
+	Speed 15
+	Damage 4
+	PoisonDamage 32
+	Renderstyle Add
+	Alpha 0.67
+	Projectile
+	DeathSound "grell/projhit"
+	States
+	{
+		Spawn:
+			FVUL AAABBB 1 Bright A_SpawnItemEx("BarbTrail",0,0,0,0,0,0,0,128,0)
+			loop
+		XDeath:
+			FVUL C 0 Bright A_RadiusGive("GrellSlowdown", 48, RGF_PLAYERS | RGF_CUBE, 1)
+		Death:
+			FVUL CDEF 4 Bright
+			stop
+	}
+}
+
+ACTOR PowerSlow : PowerSpeed
+{
+	Powerup.Duration -3
+	Speed 0.66
+}
+
+ACTOR GrellSlowdown : PowerupGiver
+{
+	+Inventory.AUTOACTIVATE
+	-Inventory.INVBAR
+	Powerup.Type "Slow"
+}
+
+ACTOR Barbtrail
+{
+	Radius 0
+	Height 1
+	PROJECTILE
+	RENDERSTYLE ADD
+	ALPHA 0.75
+	States
+	{
+		Spawn:
+			NULL A 1 Bright
+			SSFX ABCDEFG 2 Bright
+			Stop 
+	}
+}
+
+Actor Fleshspawn 10558
+{
+	//$Category SEMonsters
+	Obituary "%o was burned by a FleshSpawn." 
+	HitObituary "%o was devoured by a FleshSpawn."
+	health 50
+	radius 14
+	height 30
+	mass 80
+	speed 10
+	damage 2
+	painchance 224
+	missiletype "Fleshspawnball"
+	bloodcolor "red"
+	attacksound "flesh/melee"
+	seesound "flesh/sight"
+	painsound "flesh/pain"
+	deathsound "flesh/death"
+	activesound "flesh/active"
+	MONSTER
+	+FLOAT
+	+NOGRAVITY
+	+DONTHURTSPECIES
+	+NOINFIGHTING
+	+NOTARGET
+	States
+	{
+		Spawn:
+			FLSP AB 8 A_Look
+			loop
+		See:
+			FLSP AABB 2 A_Chase
+			loop
+		Missile:
+			FLSP C 0 A_Jump(128,"Charge")
+			goto See
+		Charge:
+			FLSP C 0 A_Jump(96, 6)
+			FLSP C 8 A_FaceTarget
+			FLSP D 4 A_FaceTarget    
+			FLSP E 4 A_SkullAttack
+			FLSP FE 4
+			Goto Charge+4
+			FLSP C 8 A_FaceTarget
+			FLSP D 4 A_FaceTarget    
+			FLSP E 4 A_SkullAttack
+			FLSP FEFE 4
+			FLSP C 6 A_FaceTarget
+			FLSP D 4 A_FaceTarget    
+			FLSP E 4 A_SkullAttack
+			FLSP FE 4
+			Goto Charge+4
+		Pain:
+			FLSP I 3 
+			FLSP I 3 A_Pain
+			Goto See
+		Death:
+			FLSP I 5
+			FLSP J 5 A_Scream
+			FLSP K 5
+			FLSP L 5 A_NoBlocking
+			FLSP MN 5 A_SetFloorClip
+			FLSP O -1 
+			Stop
+		XDeath:
+			FLSP P 3 
+			FLSP Q 0 A_FaceTarget
+			FLSP Q 0 A_SpawnItemEx("FleshSpawnGibs", 0, 0, 0, 0, 0, 0, 0, 128)
+			FLSP Q 0 A_CustomMissile("Fleshspawngib1", 14, 0, random(-180,180), 2, random(10,40))
+			FLSP Q 0 A_CustomMissile("Fleshspawngib2", 6, 2, random(-180,180), 2, random(0,25))
+			FLSP Q 0 A_CustomMissile("Fleshspawngib2B", 10, -2, random(-180,180), 2, random(0,25))
+			FLSP Q 0 A_CustomMissile("Fleshspawngib3", 8, 0, random(-180,180), 2, random(0,35))
+			FLSP Q 0 A_CustomMissile("Fleshspawngib4", 12, 5, random(-180,180), 2, random(-5,40))
+			FLSP Q 0 A_CustomMissile("Fleshspawngib4B", 5, -5, random(-180,180), 2, random(0,30))
+			FLSP Q 0 A_CustomMissile("Fleshspawngib5", 6, 3, random(-180,180), 2, random(10,60))
+			FLSP Q 0 A_CustomMissile("Fleshspawngib5", 8, 0, random(-180,180), 2, random(-10,55))
+			FLSP Q 0 A_CustomMissile("Fleshspawngib6", 12, 0, 0, 2, 0)
+			FLSP Q 3 A_XScream
+			FLSP R 3 A_NoBlocking  
+			FLSP STU 3
+			Stop
+		Raise:
+			FLSP O 5 A_UnSetFloorClip
+			FLSP NMLKJI 5
+			Goto See
+	}
+}
+
+Actor FleshSpawnGibs
+{
+	+NoClip
+	States
+	{
+		Spawn:
+			TNT1 A 0
+			TNT1 A 0 A_CustomMissile("Fleshspawngib1", 14, 0, random(-180,180), 2, random(10,40))
+			TNT1 A 0 A_CustomMissile("Fleshspawngib2", 6, 2, random(-180,180), 2, random(0,25))
+			TNT1 A 0 A_CustomMissile("Fleshspawngib2B", 10, -2, random(-180,180), 2, random(0,25))
+			TNT1 A 0 A_CustomMissile("Fleshspawngib3", 8, 0, random(-180,180), 2, random(0,35))
+			TNT1 A 0 A_CustomMissile("Fleshspawngib4", 12, 5, random(-180,180), 2, random(-5,40))
+			TNT1 A 0 A_CustomMissile("Fleshspawngib4B", 5, -5, random(-180,180), 2, random(0,30))
+			TNT1 A 0 A_CustomMissile("Fleshspawngib5", 6, 3, random(-180,180), 2, random(10,60))
+			TNT1 A 0 A_CustomMissile("Fleshspawngib5", 8, 0, random(-180,180), 2, random(-10,55))
+			TNT1 A 0 A_CustomMissile("Fleshspawngib6", 12, 0, 0, 2, 0)
+			Stop
+	}
+}
+
+Actor Fleshspawngib1
+{
+	Speed 8
+	Mass 100
+	Radius 1
+	Height 1
+	Projectile
+	-NOGRAVITY
+	+DROPOFF
+	States
+	{
+		Spawn:
+			FGB1 ABCD 4 
+			loop
+		Death:
+			FGB1 E -1
+			stop      
+	}
+}
+
+Actor Fleshspawngib2 : Fleshspawngib1
+{
+	Speed 8
+	Mass 100
+	Radius 1
+	Height 1
+	Projectile
+	-NoGravity
+	+DropOff
+	+ClientSideOnly
+	States
+	{
+		Spawn:
+			FGB2 ABCD 4 
+			loop
+		Death:
+			FGB2 I -1
+			stop
+	}
+}
+
+Actor Fleshspawngib2B : Fleshspawngib1
+{
+	+ClientSideOnly
+	States
+	{
+		Spawn:
+			FGB2 EFGH 4 
+			loop
+		Death:
+			FGB2 J -1
+			stop      
+	}
+}
+
+Actor Fleshspawngib3 : Fleshspawngib1
+{
+	+ClientSideOnly
+	States
+	{
+		Spawn:
+			FGB3 ABCD 4 
+			loop
+		Death:
+			FGB3 E -1
+			stop      
+	}
+}
+
+Actor Fleshspawngib4 : Fleshspawngib1
+{
+	+ClientSideOnly
+	States
+	{
+		Spawn:
+			FGB4 ABCD 4 
+			loop
+		Death:
+			FGB4 I -1
+			stop      
+	}
+}
+
+Actor Fleshspawngib4B : Fleshspawngib1
+{
+	+ClientSideOnly
+	States
+	{
+		Spawn:
+			FGB4 EFGH 4 
+			loop
+		Death:
+			FGB4 J -1
+			stop      
+	}
+}
+
+Actor Fleshspawngib5 : Fleshspawngib1
+{
+	+ClientSideOnly
+	States
+	{
+		Spawn:
+			FGB5 ABCD 4 
+			loop
+		Death:
+			FGB5 E -1
+			stop      
+	}
+}
+
+Actor Fleshspawngib6 : Fleshspawngib1
+{
+	+ClientSideOnly
+	Speed 0
+	States
+	{
+		Spawn:
+			FGB6 A 4 
+			loop
+		Death:
+			FGB6 BC 4
+			FGB6 D -1
+			stop      
+	}
+}
+
+ACTOR KDiZDNightmare 26000
+{
+	//$Category SEMonsters
+	Health 60
+	Radius 20
+	Height 56
+	Speed 15
+	PainChance 144
+	MONSTER 
+	+FLOORCLIP
+	+STEALTH
+	RenderStyle Add
+	Alpha 0.4
+	SeeSound "nightmare/sight"
+	PainSound "nightmare/pain"
+	DeathSound "nightmare/death"
+	ActiveSound "nightmare/active"
+	MeleeSound "nightmare/melee"
+	HitObituary "%o was tormented by a nightmare."
+	MeleeDamage 4
+	States
+	{
+		Spawn:
+			NMRE AB 10 A_Look
+			Loop
+		See:
+			NMRE AABBCCDD 3 A_Chase
+			NMRE D 0 A_Jump(32,1)
+			Loop
+			NMRE D 0 A_SpawnItemEx("NightmareWisp",0,0,0,0,0,0,0,128) 
+			Loop
+		Melee:
+			NMRE EF 9 A_FaceTarget
+			NMRE G 9 A_MeleeAttack
+			Goto See
+		Pain:
+			NMRE H 10 A_Pain
+			Goto See
+		Death:
+			NMRE I 3 A_ScreamAndUnblock
+			NMRE JKLMNO 3 
+			Stop
+	}
+}
+
+ACTOR NightmareWisp
+{
+	Radius 4
+	Height 8
+	Speed 0
+	Damage 0
+	RenderStyle ADD
+	Alpha 0.4
+	PROJECTILE
+	+NOCLIP
+	States
+	{
+		Spawn:
+			NMRE IJKLMNO 3
+			Stop
+	}
+}
+
+/*
+Actor HellWarrior 3119
+{
+	//$Category SEMonsters
+	Health 200
+	Speed 14
+	Radius 24
+	Height 64
+	PainChance 50
+	Mass 1000
+	Meleedamage 8
+	SeeSound "baron/sight"
+	PainSound "baron/pain"
+	DeathSound "baron/death"
+	ActiveSound "baron/active"
+	MeleeSound "baron/melee"
+	ReactionTime 8
+	Monster
+	+FloorClip
+	Missiletype HellWarriorBall
+	Obituary "%o was blasted by a nemian lion."
+	HitObituary "%o was mauled by a nemian lion."
+	States
+	{
+		Spawn:
+			HWAR AB 10 A_Look
+			Loop
+		See:
+			HWAR A 0 A_UnSetInvulnerable
+			HWAR AABBCCDD 3 A_Chase
+			Loop
+		Missile:
+			HWAR E 0 A_Jump(128, 4)
+			HWAR EF 8 A_FaceTarget
+			HWAR G 8 A_ComboAttack
+			Goto See
+			HWAR H 0 A_Jump(128, 6)
+			HWAR H 0 A_SetInvulnerable
+			HWAR H 6 A_FaceTarget
+			HWAR I 4 Bright A_Custommissile("HellWarriorBall2", 25, 0, 0)
+			HWAR H 6 A_FaceTarget
+			HWAR H 0 A_UnSetInvulnerable
+			Goto See
+			HWAR H 0 A_SetInvulnerable
+			HWAR H 6 A_FaceTarget
+			HWAR I 4 Bright A_Custommissile("HellWarriorBall2", 25, 0, 0)
+			HWAR H 16 A_SpidRefire
+			HWAR I 4 Bright A_Custommissile("HellWarriorBall2", 25, 0, 0)
+			HWAR H 6 A_FaceTarget
+			HWAR H 0 A_UnSetInvulnerable
+			Goto See  
+		Melee: 
+			HWAR EF 8 A_FaceTarget 
+			HWAR G 8 A_ComboAttack 
+			Goto See 
+		Pain:
+			HWAR J 6 A_Pain 
+			HWAR H 0 A_SetInvulnerable
+			HWAR HHHHHHH 6 A_FaceTarget 
+			HWAR H 0 A_UnSetInvulnerable
+			Goto See 
+		Death: 
+			HWAE K 0 A_FaceTarget
+			HWAR K 5 A_SpawnItemEx("HellWarriorShield", 0, 0, 25, 6, 0, 0, 60, 128)
+			HWAR L 5 A_Scream
+			HWAR M 5
+			HWAR N 5 A_NoBlocking 
+			HWAR OPQRS 5  
+			HWAR T -1 
+			Stop 
+		Raise: 
+			HWAR QPONMLK 5 
+			Goto See 
+	} 
+}
+
+Actor HellWarriorBall
+{
+	Radius 6
+	Height 8
+	Speed 14
+	Damage 8
+	Projectile
+	RenderStyle Add
+	Alpha 0.7
+	SeeSound "imp/attack"
+	DeathSound "imp/shotx"
+	Decal BaronScorch
+	States
+	{
+		Spawn:
+			HWFB AB 5 Bright
+			Loop
+		Death:
+			HWFB CDE 5 Bright
+			Stop
+	}
+}
+
+Actor HellWarriorBall2
+{
+	Radius 6
+	Height 8
+	Speed 8
+	Damage 2
+	Projectile
+	RenderStyle Add
+	+Randomize
+	+Ripper
+	Alpha 0.8
+	Scale 0.4
+	SeeSound "imp/attack"
+	DeathSound "imp/shotx"
+	States
+	{
+		Spawn:
+			GRBA ABCDEFGH 2 Bright
+			Loop
+		Death:
+			GRBA AIJKLMN 3 Bright
+			Stop
+	}
+}
+
+Actor HellWarriorShield
+{
+	Radius 8
+	Height 8
+	Speed 6
+	+DoomBounce
+	+DropOff
+	+Missile
+	States
+	{
+		Spawn:
+			HWSH ABCDEFGH 3
+			Loop
+		Death:
+			HWSH I -1
+			Loop
+	}
+}
+*/
+
+ACTOR GlaakiSpawn 3118
+{
+	//$Category SEMonsters
+	Health 150
+	Speed 5
+	Radius 16
+	Height 29
+	Mass 400
+	Monster
+	+FLOORCLIP +LOOKALLAROUND +NOTARGET
+	SeeSound "slgmsee"
+	DeathSound "slgmdie"
+	Obituary "%o was eaten by the spawn of Glaaki."
+	States
+	{
+		Spawn:
+			SLGM A 0 A_Look
+			NULL A 0 A_UnsetShootable
+			NULL A 1 A_Look
+			Goto Spawn+1
+		See:
+			NULL A 0 A_ChangeFlag("NOTARGET",0)
+			NULL A 0 A_JumpIfInventory("RiseCheck",1,"Walk")
+			NULL A 0 A_GiveInventory("RiseCheck",1)
+			NULL A 0 A_SetShootable
+			SLGM ABCDEFGHHHVWXY 4
+			Loop
+		Walk:
+			NULL A 0 A_UnsetShootable
+			NULL A 0 A_ChangeFlag("NOTARGET",1)
+			NULL AA 2 A_Chase
+			NULL A 0 A_Jump(8,"PeekUp")
+			Loop
+		PeekUp:
+			NULL A 0 A_ChangeFlag("NOTARGET",0)
+			NULL A 0 A_SetShootable
+			SLGM ABCDEFG 4
+			SLGM HZ 5
+			SLGM "\" 5
+			SLGM ZH 5
+			SLGM VWXY 4
+			Goto Walk
+		Melee:
+			NULL A 0 A_ChangeFlag("NOTARGET",0)
+			NULL A 0 A_SetShootable
+			SLGM IJKLMN 4
+			SLGM O 6 A_CustomMeleeAttack (20, "slgmbite", "slgmbite", Normal, 1)
+			SLGM NMLKJI 4
+			Goto Walk
+		Death:
+			SLGM VWXY 5
+			NULL A 5
+			NULL AAAA 0 A_Wander
+			SLGM P 5 A_Scream
+			SLGM QRST 5
+			SLGM U 5 A_NoBlocking
+			SLGM U -1
+			Stop
+		Raise:
+			SLGW N 5
+			SLGW MLKJI 5
+			Goto See
+	}
+}
+
+actor RiseCheck : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
+/*
+//Monster-Death Incarnate
+ACTOR Incarnate 30115
+{
+	//$Title "Death Incarnate"
+	//$Category SEMonsters
+	Health 150
+	GibHealth 8
+	Radius 20
+	Height 56
+	Mass 500
+	Speed 12
+	MeleeDamage 7
+	PainChance 64
+	MONSTER
+	Damagefactor IncarnateShot, 0
+	// [MagicWazard] Note to modders: adding a GibHealth value of 50 - 100 will make
+	// it easier to trigger his Hades Sphere-spawning XDeath sequence
+	+FLOORCLIP
+	-COUNTKILL
+	Obituary "%o was killed by a Death Incarnate's glare."
+	HitObituary "%o was beaten to death by a Death Incarnate."
+	SeeSound "monster/incsit"
+	PainSound "skeleton/pain"
+	DeathSound "monster/incdth"
+	ActiveSound "monster/incact"
+	AttackSound "monster/incatk"
+	MeleeSound "monster/inchit"
+	States
+	{
+		Spawn:
+			INCA AB 10 A_Look
+			Loop
+		See:
+			INCA AABBCCDDEEFF 2 A_Chase
+			Loop
+		Melee:
+			INCA G 0 A_Jump(128,5)
+			INCA G 0 A_FaceTarget
+			INCA G 6 A_SkelWhoosh
+			INCA H 6 A_FaceTarget
+			INCA I 6 A_MeleeAttack
+			Goto See
+			INCA R 0 A_FaceTarget
+			INCA R 5 A_SkelWhoosh
+			INCA S 5 A_FaceTarget
+			INCA T 5 A_MeleeAttack
+			INCA G 0 A_FaceTarget
+			INCA G 5 A_SkelWhoosh
+			INCA H 5 A_FaceTarget
+			INCA I 5 A_MeleeAttack
+			Goto See
+		Missile:
+			INCA J 5 A_FaceTarget
+			INCA J 5
+			INCA U 10 bright A_custommissile("magicblast",90,0,0)
+			INCA K 10
+			Goto See
+		Pain:
+			INCA L 5
+			INCA L 5 A_Pain
+			Goto See
+		Death:
+			INCA LM 7
+			INCA N 7 A_Scream
+			INCA O 7 A_NoBlocking
+			INCA P 7
+			INCA Q 0 A_Jump(192,4)
+			INCA Q 0 A_Jump(128,4)
+			INCA Q 0 A_Jump(96,4)
+			INCA Q 0 A_Jump(64,4)
+			INCA Q 115
+			INCA Q 115
+			INCA Q 115
+			INCA Q 115
+			INCA Q 115
+			INCA Q -1 Thing_Raise(0)
+			Stop
+		XDeath:
+			INCX A 10 Bright A_Playsound("monster/incexp")
+			INCX BC 5 Bright
+			INCX D 5 Bright A_NoBlocking
+			INCX D 0 Bright A_SpawnItem("HS",0,32)
+			INCX EFGHIJ 5 Bright
+			INCX K -1
+		Raise:
+			INCA Q 0 A_KillChildren
+			INCA QPONML 5
+			Goto See
+	}
+}
+
+
+//new visible puff
+ACTOR DIPuff
+{
+	+NOBLOCKMAP
+	+NOGRAVITY
+	+RANDOMIZE
+	+PUFFONACTORS
+	RENDERSTYLE Add
+	DamageType IncarnateShot
+	States
+	{
+		Spawn:
+			INPF ABCDE 3 Bright
+			Stop
+	}
+}
+*/
+
+//old invisible puff
+/*ACTOR DIPuff
+{
+	Radius 0
+	Height 1
+	Speed 0
+	PROJECTILE
+	RENDERSTYLE NONE
+	DamageType IncarnateShot
+	States
+	{
+		Spawn:
+			TNT1 A 2 Bright
+			Stop
+	}
+}*/
+//End of Incarnate
+
+/*
+//Hades Sphere
+ACTOR HS 30116
+{
+	//$Title "Hades Sphere"
+	//$Category SEMonsters
+	Health 35
+	Radius 24
+	Height 48
+	Mass 3000
+	Speed 10
+	Obituary "%o was blown away by a Hades Sphere."
+	Monster
+	SeeSound "monster/hadsit"
+	DeathSound "monster/hadexp"
+	+LOOKALLAROUND
+	+DONTGIB
+	+NOTARGET
+	+NOGRAVITY
+	+FLOAT
+	+DONTFALL
+	//+DONTHARMCLASS // [MagicWazard] See "notes" below
+	States
+	{
+		Spawn:
+			TNT1 A 1 Bright A_Look
+			Loop
+		See:
+			HADE EFGH 4 Bright
+		SeeLoop:
+			HADE A 2 Bright A_Playsound("monster/hadwlk")
+			HADE ABBCCDD 2 Bright A_GiveInventory("HS_SpecialChase", 1) // [Blue Shadow] Conditional A_Chase
+			TNT1 A 0 A_CheckFlag("SKULLFLY", "SeeLoop") // [Blue Shadow] Don't bother trying to teleport out while "skull-flying"
+			TNT1 A 0 A_Jump(32, "TeleportOut")
+			Loop
+		TeleportOut:
+			TNT1 A 0 A_UnSetSolid
+			TNT1 A 0 A_UnSetShootable
+			HADE H 5 Bright A_Playsound("monster/hadtel")
+			HADE GFEIJKL 4 Bright
+		SeeTeleport:
+			TNT1 AAAAAAAA 2 A_Chase(0)
+			TNT1 A 0 A_Jump(96, "TeleportIn")
+			Loop
+		TeleportIn:
+			HADE L 3 Bright A_Playsound("monster/hadtel")
+			HADE KJIEFG 4 Bright
+			TNT1 A 0 A_SetShootable
+			TNT1 A 0 A_SetSolid
+			Goto SeeLoop
+		Melee:
+			TNT1 A 0 A_SetInvulnerable
+			HADE HGFE 4 Bright
+			TNT1 A 0 A_UnSetInvulnerable
+			TNT1 A 0 A_SetShootable
+			TNT1 A 0 A_Die
+			Stop
+		Death:
+			TNT1 A 0 A_NoBlocking
+			TNT1 A 0 A_SetTranslucent(0.9, 1)
+			TNT1 A 0 A_Scream
+			HADE M 4 Bright A_Explode(112, 112, XF_NOTMISSILE)
+			HADE NOPQ 5 Bright
+			Stop
+		XDeath:
+			TNT1 A 0 A_Noblocking
+			HADE H 5 Bright A_PlaySound("monster/haddth")
+			HADE GFE 4 Bright
+			HADE RSTUVWX 4 Bright
+			Stop
+		Death.Ice:
+			"####" "#" 0 A_ChangeFlag("NOGRAVITY", FALSE)
+			Goto GenericFreezeDeath
+	}
+}
+*/
+
+// [MagicWazard] NOTES: +DONTHARMCLASS was originally enabled, but HS were still
+// able to damage each other with self-destructs due to way the self-destruct
+// was coded. Now that the self-destruct code has been changed, they are
+// invulnerable to each others' explosions if that flag is enabled. Keep
+// +DONTHARMCLASS disabled if you want the HS to be vunlerable to each others'
+// explosions! Remove the comments and enable the flag if you want the HS to be
+// immune to other HS' self-destruct damage.
+
+
+// [Blue Shadow] Depending on whether or not the Hades Sphere is currently flying
+// (due to A_SkullAttack), choose the appropriate "chase mode".
+ACTOR HS_SpecialChase : CustomInventory
+{
+	States
+	{
+		Pickup:
+			TNT1 A 0 A_CheckFlag("SKULLFLY", "ThrustChase")
+			TNT1 A 0 A_Chase
+			Stop
+		ThrustChase:
+			TNT1 A 0 A_Chase("", "")
+			Stop
+	}
+}
+//End of Hades Sphere
+
+// Flayworm, based on Slimeworm by Captain toenail//
+
+actor SlimeWorm 31994
+{
+	//$Category SEMonsters
+	obituary "%o was devoured by a flayworm."
+	health 120
+	painchance 90
+	speed 10
+	radius 20
+	height 56
+	mass 100
+	seesound "slimeworm/sight"
+	attacksound "slimeworm/melee"
+	painsound "slimeworm/pain"
+	deathsound "slimeworm/death"
+	activesound "slimeworm/active"
+	bloodcolor yellow
+	MONSTER
+	+FLOORCLIP
+	states
+	{
+		Spawn:
+			WORM AB 10 A_Look
+			loop
+		See:
+			WORM AABBCCDD 2 Fast A_Chase
+			loop
+		Melee:
+			WORM EF 6 A_FaceTarget
+			WORM G 6 A_SargAttack
+			goto See
+		Pain:
+			WORM H 2
+			WORM H 2 A_Pain
+			goto See
+		Death:
+			WORM I 8
+			WORM J 8 A_Scream
+			WORM K 4
+			WORM L 4 A_NoBlocking
+			WORM M 4
+			WORM N -1
+			stop
+		Raise:
+			WORM NMLKJI 5
+			goto See
+	}
+}
+
+actor SlimeBall1 : DoomImpBall
+{
+		radius 4
+		height 4
+		speed 14
+		damage 4
+		poisondamage 15
+		seesound none
+		deathsound "slimeball/splat"
+		scale 0.5
+		-NOGRAVITY
+		Decal PlasmaScorchLower
+		states
+		{
+		Spawn:
+			BOGY ABC 2 bright
+			loop
+		Death:
+			BOGY D 0 bright A_NoGravity
+			BOGY DEF 4 bright
+			stop
+	}
+}
+
+actor SlimeBall2 : SlimeBall1
+{
+	speed 16
+}
+
+actor SlimeBall3 : SlimeBall1
+{
+	speed 18
+}
+
+actor SlimeBall4 : SlimeBall1
+{
+	speed 20
+}
+
+actor SlimeBall5 : SlimeBall1
+{
+	speed 22
+}
+
+Actor DemonWizard 31997
+{
+	//$Category SEMonsters
+	Health 220
+	Radius 22
+	Height 60
+	Speed 12
+	PainChance 64
+	Monster
+	+FLOAT
+	+NOGRAVITY
+	SeeSound "DWizard/See"
+	PainSound "DWizard/Pain"
+	DeathSound "DWizard/Death"
+	ActiveSound "DWizard/Active"
+	Obituary "%o couldn't grasp the power of the Demon Wizard."
+	States
+	{
+		Spawn:
+			WDEM A 10 A_Look
+			Loop
+		See:
+			WDEM AAA 3 A_Chase
+			Loop
+		Missile:
+			WDEM B 4 A_FaceTarget
+			WDEM C 4 Bright A_FaceTarget
+			TNT1 A 0 A_CustomMissile("WDemonProj",46,8,-3,0,0)
+			WDEM D 3 Bright A_CustomMissile("WDemonProj2",46,-8,3,0,0)
+			WDEM D 3 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("WDemonProj",46,8,-3,0,0)
+			WDEM D 3 Bright A_CustomMissile("WDemonProj2",46,-8,3,0,0)
+			WDEM D 3 A_FaceTarget
+			TNT1 A 0 A_CustomMissile("WDemonProj",46,8,-3,0,0)
+			WDEM D 3 Bright A_CustomMissile("WDemonProj2",46,-8,3,0,0)
+			WDEM D 3 A_FaceTarget
+			Goto See
+		Pain:
+			WDEM E 5 A_Pain
+			Goto See
+		Death:
+			WDEM F 6 Bright A_Scream
+			WDEM G 5 Bright A_NoBlocking
+			WDEM H 5 Bright
+			WDEM I 5 Bright
+			WDEM JK 4 Bright
+			WDEM L 4 A_SpawnItemEx("BishopPuff",0,0,40,0,0,0.5)
+			WDEM M 4 A_QueueCorpse
+			WDEM N -1
+			Stop
+	}
+}
+
+Actor WDemonProj
+{
+	Radius 10
+	Height 6
+	Speed 10
+	Damage 2
+	Projectile
+	RenderStyle Translucent
+	Alpha 0.8
+	SeeSound "WDProj/Fire"
+	DeathSound "WDProj/Xplode"
+	Decal WizardScorch
+	States
+	{
+		Spawn:
+			WBOL AABBCCDD 1 Bright A_Weave(3,0,1.0,0.0)
+			Loop
+		Death:
+			WBOL EFG 4 Bright
+			Stop
+	}
+}
+
+Actor WDemonProj2 : WDemonProj
+{
+	States
+	{
+		Spawn:
+			WBOL AABBCCDD 1 Bright A_Weave(-3,0,1.0,0.0)
+			Loop
+		Death:
+			WBOL EFG 4 Bright
+			Stop
+	}
+}
+
+ACTOR ShadowBeast replaces BaronOfHell 30123
+{
+	//$Category SEMonsters
+	OBITUARY "%o was killed by a shadow beast."
+	Bloodcolor "70 AC 00"
+	Health 1000
+	Radius 40
+	Height 80
+	Mass 500
+	Speed 12
+	PainChance 144
+	SEESOUND "shadowbeast/sight"
+	PAINSOUND "shadowbeast/pain"
+	DEATHSOUND "shadowbeast/death"
+	ACTIVESOUND "shadowbeast/active"
+	MONSTER
+	+FloorClip
+	states
+	{
+		Spawn:
+			BDEM AB 10 A_Look
+			Loop
+		See:
+			TNT1 A 0 A_JumpIfHealthLower (250, "Run") 
+			BDEM ABCDEF 6 A_Chase
+			Loop
+		Run:
+			TNT1 A 0 A_PlaySound("shadowbeast/sight")
+			BDEM AABBCCDDEEFF 2 A_Chase(0,0)
+			BDEM AABBCCDDEEFF 2 A_Chase(0,0)
+			BDEM AABBCCDDEEFF 2 A_Chase(0,0)
+			Goto Missile
+		Missile:
+			TNT1 A 0 A_JumpIfHealthLower (250, "Missile2") 
+			TNT1 A 0 A_Jump(90, 5)
+			BDEM H 6 A_FaceTarget
+			BDEM I 0 A_CustomMissile ("ShadowBeast_Ball1", 56, 0, -8)
+			BDEM I 6 A_CustomMissile ("ShadowBeast_Ball1", 56, 0, 8)
+			BDEM I 0 A_CustomMissile ("ShadowBeast_Ball1", 56, 0, 0)
+			Goto See
+			BDEM H 4 A_FaceTarget
+			BDEM I 4 A_CustomMissile ("ShadowBeast_Ball2", 56, 0, -16)
+			BDEM I 0 A_FaceTarget
+			BDEM I 4 A_CustomMissile ("ShadowBeast_Ball2", 56, 0, -8)
+			BDEM I 0 A_FaceTarget
+			BDEM I 4 A_CustomMissile ("ShadowBeast_Ball2", 56, 0, 0)
+			BDEM I 0 A_FaceTarget
+			BDEM I 4 A_CustomMissile ("ShadowBeast_Ball2", 56, 0, 8)
+			BDEM I 0 A_FaceTarget
+			BDEM I 4 A_CustomMissile ("ShadowBeast_Ball2", 56, 0, 16)
+			BDEM I 0 A_FaceTarget
+			BDEM I 4 A_CustomMissile ("ShadowBeast_Ball2", 56, 0, 32)
+			Goto See
+		Missile2:
+			TNT1 A 0 A_Jump(90, 15)
+			BDEM H 6 A_FaceTarget
+			BDEM I 2 A_CustomMissile ("ShadowBeast_BallFire", 56, 0, random(-8,8))
+			BDEM I 2 A_CustomMissile ("ShadowBeast_BallFire", 56, 0, random(-8,8))
+			BDEM I 2 A_CustomMissile ("ShadowBeast_BallFire", 56, 0, random(-8,8))
+			BDEM I 2 A_CustomMissile ("ShadowBeast_BallFire", 56, 0, random(-8,8))
+			BDEM I 2 A_CustomMissile ("ShadowBeast_BallFire", 56, 0, random(-8,8))
+			BDEM I 2 A_CustomMissile ("ShadowBeast_BallFire", 56, 0, random(-8,8))
+			BDEM I 2 A_CustomMissile ("ShadowBeast_BallFire", 56, 0, random(-8,8))
+			BDEM I 2 A_CustomMissile ("ShadowBeast_BallFire", 56, 0, random(-8,8))
+			BDEM I 2 A_CustomMissile ("ShadowBeast_BallFire", 56, 0, random(-8,8))
+			BDEM I 2 A_CustomMissile ("ShadowBeast_BallFire", 56, 0, random(-8,8))
+			BDEM I 2 A_CustomMissile ("ShadowBeast_BallFire", 56, 0, random(-8,8))
+			BDEM I 2 A_CustomMissile ("ShadowBeast_BallFire", 56, 0, random(-8,8))
+			BDEM I 2 A_CustomMissile ("ShadowBeast_BallFire", 56, 0, random(-8,8))
+			Goto See
+			BDEM H 16 A_FaceTarget
+			BDEM I 0 A_CustomMissile ("ShadowBeast_Ball3", 56, 0, -64)
+			BDEM I 0 A_CustomMissile ("ShadowBeast_Ball3", 56, 0, 64)
+			BDEM I 0 A_CustomMissile ("ShadowBeast_Ball3", 56, 0, -56)
+			BDEM I 0 A_CustomMissile ("ShadowBeast_Ball3", 56, 0, 56)
+			BDEM I 0 A_CustomMissile ("ShadowBeast_Ball3", 56, 0, -48)
+			BDEM I 0 A_CustomMissile ("ShadowBeast_Ball3", 56, 0, 48)    
+			BDEM I 0 A_CustomMissile ("ShadowBeast_Ball3", 56, 0, -40)
+			BDEM I 0 A_CustomMissile ("ShadowBeast_Ball3", 56, 0, 40)    
+			BDEM I 0 A_CustomMissile ("ShadowBeast_Ball3", 56, 0, -32)
+			BDEM I 0 A_CustomMissile ("ShadowBeast_Ball3", 56, 0, 32)
+			BDEM I 0 A_CustomMissile ("ShadowBeast_Ball3", 56, 0, -24)
+			BDEM I 0 A_CustomMissile ("ShadowBeast_Ball3", 56, 0, 24)
+			BDEM I 0 A_CustomMissile ("ShadowBeast_Ball3", 56, 0, -16)
+			BDEM I 0 A_CustomMissile ("ShadowBeast_Ball3", 56, 0, 16)    
+			BDEM I 0 A_CustomMissile ("ShadowBeast_Ball3", 56, 0, -8)
+			BDEM I 0 A_CustomMissile ("ShadowBeast_Ball3", 56, 0, 8)    
+			BDEM I 6 A_CustomMissile ("ShadowBeast_Ball3", 56, 0, 0)
+			Goto See
+		Pain:
+			TNT1 A 0 A_Jump (16, "Spread")
+			BDEM G 4 A_Pain
+			Goto See
+		Death:
+			BDEM R 8
+			BDEM S 8 A_Scream
+			BDEM TUVWX 6
+			BDEM Y 6 A_NoBlocking
+			BDEM Z -1 A_BossDeath
+			Stop
+		Spread:
+			TNT1 A 0 A_SpawnItemEx ("ShadowBeast_Spread", 0, 0, 0, 0, 0, 0, 0, 128)
+			TNT1 AAAAAAAAAAAAA 0 A_SpawnItemEx ("ShadowBeast_Sparkle", random(0,16), random(0,16), random(16,48), 0, 0, 0, random(0,359), 128)
+			TNT1 AAAAA 0 A_SpawnItemEx ("ShadowBeast_Creature", 0, 0, random(16,48), random(0,8), random(0,8), random(0,8), random(0,359), 0)
+			TNT1 A 0 A_SetTranslucent (0.0)
+			Goto Wander
+		Wander:
+			TNT1 A 0 A_UnSetShootable
+			TNT1 A 0 A_ChangeFlag("NoPain", 1)
+			TNT1 A 0 A_Jump(60, 5)
+			TNT1 A 0 A_Jump(60, 15)
+			TNT1 A 0 A_Jump(60, 25)
+			TNT1 A 0 A_Jump(60, 35)
+			TNT1 A 0 A_Jump(60, 45)
+			TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 2 A_Wander
+			BDEM A 3 A_Wander
+			BDEM A 0 A_SetTranslucent (0.2)
+			BDEM B 3 A_Wander
+			BDEM A 0 A_SetTranslucent (0.4)
+			BDEM C 3 A_Wander
+			BDEM A 0 A_SetTranslucent (0.6)
+			BDEM D 3 A_Wander
+			BDEM A 0 A_SetTranslucent (0.75)
+			BDEM E 3 A_Wander
+			BDEM A 0 A_SetTranslucent (0.8)
+			BDEM F 3 A_Wander
+			BDEM A 0 A_SetTranslucent (1.0)
+			TNT1 A 0 A_SetShootable
+			TNT1 A 0 A_ChangeFlag("NoPain", 0)
+			Goto See
+	}
+}
+
+ACTOR ShadowBeast_Spread
+{   
+	Radius 1
+	Height 1
+	Damage 0
+	Speed 0
+	PROJECTILE
+	states
+	{
+		Spawn:
+			TNT1 A 0
+			TNT1 A 0 A_PlaySound ("shadowbeast/spread")
+			BDEM JKLMNOP 8
+			BDEM Q 70 
+			BDEM QQQQQQQQQQ 1 A_FadeOut(0.1)
+			stop
+	}
+}
+
+ACTOR ShadowBeast_Creature
+{
+	Alpha 1.0
+	Renderstyle Add
+	Speed 16
+	MONSTER
+	-SOLID
+	-SHOOTABLE
+	-COUNTKILL
+	+FLOAT
+	+NOGRAVITY
+	states
+	{
+		Spawn:
+			TNT1 A 0
+			TNT1 A 0 A_Playsound("shadowbeast/spiritsit")
+			Goto See
+		See:
+			TNT1 A 0 A_Jump(60, 5)
+			TNT1 A 0 A_Jump(60, 15)
+			TNT1 A 0 A_Jump(60, 25)
+			TNT1 A 0 A_Jump(60, 35)
+			TNT1 A 0 A_Jump(60, 45)
+			BDSP ABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABAB 2 A_Chase
+			Goto Death  
+		Melee:
+			BDSP AB 2 A_CustomMeleeAttack(5)
+			Goto See
+		Death:
+			TNT1 A 0 A_Playsound("shadowbeast/spiritdth")
+			BDSP EFGHIJ 5
+			Stop
+	}
+}
+
+ACTOR ShadowBeast_Sparkle
+{   
+	Alpha 1.0
+	Renderstyle Add
+	Radius 1
+	Height 1
+	Damage 0
+	Speed 0
+	PROJECTILE
+	Scale 1.0
+	states
+	{
+		Spawn:
+			TNT1 A 0
+			TNT1 A 0 A_Jump(128,4)
+			TNT1 A 0 A_Jump(128,2)
+			BDP1 GHI 5
+			stop
+	}
+}
+
+ACTOR ShadowBeast_BallFire
+{
+	Alpha 1.0  
+	Renderstyle Add
+	Speed 15
+	Radius 10
+	Height 6
+	Damage 1
+	DamageType Poison
+	Projectile
+	+SPAWNSOUNDSOURCE
+	+RIPPER
+	RenderStyle Add
+	SeeSound "shadowbeast/pr1death"
+	Decal MummyScorch
+	States
+	{
+		Spawn:
+			BDP2 DEFGH 5 Bright
+			Goto Death
+		Death:
+			TNT1 A 0
+			Stop
+	}
+}
+
+ACTOR ShadowBeast_Ball1
+{
+	Alpha 1.0  
+	Renderstyle Add
+	Speed 15
+	Radius 10
+	Height 6
+	Damage 5
+	DamageType Poison
+	Projectile
+	+SPAWNSOUNDSOURCE
+	RenderStyle Add
+	SeeSound "shadowbeast/pr1sight"
+	DeathSound "shadowbeast/pr1death"
+	States
+	{
+		Spawn:
+			BDP2 ABC 4 Bright
+			Loop
+		Death:
+			BDP2 DE 4 Bright
+			BDP2 FGH 3 Bright
+			Stop
+	}
+}
+
+ACTOR ShadowBeast_Ball2
+{
+	Alpha 1.0
+	Renderstyle Add
+	Radius 8
+	Height 6
+	Damage 2
+	Speed 16
+	PROJECTILE
+	+Randomize
+	SeeSound "shadowbeast/pr2sight"
+	DeathSound "shadowbeast/pr2death"
+	Decal PlasmaScorchLower
+	States
+	{
+		Spawn:
+			BDP1 D 1 A_BishopMissileWeave
+			BDP1 E 1 A_BishopMissileWeave
+			loop
+		Death:
+			BDP1 FGHI 3
+			Stop
+	}
+}
+
+ACTOR ShadowBeast_Ball3
+{
+	Alpha 1.0
+	Scale 1.4
+	Renderstyle Add
+	Radius 8
+	Height 6
+	Damage 10
+	Speed 20
+	PROJECTILE
+	+Randomize
+	SeeSound "shadowbeast/pr2sight"
+	DeathSound "shadowbeast/pr2death"
+	Decal PlasmaScorchLower
+	States
+	{
+		Spawn:
+			BDP1 DEDEDEDED 2 A_BishopMissileWeave
+			BDP1 ED 2 A_BishopMissileWeave
+			TNT1 A 0 A_FadeOut(0.20)
+			Goto Spawn+9
+		Death:
+			BDP1 FGHI 3
+			Stop
+	}
+}
+
+ACTOR BeamRevenant : Revenant 2112
+{
+	//$Category SEMonsters
+	seesound "beamrevenant/activate"
+	painsound "beamrevenant/pain"
+	deathsound "beamrevenant/death"
+	meleesound "beamrevenant/punch"
+	HitObituary "%o was punched by a Beam Revenant."
+	Obituary "%o got in the Beam Revenant's way."
+	States
+	{
+		Spawn:
+			RASK AB 10 A_Look
+			Loop
+		See:
+			RASK AAABBBCCCDDDEEEFFF 2 A_Chase
+			Loop
+		Melee:
+			RASK G 1 A_FaceTarget
+			RASK G 6 A_SkelWhoosh
+			RASK H 6 A_FaceTarget
+			RASK I 6 A_SkelFist
+			Goto See
+		Missile:
+			RASK J 1 Bright A_FaceTarget
+			RASK J 9 Bright A_FaceTarget
+			RASK K 10 A_CustomMissile("Revrailshot", 60, 0, random(-2,2),0)
+			RASK K 10 A_FaceTarget
+			Goto See
+		Pain:
+			RASK L 5
+			RASK L 5 A_Pain
+			Goto See
+		Death:
+			RASK LM 7
+			RASK N 7 A_Scream
+			RASK O 7 A_NoBlocking
+			RASK P 7
+			RASK Q -1
+			Stop
+		Raise:
+			RASK Q 5
+			RASK PONML 5
+			Goto See
+	}
+}
+
+ACTOR Revrailshot : FastProjectile
+{
+	radius 1
+	height 1
+	speed 100
+	damage (30)
+	renderstyle Add
+	decal RailScorchLower
+	seesound "weapons/railgf"
+	deathsound "weapons/railgf"
+	obituary "%o was shafted by a Beam Revenant."
+	PROJECTILE
+	+RANDOMIZE
+	+BLOODSPLATTER
+	+FOILINVUL
+	+DONTREFLECT
+	states
+	{
+		Spawn:
+			TNT1 A 1 bright A_SpawnItemEx("railtrail", 0, 0, 0,0,0,0,0,128)
+			loop
+		Death:
+			TNT1 A 2 bright A_SpawnItemEx("railpow", 0, 0, 0,0,0,0,0,128)
+			stop
+	}
+}
+
+ACTOR Railtrail
+{
+	Radius 2
+	Height 2
+	Speed 0
+	scale 0.5
+	PROJECTILE
+	+CLIENTSIDEONLY
+	+NOINTERACTION
+	States
+	{
+		Spawn:
+			APLS ABABAB 3 BRIGHT
+			Stop
+	}
+}
+
+ACTOR Railpow
+{
+	Radius 2
+	Height 2
+	Speed 0
+	Scale 0.5
+	PROJECTILE
+	+NOINTERACTION
+	+CLIENTSIDEONLY
+	States
+	{
+		Spawn:
+			APBX ABCDE 5 bright
+			Stop
+	}
+}
+
+/*
+ACTOR Spiderbaby 3125
+{
+	//$Category SEMonsters
+	Health 300
+	Radius 22
+	Height 64
+	Mass 300
+	Speed 10
+	PainChance 50
+	Damage 30
+	Monster
+	+FLOORCLIP
+	SeeSound "baby/sight"
+	PainSound "baby/pain"
+	DeathSound "baby/death"
+	ActiveSound "baby/active"
+	Obituary "%o was splattered by a spiderbaby."
+	Decal RedRailScorch
+	DropItem "Cell"
+	States
+	{
+		Spawn:
+			RSPI AB 10 A_Look
+			Loop
+		See:
+			RSPI A 20
+			RSPI A 2 A_BabyMetal
+			RSPI ABBCC 2 A_Chase
+			RSPI D 2 A_BabyMetal
+			RSPI DEEFF 2 A_Chase
+			Goto See+1
+		Missile:
+			RSPI A 0 A_PlaySound ("baby/chargerailgun")
+			RSPI A 16 A_FaceTarget
+			RSPI G 16 A_FaceTarget
+			RSPI H 4 A_CustomMissile("Revrailshot", 32, 0, random(-4,4),0)
+			RSPI G 8
+			Goto See+1
+		Pain:
+			RSPI I 3
+			RSPI I 3 A_Pain
+			Goto See+1
+		Death:
+			RSPI J 20 A_Scream
+			RSPI K 7 A_Fall
+			RSPI LMNO 7
+			RSPI P -1
+			Stop
+			Raise:
+			RSPI P 5
+			RSPI ONMLKJ 5
+			Goto See+1
+	}
+}
+*/
+
+ACTOR Dhole replaces Cyberdemon 9494
+{
+	//$Category SEMonsters
+	Health 2000
+	Speed 25
+	Radius 50
+	Height 110
+	Mass 1000
+	scale 2.0
+	Monster
+	+FLOORCLIP +LOOKALLAROUND +NOTARGET +NORADIUSDMG
+	SeeSound "dholsee"
+	DeathSound "dholdie"
+	Obituary "%o was flattened by a dhole."
+	States
+	{
+		Spawn:
+			DHOL A 0 A_Look
+			NULL A 0 A_UnSetShootable
+			NULL A 1 A_Look
+			Goto Spawn+1
+		See:
+			NULL A 0 A_ChangeFlag("NOTARGET",0)
+			NULL A 0 A_JumpIfInventory("RiseCheck",1,"Walk")
+			NULL A 0 A_GiveInventory("RiseCheck",1)
+			NULL A 0 A_UnSetShootable
+			Loop
+		Walk:
+			NULL A 0 A_UnSetShootable
+			NULL A 0 A_ChangeFlag("NOTARGET",1)
+			NULL A 0 Radius_Quake(4,8,0,16,0)
+			NULL AA 2 A_Chase
+			Loop
+		Missile:
+			NULL A 0 A_ChangeFlag("NOTARGET",0)
+			NULL A 0 A_SetShootable
+			DHOL A 4 A_Explode
+			DHOL BCDEFGHIJ 4
+			DHOL K 2 A_CustomMeleeAttack (20, "dholbite", "dholbite", Normal, 1)
+			DHOL K 2 A_custommissile("Grellball", 80, 0, -8, 0)
+			DHOL K 2 A_custommissile("Grellball", 90, 0, 0, 0)
+			DHOL K 2 A_custommissile("Grellball", 80, 0, 8, 0)
+			DHOL MNIHGFEDCBA 4
+			Goto Walk
+		Melee:
+			NULL A 0 A_ChangeFlag("NOTARGET",0)
+			NULL A 0 A_SetShootable
+			DHOL A 4 A_Explode
+			DHOL BDCEFGHIJK 4
+			DHOL L 6 A_CustomMeleeAttack (20, "dholbite", "dholbite", Normal, 1)
+			DHOL MNIHGFEDCBA 4
+			Goto Walk
+		Death:
+			DHOL O 1 A_NoBlocking
+			DHOL OOOOOOOOOOOOOOOOOOOOOOO 5 Bright A_CustomMissile("DholeDeathExplosion",0+random(20,120),0,0+random(0,370),0)
+			DHOL O 1 A_Scream
+			DHOL O 1 A_BossDeath
+			NULL AAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile("DholeGibber",50,0,random(0,359))
+			NULL A 0 A_CustomMissile("DholeBigExplosion",0,0,0)
+			TNT1 A 0 Radius_Quake(8,40,0,35,0)
+			Stop
+	}
+}
+
+actor DholeGibber
+{
+	radius 20
+	height 20
+	+NOINTERACTION
+	states
+	{
+		Spawn:
+			NULL A 0 A_Gravity
+			NULL A 0
+			NULL A 0 A_PlaySound("darkinquisitor/gibbage")
+			NULL A 1 A_SpawnItemEx ("Fleshspawngib1", 0, 0, random(0,42), random(2,6), random(2,6), 0, random(0,360), 160)
+			NULL A 1 A_SpawnItemEx ("Fleshspawngib2", 0, 0, random(0,42), random(2,6), random(2,6), 0, random(0,360), 160)
+			NULL A 1 A_SpawnItemEx ("Fleshspawngib3", 0, 0, random(0,42), random(2,6), random(2,6), 0, random(0,360), 160)
+			NULL A 1 A_SpawnItemEx ("Fleshspawngib4", 0, 0, random(0,42), random(2,6), random(2,6), 0, random(0,360), 160)
+			NULL A 1 A_SpawnItemEx ("Fleshspawngib5", 0, 0, random(0,42), random(2,6), random(2,6), 0, random(0,360), 160)
+			NULL A 1 A_SpawnItemEx ("Fleshspawngib6", 0, 0, random(0,42), random(2,6), random(2,6), 0, random(0,360), 160)
+			stop
+	}
+}
+
+actor DholeDeathExplosion
+{
+	radius 10
+	height 12
+	damage 0
+	speed 0
+	renderstyle Add
+	Alpha 0.90
+	seesound "dholdethex"
+	PROJECTILE
+	+NOCLIP
+	+DONTSPLASH
+	+SPAWNSOUNDSOURCE
+	states
+	{
+		Spawn:
+			TNT1 A 0 A_SpawnItemEx ("Fleshspawngib1", 0, 0, random(0,42), random(2,6), random(2,6), 0, random(0,360), 160)
+			TNT1 A 0 A_SpawnItemEx ("Fleshspawngib2", 0, 0, random(0,42), random(2,6), random(2,6), 0, random(0,360), 160)
+			TNT1 A 0 A_SpawnItemEx ("Fleshspawngib6", 0, 0, random(0,42), random(2,6), random(2,6), 0, random(0,360), 160)
+			FLSP QRSTU 3 bright A_Explode
+			stop
+	}
+}
+
+ACTOR DholeBigExplosion
+{
+	Radius 2
+	Height 2
+	Damage 0
+	+NOCLIP
+	Speed 0
+	PROJECTILE
+	RENDERSTYLE ADD
+	ALPHA 0.75
+	Scale 2.0
+	SeeSound "dholbigex"
+	States
+	{
+		Spawn:
+			TNT1 A 0
+			GRNE A 3 Bright A_Explode (128,256,0)
+			GRNE B 3 Bright
+			GRNE CDEFGHIJKLMN 3 Bright
+			stop
+	}
+}
+
+//=========================================
+//
+//             Spider God (InfernalSpider)
+//           made by:.+:icytux:+.
+//
+//=========================================
+ACTOR SpiderGod replaces SpiderMastermind 29999
+{
+	//$Category SEMonsters
+	Radius 72
+	Height 120
+	Health 4000
+	Speed 35
+	mass 99999
+	meleerange 76
+	meleedamage 12
+	painchance 10
+	translation "152:159=216:223,9:9=223:223,76:70=216:223,129:132=216:223"
+	BloodColor Orange
+	scale 2.0
+	SeeSound "spider2/sight"
+	DeathSound "spider2/death"
+	PainSound "spider2/pain"
+	ActiveSound "spider2/active"
+	MeleeSound "misc/gibbed"
+	Obituary "%o was immolated by the Spinner in Darkness."
+	HitObituary "%o was devoured by the Spinner in Darkness."
+	Dropitem SpiderGodling
+	MONSTER
+	+BOSS
+	+NORADIUSDMG
+	+MISSILEMORE
+	+MISSILEEVENMORE
+	+DONTHURTSPECIES
+	+NOTARGET
+	+FLOORCLIP
+	States
+	{
+		Spawn:
+			SPI2 AAAAAAAAAA 10 A_Look
+			SPI2 A 0 A_Playsound("spider/step")
+			SPI2 U 50 ThrustThingZ( 0, 100, 0, 1)
+			SPI2 A 0 Radius_Quake(9,64,0,16,0)
+			SPI2 A 0 A_Playsound("spider/land")
+			loop
+		See:
+			SPI2 ABCD 2 A_Chase
+			MNTR A 0 A_playsound ("spider/step")
+			SPI2 ABCD 2 A_Chase
+			MNTR A 0 A_playsound ("spider/step")
+			SPI2 ABCD 2 A_Chase
+			MNTR A 0 A_playsound ("spider/step")
+			SPI2 ABCD 2 A_Chase
+			MNTR A 0 A_playsound ("spider/step")
+			SPI2 ABCD 2 A_Chase
+			MNTR A 0 A_playsound ("spider/step")
+			SPI2 ABCD 2 A_Chase
+			MNTR A 0 A_playsound ("spider/step")
+			loop
+		Melee:
+			MNTR E 0 A_Facetarget
+			SPI2 E 5 A_Meleeattack
+			SPI2 A 13 A_Facetarget
+			goto see
+		Missile:
+			MNTR V 0 A_Jump (82,20)
+			MNTR V 0 A_Jump (32,9)
+			SPI2 U 5 A_Facetarget
+			TNT1 A 0 A_jumpifcloser(1024,6)
+			SPI2 E 0 A_Facetarget
+			MNTR E 0 A_Playsound ("spider/step")
+			SPI2 U 50 A_Skullattack
+			MNTR A 0 A_Playsound ("spider/land")
+			SPI2 A 1 A_stop
+			goto see
+			SPI2 U 5 A_Facetarget
+			SPI2 X 2 A_custommissile("flameshot", 54, 0, -8, 0)
+			SPI2 X 2 A_custommissile("flameshot", 54, 0, 0, 0)
+			SPI2 X 2 A_custommissile("flameshot", 54, 0, 8, 0)
+			SPI2 X 3 A_Facetarget
+			SPI2 U 5
+			goto see
+			SPI2 E 5 A_Facetarget
+			SPI2 E 6 A_throwgrenade("lengspiderling", 85, 10, 20)
+			SPI2 E 6 A_throwgrenade("lengspiderling", 85, 10, 20)
+			SPI2 E 6 A_throwgrenade("lengspiderling", 85, 10, 20)
+			SPI2 E 5
+			goto see
+			SPI2 E 5 A_Facetarget
+			SPI2 U 5 A_Playsound("spider2/sight")
+			MNTR W 0 A_Facetarget
+			SPI2 X 2 A_custommissile("grellball", 54, 0, -8, 0)
+			SPI2 X 2 A_custommissile("grellball", 54, 0, 0, 0)
+			SPI2 X 2 A_custommissile("grellball", 54, 0, 8, 0)
+			SPI2 U 5 A_Facetarget
+			goto see
+		Pain:
+			SPI2 E 2 A_Pain
+			MNTR E 0 A_Facetarget
+			SPI2 E 6 A_throwgrenade("lengspiderling", 85, 10, 20)
+			SPI2 E 6 A_throwgrenade("lengspiderling", 85, 10, 20)
+			SPI2 E 6 A_throwgrenade("lengspiderling", 85, 10, 20)
+			goto see
+		Death:
+			MNTR A 0 A_Die
+			MNTR A 0 A_Fall
+			SPI2 F 8 bright A_Pain
+			SPI2 G 18 bright A_Scream
+			SPI2 HIJKL 3 bright
+			SPI2 M -1 A_BossDeath
+			stop
+		Raise:
+			stop
+	}
+}
+
+ACTOR flameshot : fatshot
+{
+	Speed 25
+	SeeSound "skeleton/attack"
+	Decal Scorch
+	States
+	{
+		Spawn:
+			SBAL ABC 5 BRIGHT
+			loop
+		Death:
+			SBAL DEFGH 3 BRIGHT
+			stop
+	}
+}
+
+Actor Hellripper : fatshot
+{
+	Speed 50
+	Damage 30
+	Explosionradius 64
+	ExplosionDamage 50
+	SeeSound "skeleton/attack"
+	Decal Scorch
+	States
+	{
+		Spawn:
+			TNT1 A 1 Bright A_Custommissile("archvilefire2",0,0,90,0)
+			TNT1 A 0 Bright A_Custommissile("archvilefire2",0,0,-90,0)
+			TNT1 A 0 A_JumpIf (z-floorz<24,1)
+			loop
+			TNT1 A 0 A_Explode
+			TNT1 A 0 ThrustThingZ (0, random(2,3), 0, 0)
+			loop
+		Death:
+			TNT1 B 5 A_Burst("archvilefire2")
+			stop
+	}
+}
+
+Actor Archvilefire2 : archvilefire
+{
+	Damage 5
+	Speed 4
+}
+
+ACTOR LengSpider 19999
+{
+	//$Category SEMonsters
+	health 150
+	radius 32
+	height 56
+	speed 12
+	Painchance 200
+	Obituary "%o was devoured by a Leng spider."
+	HitObituary "%o was devoured by a Leng spider."
+	SeeSound "spider2/sight"
+	MeleeSound "misc/gibbed"
+	PainSound "spider2/pain"
+	translation 1
+	translation "96:111=64:79"
+	scale 1.0
+	meleedamage 6
+	MONSTER
+	+NOTARGET
+	States
+	{
+		Spawn:
+			GAYS A 1 A_Look
+			loop
+		See:
+			GAYS ABCD 1 A_chase
+			loop
+		Melee:
+			GAYS E 0 A_Facetarget
+			GAYS E 8 A_Meleeattack
+			GAYS E 13 A_Facetarget
+			goto see
+		Pain:
+			GAYS A 2 A_Pain
+			GAYS A 2
+			goto see
+		Death:
+			GAYR FEDC 5 A_Setfloorclip
+			GAYR B 5 A_Scream
+			GAYR A 5 A_Die
+			GAYR A 0 A_Fall
+			GAYR A -1
+			stop
+	}
+}
+
+Actor Fakelengspider 19991
+{
+	//$Category Decorate
+	radius 32
+	height 56
+	States
+	{
+		spawn:
+			GAYS A 1
+			loop
+	}
+}
+
+Actor SpiderGodling : SpiderGod 29998
+{
+	//$Category SEMonsters
+	Health 1000
+	Height 42
+	Radius 56
+	Speed 32
+	MeleeRange 42
+	MeleeDamage 8
+	Obituary "%o was immolated by the Spinner in Darkness."
+	HitObituary "%o was devoured by the Spinner in Darkness."
+	Dropitem lengspiderling
+	Scale 1.0
+	Painchance 10
+	-MISSILEEVENMORE
+	-NOTARGET
+	-BOSS
+	States
+	{
+		Spawn:
+			SPI2 AAAAAAAAAA 10 A_Look
+			loop
+		See:
+			SPI2 ABCD 2 A_Chase
+			SPI2 ABCD 2 A_Chase
+			SPI2 ABCD 2 A_Chase
+			SPI2 ABCD 2 A_Chase
+			SPI2 ABCD 2 A_Chase
+			SPI2 ABCD 2 A_Chase
+			loop
+		Missile:
+			TNT1 A 0 A_jumpifcloser(1024,5)
+			SPI2 E 0 A_Facetarget
+			MNTR E 0 A_Playsound ("spider/step")
+			SPI2 U 50 A_Skullattack
+			MNTR A 0 A_Playsound ("spider/land")
+			SPI2 A 1 A_stop
+			MNTR V 0 A_Jump (82,11)
+			MNTR V 0 A_Jump (32,5)
+			SPI2 U 5 A_Facetarget
+			SPI2 X 2 A_custommissile("grellball", 16, 0, 0, 0)
+			SPI2 X 3 A_Facetarget
+			SPI2 U 5
+			goto see
+			SPI2 E 5 A_Facetarget
+			SPI2 E 6 A_throwgrenade("lengspiderling", 64, 10, 20)
+			SPI2 E 6 A_throwgrenade("lengspiderling", 64, 10, 20)
+			SPI2 E 6 A_throwgrenade("lengspiderling", 64, 10, 20)
+			SPI2 E 5
+			goto see
+			SPI2 E 5 A_Facetarget
+			SPI2 U 5 A_Playsound("spider2/sight")
+			MNTR W 0 A_Facetarget
+			SPI2 X 5 A_Custommissile("Hellripper2", 56, 0, 0, 0)
+			SPI2 X 17 A_Facetarget
+			SPI2 X 2 A_custommissile("grellball", 16, 0, -8, 0)
+			SPI2 X 2 A_custommissile("grellball", 16, 0, 0, 0)
+			SPI2 X 2 A_custommissile("grellball", 16, 0, 8, 0)
+			SPI2 U 5 A_Facetarget
+			goto see
+		Pain:
+			SPI2 E 2 A_Pain
+			MNTR E 0 A_Facetarget
+			SPI2 E 6 A_throwgrenade("lengspiderling", 85, 10, 20)
+			SPI2 E 6 A_throwgrenade("lengspiderling", 85, 10, 20)
+			SPI2 E 6 A_throwgrenade("lengspiderling", 85, 10, 20)
+			goto see
+		Raise:
+			stop
+	}
+}
+
+Actor LengSpiderling : LengSpider 19998
+{
+	//$Category SEMonsters
+	Health 40
+	Radius 20
+	Height 24
+	Scale 0.5
+	Translation 2
+	Meleedamage 3
+	-NOTARGET
+}
+
+Actor Hellripper2 : Hellripper
+{
+	damage 12
+}
+
+ACTOR StarVampire 26001
+{
+	//$Category SEMonsters
+	Health 60
+	Radius 20
+	Height 56
+	Speed 15
+	PainChance 144
+	MONSTER 
+	+STEALTH
+	+NOGRAVITY
+	+FLOAT
+	RenderStyle Add
+	Alpha 0.4
+	SeeSound "starvamp/sight"
+	PainSound "starvamp/pain"
+	DeathSound "starvamp/death"
+	ActiveSound "starvamp/active"
+	MeleeSound "starvamp/melee"
+	HitObituary "%o was drained by a star vampire."
+	MeleeDamage 4
+	States
+	{
+		Spawn:
+			VAMP AB 10 A_Look
+			Loop
+		See:
+			VAMP AABBCCDD 3 A_Chase
+			Loop
+		Melee:
+			VAMP EF 9 A_FaceTarget
+			VAMP G 6 A_MeleeAttack
+			Goto See
+		Pain:
+			VAMP H 10 A_Pain
+			Goto See
+		Death:
+			VAMP I 3 A_ScreamAndUnblock
+			VAMP JKLM 5
+			VAMP N -1
+			Stop
+	}
+}
+
+actor Skeleton 31995
+{
+	//$Category SEMonsters
+	hitobituary "%o was boned by a skeleton."
+	health 100
+	painchance 180
+	speed 10
+	radius 24
+	height 56
+	mass 100
+	scale 0.9
+	seesound "skelsit"
+	painsound "skelpai"
+	deathsound "skeldth"
+	MONSTER
+	+NOBLOOD
+	-COUNTKILL
+	states
+	{
+		Spawn:
+			SKLT R 10 A_Look
+			loop 
+		See:
+			SKLT AABBCCDDEEFF 2 A_Chase
+			loop
+		Melee:
+			SKLT GH 4 A_FaceTarget 
+			SKLT I 4 A_playsound("skelatt",chan_auto)  
+			SKLT J 4 A_CustomMeleeAttack(random(1,6)*4,"swordhit",none)     
+			SKLT K 4 A_FaceTarget    
+			goto See
+		Pain:
+			SKLT L 2
+			SKLT L 2 A_Pain
+			goto See
+		Death:
+			SKLT M 0 A_Jump(192,7)
+			SKLT M 4 A_Scream
+			SKLT N 4 A_Fall
+			SKLT O 8 A_Noblocking
+			SKLT P 12  
+			SKLT Q -1 
+			stop
+		SKLT M 4 A_Scream
+			SKLT N 4 A_Fall
+			SKLT O 8 A_Noblocking
+			SKLT P 12  
+			SKLT Q 0 A_Jump(192,4)
+			SKLT Q 0 A_Jump(128,4)
+			SKLT Q 0 A_Jump(96,4)
+			SKLT Q 0 A_Jump(64,4)
+			SKLT Q 115
+			SKLT Q 115
+			SKLT Q 115
+			SKLT Q 115
+			SKLT Q 115
+			SKLT Q -1 Thing_Raise(0)
+		Raise:
+			SKLT PONM 4
+			goto see
+	}
+}
+
+actor Nyarlathotep 7801
+{
+	//$Category SEMonsters
+	spawnid 171
+	obituary "%o was smote by the High Priest Not To Be Described."
+	health 4000
+	radius 20
+	height 80
+	meleeDamage 3
+	mass 100
+	speed 30
+	painchance 200
+	SEESOUND "wizard/sight"
+	painsound "wizard/pain"
+	deathsound "wizard/death"
+	activesound "wizard/active"
+	MONSTER
+	+FLOAT
+	+NOGRAVITY
+	+NOTARGET
+	+STEALTH
+	+NOINFIGHTING
+	-SOLID
+	states
+	{
+		Spawn:
+			LMWZ E 10 A_Look
+			loop
+		See:
+			LMWZ EEFFEEFF 1 A_Fastchase
+			loop
+		Missile:
+			LMWZ E 0 A_jump(256,"wraiths","floorshot","magic")
+			goto see
+		Wraiths:
+			LMWZ E 0 A_SetShootable
+			LMWZ EFG 10 A_FaceTarget
+			TNT1 AAAAA 0 A_SpawnItemEx ("ShadowBeast_Creature", 0, 0, random(16,48), random(0,8), random(0,8), random(0,8), random(0,359), 0)
+			LMWZ G 5
+			LMWZ E 5 A_UnSetShootable
+			LMWZ E 1 A_PlaySound ("wizard/tele")
+			Goto See
+		Floorshot:
+			LMWZ E 0 A_SetShootable
+			LMWZ F 10 A_facetarget
+			LMWZ G 0 A_custommissile("floorshot",60,0,0)
+			LMWZ GGG 10 bright A_facetarget
+			LMWZ E 5 A_UnSetShootable
+			LMWZ E 1 A_PlaySound ("wizard/tele")
+			goto See
+		Magic:
+			LMWZ E 0 A_SetShootable
+			LMWZ E 10 A_facetarget
+			LMWZ E 0 bright A_custommissile("magicblast",90,30,0)
+			LMWZ E 4 bright A_facetarget	   
+			LMWZ E 0 bright A_custommissile("magicblast",90,-30,0)
+			LMWZ E 4 bright A_facetarget	 	   
+			LMWZ E 0 bright A_custommissile("magicblast",55,-30,0)
+			LMWZ E 4 bright A_facetarget	 	   
+			LMWZ E 0 bright A_custommissile("magicblast",55,30,0)
+			LMWZ E 4 bright A_Cposrefire	
+			LMWZ E 5 A_UnSetShootable
+			LMWZ E 1 A_PlaySound ("wizard/tele")
+			goto See
+		Pain:
+			LMWZ I 3
+			LMWZ I 5 A_Pain
+			LMWZ I 0 A_PlaySound ("wizard/tele")
+			Goto See
+		Death:
+			LMWZ J 6 A_Scream
+			LMWZ K 6 A_NoBlocking
+			LMWZ LMNO 6
+			LMWZ P -1
+			Stop
+	}
+}
+
+ACTOR dragontrail
+{
+	Radius 0
+	Height 1
+	Speed 0
+	PROJECTILE
+	RENDERSTYLE ADD
+	ALPHA 1
+	States
+	{
+		Spawn:
+			NULL A 2 Bright
+			BOOM ABC 2 Bright
+			Stop 
+	}
+}
+
+ACTOR floorshot
+{
+	Radius 5
+	Height 5
+	Speed 15
+	ReactionTime 175
+	Damage 11
+	ExplosionDamage 10
+	ExplosionRadius 128
+	DamageType fire
+	RenderStyle ADD
+	Alpha 1
+	PROJECTILE
+	DONTHURTSHOOTER
+	+FRIENDLY
+	+SEEKERMISSILE
+	+THRUGHOST
+	+FLOORHUGGER  
+	-NOGRAVITY
+	Seesound "weapons/diasht"
+	DeathSound "weapons/boom1"   
+	States
+	{
+		Spawn:      
+			NULL A 1 Bright A_SeekerMissile(0,3)
+			NULL A 0 Bright 
+			NULL A 0 Bright A_CustomMissile("floorPuff",0,0,0,0)
+			loop
+		Death:
+			NUCK A 4 Bright A_Explode
+			NUCK B 4 Bright 
+			NUCK CDE 3 Bright
+			stop
+	}
+}
+
+ACTOR FloorPuff
+{
+	Radius 1
+	Height 1
+	Speed 0
+	RENDERSTYLE ADD
+	DamageType fire
+	ALPHA 1
+	PROJECTILE
+	DONTHURTSHOOTER
+	+FRIENDLY
+	+FLOORHUGGER
+	-NOGRAVITY
+	States
+	{
+		Spawn:
+			FLOR ABCDEFGH 3 Bright 
+			stop
+	}
+}
+
+
+ACTOR magicblast
+{
+	Radius 8
+	Height 8
+	Speed 25
+	Damage 5
+	PROJECTILE
+	RENDERSTYLE ADD
+	ALPHA 1
+	DamageType Fire
+	+THRUGHOST
+	SeeSound "monster/dknmsl"
+	States
+	{
+		Spawn:
+			SHOK A 2 Bright A_CStaffMissileSlither
+			SHOK A 0 A_SpawnItem("magicPuff",0,0)
+			SHOK B 2 Bright A_CStaffMissileSlither
+			SHOK B 0 A_SpawnItem("magicPuff",0,0)
+			SHOK C 2 Bright A_BishopMissileWeave
+			SHOK C 0 A_SpawnItem("magicPuff",0,0)	  
+			loop
+		Death:
+			SHOK DEF 4 Bright
+			stop
+	}
+}
+
+ACTOR magicPuff
+{
+	Radius 1
+	Height 1
+	Speed 0
+	RENDERSTYLE ADD
+	ALPHA 1
+	PROJECTILE
+	States
+	{
+		Spawn:
+			SHOK ABCABCABC 3 Bright A_FadeOut(0.10) 
+			stop
+	}
+}
+
+//Submitted: Captain Toenail
+//Decorate: Captain Toenail
+//GLDEFs: Captain Toenail
+//Sounds: Free Radical Design
+//Sprites: Raven Software
+//Sprite Edit: Captain Toenail
+
+actor UndeadPriest 15488
+{
+	//$Category SEMonsters
+	obituary "%o was bagged by a Leng Chieftain."
+	health 100
+	gibhealth 50
+	radius 20
+	height 56
+	mass 125
+	speed 10
+	painchance 70
+	dropitem "Shell" 96
+	dropitem "Shell" 128
+	decal BulletChip
+	painsound "undeadhunter/pain"
+	deathsound "undeadhunter/death"
+	seesound "undeadhunter/activate"
+	DamageFactor "UndeadPriest", 0
+	MONSTER
+	+FLOORCLIP
+	states
+	{
+		Spawn:
+			UNDP A 10 A_Look
+			loop
+		See:
+			UNDP A 0 A_Jump (32, "Run")
+			UNDP AABBCCDD 3 A_Chase
+			loop
+		Run:
+			UNDP A 0 A_Jump (24, "See")
+			UNDP AABBCCDD 2 A_Chase
+			loop
+		Missile:
+			UNDP E 10 A_FaceTarget
+			UNDP F 0 bright A_CustomBulletAttack (7, 7, 5, 2, PriestPuff)
+			UNDP F 5 bright A_PlaySoundEx ("UndeadPriest/Shoot","SoundSlot6")
+			UNDP E 2 A_SentinelRefire
+			UNDP E 10 A_FaceTarget
+			UNDP F 0 bright A_CustomBulletAttack (7, 7, 5, 3, PriestPuff)
+			UNDP F 5 bright A_PlaySoundEx ("UndeadPriest/Shoot2","SoundSlot7")
+			UNDP E 10
+			goto See
+		Pain:
+			UNDP G 3
+			UNDP G 3 A_Pain
+			goto See
+		Death:
+			UNDP H 6
+			UNDP I 6 A_Scream
+			UNDP JK 6
+			UNDP L 6 A_NoBlocking
+			UNDP M 6
+			UNDP N -1
+			Stop
+		XDeath:
+			UNDP O 5 A_XScream
+			UNDP P 5
+			UNDP R 5 A_NoBlocking
+			UNDP STUVW 5
+			UNDP X -1
+			Stop
+		Raise:
+			UNDP NMLKJIH 6
+			goto See
+	}
+}
+
+Actor PriestPuff : BulletPuff
+{
+	DamageType UndeadPriest
+}
+
+// Evil Tentacle//
+
+actor PurpleTentacle 31893
+{
+	//$Category SEMonsters
+	obituary "%o feels great, stronger, more aggressive."
+	health 120
+	painchance 90
+	speed 10
+	radius 20
+	height 56
+	mass 100
+	seesound "slimeworm/sight"
+	attacksound "slimeworm/melee"
+	painsound "slimeworm/pain"
+	deathsound "slimeworm/death"
+	activesound "slimeworm/active"
+	bloodcolor green
+	MONSTER
+	+FLOORCLIP
+	-COUNTKILL
+	states
+	{
+		Spawn:
+			TENT A 10 A_Look
+			loop
+		See:
+			TENT AABBCCDD 2 Fast A_Chase
+			loop
+		Melee:
+			TENT FG 6 A_FaceTarget
+			TENT H 6 A_SargAttack
+			goto See
+		Pain:
+			TENT I 2
+			TENT I 2 A_Pain
+			goto See
+		Death:
+			TENT I 8
+			TENT J 8 A_Scream
+			TENT K 4
+			TENT L 4 A_NoBlocking
+			TENT L -1
+			stop
+		Raise:
+			TENT MLKJI 5
+			goto See
+	}
+}
+
+Actor AmmoSphere : PowerupGiver 21468
+{
+	//$Category Powerups
+	Game Doom
+	+COUNTITEM
+	+INVENTORY.AUTOACTIVATE
+	+INVENTORY.ALWAYSPICKUP
+	+INVENTORY.FANCYPICKUPSOUND
+	Inventory.PickupMessage "Infinite Ammo!"
+	Inventory.PickupSound "misc/p_pkup"
+	Powerup.Duration -30
+	Powerup.Type "PowerInfiniteAmmo"
+	Powerup.Color "255 0 0" 0.4
+	States
+	{
+		Spawn:
+			AMSP ABCD 6 bright
+			loop
+	}
+}
+
+ACTOR RageSphere : PowerupGiver 12572
+{
+	//$Category Powerups
+	+COUNTITEM
+	+INVENTORY.AUTOACTIVATE
+	+INVENTORY.ALWAYSPICKUP
+	+INVENTORY.BIGPOWERUP
+	Inventory.MaxAmount 0
+	Powerup.Duration -60
+	Powerup.Color 255, 0, 0, 0.125
+	Inventory.PickupMessage "Double fire rate!"
+	Powerup.Type "PowerDoubleFiringSpeed"
+	States
+	{
+		Spawn:
+			BLDS ABCDCB 6 Bright
+			Loop
+	}
+}
+
+//SPHERE ITEM
+Actor MutantSphere : CustomInventory 13365
+{
+	//$Category powerups
+	//$Sprite MUSPA0
+	//$Title "Mutant Sphere"
+	Inventory.PickupMessage "Mutant Power!" // [Blue Shadow] Should work fine with ZDoom r4211 or above (See the comment below)
+	Inventory.PickupSound "misc/p_pkup"
+	Inventory.MaxAmount 0
+	+COUNTITEM
+	+INVENTORY.AUTOACTIVATE
+	+INVENTORY.ALWAYSPICKUP
+	States
+	{
+		Spawn:
+			MUSP ABCDCB 6 Bright
+			loop
+		Pickup:
+			TNT1 A 0 A_GiveInventory("MutantRage")
+			TNT1 A 0 A_GiveInventory("MutantSkin")
+			TNT1 A 0 A_GiveInventory("MutantDamage")
+			TNT1 A 0 A_GiveInventory("MutantGrow")
+			Stop
+	}
+
+}
+
+//MUTANT
+Actor MutantPlayer : DoomPlayer
+{
+	Radius 18
+	Height 64
+	Health 150
+	Scale 1.15
+	Player.Face MUT
+	Player.ViewHeight 47
+	Player.AttackZOffset 9
+	Player.JumpZ 9
+	Player.SoundClass "Mutant"
+	Player.MorphWeapon "MutantFist"
+	-PICKUP
+}
+
+//MUTANT GROW
+Actor PowerMutantGrow : PowerMorph
+{
+	PowerMorph.PlayerClass "MutantPlayer"
+	PowerMorph.MorphStyle (MRF_NEWTIDBEHAVIOUR)
+	PowerMorph.MorphFlash "GrowFlash"
+	PowerMorph.UnMorphFlash "UnGrowFlash"
+}
+
+Actor MutantGrow : PowerupGiver
+{
+	Inventory.MaxAmount 0
+	Powerup.Type MutantGrow
+	Powerup.Duration -60
+	-COUNTITEM
+	+INVENTORY.AUTOACTIVATE
+	+INVENTORY.ALWAYSPICKUP
+	States
+	{
+		Spawn:
+			TNT1 A -1
+			stop
+	}
+}
+
+Actor GrowFlash
+{
+	+NOINTERACTION
+	States
+	{
+		Spawn:
+			TNT1 A 0
+			TNT1 A 50 A_PlaySound ("mutantsphere/grow")
+			stop
+	}
+}
+
+Actor UnGrowFlash
+{
+	+NOINTERACTION
+	States
+	{
+		Spawn:
+			TNT1 A 0
+			TNT1 A 50 A_PlaySound ("mutantsphere/ungrow")
+			stop
+	}
+}
+
+//MUTANT RAGE
+Actor MutantRage : PowerupGiver
+{
+	Inventory.MaxAmount 0
+	Powerup.Type "PowerDoubleFiringSpeed"
+	Powerup.Duration -60
+	Powerup.Color YellowGreen 0.04
+	-COUNTITEM
+	+INVENTORY.AUTOACTIVATE
+	+INVENTORY.ALWAYSPICKUP
+	States
+	{
+		Spawn:
+			TNT1 A -1
+			stop
+	}
+}
+
+//MUTANT SKIN
+Actor PowerMutantskin : PowerProtection
+{
+	DamageFactor "Normal", 0.25
+}
+
+Actor MutantSkin : PowerupGiver
+{
+	Inventory.MaxAmount 0
+	Powerup.Type Mutantskin
+	Powerup.Duration -60
+	-COUNTITEM
+	+INVENTORY.AUTOACTIVATE
+	+INVENTORY.ALWAYSPICKUP
+	states
+	{
+		Spawn:
+			TNT1 A -1
+			stop
+	}
+}
+
+
+//MUTANT DAMAGE
+Actor PowerMutantDamage : PowerDamage
+{
+	DamageFactor "normal", 8
+}
+
+Actor MutantDamage : PowerupGiver
+{
+	Inventory.MaxAmount 0
+	Powerup.Type Mutantdamage
+	Powerup.Duration -60
+	-COUNTITEM
+	+INVENTORY.AUTOACTIVATE
+	+INVENTORY.ALWAYSPICKUP
+	states
+	{
+		Spawn:
+			TNT1 A -1
+			stop
+	}
+}
+
+//MUTANT FIST
+Actor MutantFist : Fist
+{
+	Inventory.Icon "MUPLA0"
+	Weapon.SlotNumber 1
+	Weapon.Kickback 150
+	-WEAPON.WIMPY_WEAPON
+	States
+	{
+		Ready:
+			TNT1 A 0 A_Jump (256,1,3,5)
+			MUPX B 50 A_WeaponReady
+			MUPL A 300 A_WeaponReady
+			Loop
+			MUPX B 50 A_WeaponReady
+			MUPR A 300 A_WeaponReady
+			Loop
+			MUPX B 150 A_WeaponReady
+			Loop
+		Deselect:
+			MUPX B 1 A_Lower
+			Loop
+		Select:
+			MUPX B 1 A_Raise
+			Loop
+		Fire:
+			MUPX B 4 //A_Playsound("mutantsphere/oof")
+			MUPR C 4 A_Punch
+			MUPR D 5
+			MUPR C 4
+			MUPX B 4 A_ReFire ("Fire2")
+			Goto Ready
+		Fire2:
+			MUPX B 4 //A_Playsound("mutantsphere/oof")
+			MUPL C 4 A_Punch
+			MUPL D 5
+			MUPL C 4
+			MUPX B 4 A_ReFire ("Fire")
+			Goto Ready
+	}
+}
+
+//Necrodome trees
+
+ACTOR PalmTree1 10600
+{
+	Radius 16
+	Height 128
+	+SOLID
+	States
+	{
+		Spawn:
+			PAMN A -1
+			Stop
+	}
+}
+
+ACTOR PalmTree2 10601
+{
+	Radius 16
+	Height 128
+	+SOLID
+	States
+	{
+		Spawn:
+			PAMN B -1
+			Stop
+	}
+}
+
+ACTOR PalmTree3 10602
+{
+	Radius 16
+	Height 128
+	+SOLID
+	States
+	{
+		Spawn:
+			PAMN C -1
+			Stop
+	}
+}
+
+
+//Powerslave tree
+
+ACTOR PalmTree4 10603
+{
+	Radius 16
+	Height 160
+	+SOLID
+	States
+	{
+		Spawn:
+			PAMP A -1
+			Stop
+	}
+}
+
+Actor BurningCorpse1 31789
+{
+	+SOLID
+	Radius 8
+	Height 108
+	States
+	{
+		Spawn:
+			BAVE ABCD 4 Bright
+			Loop
+		Inactive:
+			ALVE A 1
+			Loop
+	}
+}
+
+Actor BurningCorpse2 31788
+{
+	+SOLID
+	Radius 8
+	Height 108
+	States
+	{
+		Spawn:
+			BAV2 ABCD 4 Bright
+			Loop
+		Inactive:
+			ALV2 A 1 A_StopSoundEx("SoundSlot7")
+			Loop
+	}
+}
+
+Actor Bush1 31889
+{
+	Radius 12
+	Height 24
+	+SOLID
+	States
+	{
+		Spawn:
+			BUS1 A -1
+			Stop
+	}
+}
+
+Actor Bush2 : Bush1 31888
+{
+	States
+	{
+		Spawn:
+			BUS1 B -1
+			Stop
+	}
+}
+
+Actor Bush3 : Bush1 31887
+{
+	States
+	{
+		Spawn:
+			BUS1 C -1
+			Stop
+	}
+}
+
+Actor BushTall1 31886
+{
+	Radius 12
+	Height 46
+	+SOLID
+	States
+	{
+		Spawn:
+			BUS1 D -1
+			Stop
+	}
+}
+
+Actor BushTall2 : Bush1 31885
+{
+	States
+	{
+		Spawn:
+			BUS1 E -1
+			Stop
+	}
+}
+
+Actor BushTall3 : BushTall1 31884
+{
+	States
+	{
+		Spawn:
+			BUS1 F -1
+			Stop
+	}
+}
+
+Actor NTreeDead1 31882
+{
+	Radius 13
+	Height 160
+	+SOLID
+	States
+	{
+		Spawn:
+			NTRE A -1
+			Stop
+	}
+}
+
+Actor NTreeDead2 31881
+{
+	Radius 13
+	Height 160
+	+SOLID
+	States
+	{
+		Spawn:
+			NTRE B -1
+			Stop
+	}
+}
+
+Actor NTreeSwamp1 31880
+{
+	Radius 13
+	Height 140
+	+SOLID
+	States
+	{
+		Spawn:
+			NTRE C -1
+			Stop
+	}
+}
+
+Actor NTreeSwamp2 31879
+{
+	Radius 10
+	Height 120
+	+SOLID
+	States
+	{
+		Spawn:
+			NTRE D -1
+			Stop
+	}
+}
+
+Actor NSwampLog 31878
+{
+	Radius 12
+	Height 17
+	+SOLID
+	States
+	{
+		Spawn:
+			NTRE E -1
+			Stop
+	}
+}
+
+Actor NSwampStump 31877
+{
+	Radius 12
+	Height 20
+	+SOLID
+	States
+	{
+		Spawn:
+			NTRE F -1
+			Stop
+	}
+}
+
+Actor NSwampRoot 31876
+{
+	Radius 10
+	Height 20
+	+SOLID
+	States
+	{
+		Spawn:
+			NTRE G -1
+			Stop
+	}
+}
+
+ACTOR SmallTree1 10700
+{
+	Radius 16
+	Height 96
+	+SOLID
+	States
+	{
+		Spawn:
+			TREN A -1
+			Stop
+	}
+}
+
+ACTOR SmallTree2 10701
+{
+	Radius 16
+	Height 64
+	+SOLID
+	States
+	{
+		Spawn:
+			TREN B -1
+			Stop
+	}
+}
+
+ACTOR SmallBush1 10702
+{
+	Radius 16
+	Height 24
+	+SOLID
+	States
+	{
+		Spawn:
+			BUSN A -1
+			Stop
+	}
+}
+
+ACTOR SmallBush2 10703
+{
+	Radius 16
+	Height 40
+	+SOLID
+	States
+	{
+		Spawn:
+			BUSN B -1
+			Stop
+	}
+}
+
+ACTOR SmallWinterTree1 10704
+{
+	Radius 16
+	Height 72
+	+SOLID
+	States
+	{
+		Spawn:
+			TRWN A -1
+			Stop
+	}
+}
+
+ACTOR SmallWinterTree2 10705
+{
+	Radius 16
+	Height 88
+	+SOLID
+	States
+	{
+		Spawn:
+			TRWN B -1
+			Stop
+	}
+}
+
+ACTOR TankCreature 31799
+{
+	Radius 16
+	Height 70
+	+SOLID
+	States
+	{
+		Spawn:
+			CIAT ABCDEDCB 7
+			Loop
+	}
+}
+
+ACTOR TankNotCreature : TankCreature 31798
+{
+	States
+	{
+		Spawn:
+			CIAT F -1
+			Loop
+	}
+}
+
+ACTOR TankBroken : TankCreature 31797
+{
+	States
+	{
+		Spawn:
+			CIAT G -1
+			Loop
+	}
+}
+
+Actor StrifeColumn 31899
+{
+	Radius 16
+	Height 120
+	+Solid 
+	States
+	{
+		Spawn:
+			KOLU A -1
+			Stop
+	}
+}
+
+Actor BloodyColumn 31898
+{
+	Radius 16
+	Height 120
+	+Solid
+	States
+	{
+		Spawn:
+			KOLU B -1
+			Stop
+	}
+}
+
+Actor StrifePillar 31897
+{
+	Radius 16
+	Height 65
+	+Solid
+	States
+	{
+		Spawn:
+			KOLU C -1
+			Stop
+	}
+}
+
+Actor BloodyPillar 31896
+{
+	Radius 16
+	Height 65
+	+Solid
+	States
+	{
+		Spawn:
+			KOLU D -1
+			Stop
+	}
+}
+
+Actor StrifelowPillar 31895
+{
+	Radius 16
+	Height 20
+	+Solid
+	States
+	{
+		Spawn:
+			KOLU E -1
+			Stop
+	}
+}
+
+Actor BloodylowPillar 31894
+{
+	Radius 16
+	Height 20
+	+Solid
+	States
+	{
+		Spawn:
+			KOLU F -1
+			Stop
+	}
+}
+
+ACTOR BigHead1 10300
+{
+	Radius 24
+	Height 88
+	+SOLID
+	States
+	{
+		Spawn:
+			EHED A -1
+			Stop
+	}
+}
+
+ACTOR BigHead2 10301
+{
+	Radius 24
+	Height 88
+	+SOLID
+	States
+	{
+		Spawn:
+			EHED B -1
+			Stop
+	}
+}
+
+ACTOR BigHead3 10302
+{
+	Radius 24
+	Height 88
+	+SOLID
+	States
+	{
+		Spawn:
+			EHED C -1
+			Stop
+	}
+}
+
+ACTOR BigHead4 10303
+{
+	Radius 24
+	Height 80
+	+SOLID
+	States
+	{
+		Spawn:
+			EHED D -1
+			Stop
+	}
+}
+
+ACTOR BigHead5 10304
+{
+	Radius 24
+	Height 80
+	+SOLID
+	States
+	{
+		Spawn:
+			EHED E -1
+			Stop
+	}
+}
+
+ACTOR StoneTorch : SwitchableDecoration 12320
+{
+	Radius 16
+	Height 64
+	+SOLID
+	States
+	{
+		Active:
+			STOR A 0 Bright A_PlaySound("Ignite")
+		Spawn:
+			STOR ABCDEFGHI 4 Bright
+			Loop
+		Inactive:
+			STOF A -1
+			Stop
+	}
+}
+
+Actor Bust1 21212
+{
+	//$Category Decorate
+	+SOLID
+	Radius 8
+	Height 32
+
+	States
+	{
+		Spawn:
+			BUST A -1
+			Stop
+	}
+}
+
+Actor Bust1Pillar1 : ZVasePillar 21217
+{
+	//$Category Decorate
+	Height 64
+
+	States
+	{
+		Spawn:
+			PBUS A -1
+			Stop
+	}
+}
+
+Actor Bust1Pillar2 : Bust1Pillar1 21222
+{
+	//$Category Decorate
+	States
+	{
+		Spawn:
+			PBUS F -1
+			Stop
+	}
+}
+
+Actor DeadElderThing 31212
+{
+	//$Category Decorate
+	+SOLID
+	Radius 8
+	Height 32
+
+	States
+	{
+		Spawn:
+			ELTH A -1
+			Stop
+	}
+}
+
+Actor MystGate 31913
+{
+	//$Category Decorate
+	+SOLID
+	Radius 8
+	Height 32
+
+	States
+	{
+		Spawn:
+			MYST A -1
+			Stop
+	}
+}

@@ -1,0 +1,276 @@
+class Roach : AetheriusMonsterZSC
+{
+	private class<Inventory> LDLPreload, LDLToken, LDLCheck, MiscCheck, MiscCheck2, MiscCheck3, MiscCheck4;
+	int check1;
+	int healint1;
+	int healint2;
+
+	Default
+	{
+		Health 150;
+		GibHealth 250;
+		Radius 19;
+		Height 48;
+		Speed 8;
+		PainChance 64;
+		Painchance "Fist", 96; // Fist attacks have a +50% chance of stunning an enemy
+		Painchance "Kick", 160; // Kick attacks have a +150% chance of stunning an enemy
+		Painchance "Gauntlets", 96; // Fist attacks have a +50% chance of stunning an enemy
+		Mass 200;
+		BloodColor "DarkGreen";
+		SeeSound "Roach/Sight";
+		PainSound "Roach/Pain";
+		DeathSound "Roach/Death";
+		ActiveSound "Roach/Active";
+		Obituary "%o was scalded by a Roach";
+		Monster;
+		+DontHarmClass
+	}
+	
+	States
+	{
+		Spawn:
+			ROAC A 6 RoachLook();
+			Loop;
+
+		SeeAlert:
+			ROAC A 0 A_AlertMonsters();
+			Goto See;
+
+		See:
+			ROAC B 0 A_Jump(32, "Stand");
+			ROAC BBBCCCDDDEEE 2
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 60) { bAVOIDMELEE = 1; }
+				if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(1); }
+
+				check1++;
+				if (check1 >= 3) 
+				{ 
+					A_Chase(); 
+					check1 = 0; 
+				} 
+				else 
+				{ 
+					A_Chase("Melee", null, CHF_NOPLAYACTIVE); 
+				}
+			}
+			Loop;
+
+		Stand:
+			ROAC AAAAAAAAAAAA 3
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 60) { bAVOIDMELEE = 1; }
+				if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(1); }
+				else if (levelbehavior > 0 && user_monsterlevel > 60) { A_SetTics(2); }
+
+				A_FaceTarget();
+				A_Chase("Melee", "Missile", CHF_NOPLAYACTIVE | CHF_DONTMOVE);
+			}
+			ROAC A 0 A_Jump(192, "Stand");
+			Goto See+1;
+
+		Melee:
+		Missile:
+			ROAC AAAAFF 3 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 240) { A_SetTics(1); }
+				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(2); }
+				A_FaceTarget();
+			}
+			ROAC G 6
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(4); }
+				else if (levelbehavior > 0 && user_monsterlevel > 60) { A_SetTics(5); }
+
+				A_MonsterCrisisCheck(); // Single Shot / Multiple Projectiles [Shotgun Style]
+
+				A_CrisisSpawnProjectile("RoachBall","RoachBallCrisis", 32.0, -4.0, 1.0); 
+				A_CrisisSpawnProjectile("RoachBall","RoachBallCrisis", 32.0, 4.0, -1.0); 
+			}
+			Goto See;
+
+		Pain:
+			ROAC H 3;
+			ROAC H 3 A_DVDSPain();
+			Goto See;
+		
+		Pain.Fist:
+			ROAC H 3;
+			ROAC H 3 A_DVDSPain();
+			ROAC HH 3;
+			Goto See;
+		
+		Pain.Kick:
+			ROAC H 3;
+			ROAC H 3 A_DVDSPain();
+			ROAC HHHH 3;
+			Goto See;
+
+		Death:
+			TNT1 A 0 A_DVDSNormalDeath(-2,0,1);
+			ROAC I 8 A_ScreamAndUnblock();
+			ROAC JKL 6;
+			ROAC M 0 A_Jump(18, 2);
+			ROAC M -1;
+			Loop;
+			ROAC MMMMM 70;
+			ROAC MMMMM 70;
+			ROAC MMMMM 70;
+			ROAC M -1 Thing_Raise(0);
+			Wait;
+
+		XDeath:
+			TNT1 A 0 A_DVDSNormalDeath(-2,0,1);
+			ROAC I 4 A_XScream();
+			ROAC NOP 6;
+			ROAC Q 6 A_NoBlocking();
+			ROAC RS 6;
+			ROAC T -1;
+			Stop;
+
+		Raise:
+			ROAC MLKJI 5;
+			Goto See;
+		Ice:
+			"####" # 0 A_DVDSIceDeath(-2,0,1);
+			ROAC M 5 A_GenericFreezeDeath;
+			ROAC M 1 A_FreezeDeathChunks;
+			wait;
+	}
+
+	void RoachLook()
+	{
+		if(Args[0] == 1)
+			A_LookEx(LOF_NOSEESOUND, 0, 0, 0, 0, "See");
+		else if(Args[0] > 1)
+			A_LookEx(0, 0, 0, 0, 0, "SeeAlert");
+		else
+			A_Look();
+	}
+	
+	override void PostBeginPlay()
+	{
+		super.PostBeginPlay(); //Call original in case of another override
+		
+		healint1 = random(9,11) - (Skill / 2);
+		healint2 = healint1 * 7;
+	}
+
+	override void Tick()
+	{
+		super.tick(); //Call original in case of another override
+	
+		String nm = "LDLegendaryMonsterTransformed";
+		LDLCheck = nm;
+
+		// Heal every six tics
+		int healamt = 0;
+		int	healmax = User_MaxHP;
+		if (health > 0)
+		{
+			Console.Printf("\cyHealTimer1: %d / %d\c-, \cxHealTimer2: %d / %d\c-", level.maptime % healint1, healint1, level.maptime % healint2, healint2);
+			if (health < User_MaxHP && level.maptime % healint1 == 0) 
+			{
+				healamt += randompick(1,2,2,2,2,2,2,2,2,3) + (user_monsterlevel / randompick(20,15,15,15,15,15,15,15,15,10));
+			}
+			if (health >= User_MaxHP && level.maptime % healint2 == 0) 
+			{
+				healmax = User_MaxHP * 2;
+				healamt += randompick(0,0,1,1,1,1,2,2) + (user_monsterlevel / randompick(50,50,40,40,40,40,30,30));
+			}
+			if (CountInv(LDLCheck) && healamt > 0) healamt * (1.0 + (random(10,15) * 0.05));
+			
+			if (healamt > 0)
+			{
+				health += healamt;
+				if (health > healmax) health = healmax;
+			}
+		}
+	
+		// Run away when low on health, get aggressive when healed up again
+		int fleehealth = (User_MaxHP * 40) / 150;
+		int nofleehealth = (User_MaxHP * 120) / 150;
+		if (health <= (User_MaxHP * 0.26667) && !bFrightened) bFrightened = true;
+		if (health >= (User_MaxHP * 0.8) && bFrightened) bFrightened = false;
+	}
+}
+
+Class RoachBall : AetheriusProjectileZSC
+{
+	Default
+	{
+		Height 5;
+		Radius 3;
+		Speed 30;
+		FastSpeed 60;
+		DamageFunction (Random(5,8) * random(1,8));
+		Decal "PlasmaScorchLower";
+		Projectile;
+		+RANDOMIZE
+		RenderStyle "Add";
+		Scale 0.6;
+		Alpha 1.0;
+		SeeSound "Roach/Fire";
+		DeathSound "Roach/Hit";
+	}
+	
+	States
+	{
+		Spawn:
+			RCHB AAAABBBB 1 Bright A_SpawnItemEx("RoachBallTrail", -(Vel.X/1.2), -(Vel.Y/1.2), (Vel.Z/1.2*-1), (Vel.X/1.2), (Vel.Y/1.2), (Vel.Z/1.2), -Angle, SXF_ABSOLUTEPOSITION | SXF_ABSOLUTEVELOCITY | SXF_CLIENTSIDE);
+			Loop;
+		Death:
+			RCHB C 0 Bright A_Explode(5, 32, 0);
+			RCHB CDEFG 3 Bright;
+			Stop;
+	}
+}
+
+Class RoachBallCrisis : RoachBall
+{
+	Default
+	{
+		DamageFunction ((Random(5,8) * random(1,8)) * CallACS("CrisisMultiplier"));
+	}
+
+	int crisistimer;
+	States
+	{
+		Spawn:
+			RCHB AAAABBBB 1 Bright 
+			{
+				A_SpawnItemEx("RoachBallTrail", -(Vel.X/1.2), -(Vel.Y/1.2), (Vel.Z/1.2*-1), (Vel.X/1.2), (Vel.Y/1.2), (Vel.Z/1.2), -Angle, SXF_ABSOLUTEPOSITION | SXF_ABSOLUTEVELOCITY | SXF_CLIENTSIDE);
+				crisistimer++;
+				if (crisistimer >= 2)
+				{
+					A_GenerateCrisisParticle();
+					crisistimer = 0;
+				}
+			}
+			Loop;
+		Death:
+			RCHB C 0 Bright A_Explode(5, 32, 0);
+			RCHB CDEFG 3 Bright;
+			Stop;
+	}
+}
+
+Class RoachBallTrail : Actor
+{
+	Default
+	{
+		Projectile;
+		RenderStyle "Add";
+		Alpha 0.5;
+		Scale 0.6;
+	}
+	
+	States
+	{
+		Spawn:
+			RCHB AABB 2 Bright A_FadeOut(0.05);
+			Loop;
+	}
+}
