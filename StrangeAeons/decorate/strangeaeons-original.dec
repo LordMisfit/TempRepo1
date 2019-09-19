@@ -1201,6 +1201,7 @@ actor UndeadHunter 15489
 	}
 }
 
+/*
 actor Devil : DoomImp 30120
 {
 	//$Category SEMonsters
@@ -1268,6 +1269,7 @@ actor Devil : DoomImp 30120
 			goto See
 	}
 }
+*/
 
 // Grell -- by NMN (w/DECORATE by Xaser)
 
