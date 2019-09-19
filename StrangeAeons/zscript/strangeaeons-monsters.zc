@@ -85,8 +85,7 @@ class Roach : AetheriusMonsterZSC
 				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(4); }
 				else if (levelbehavior > 0 && user_monsterlevel > 60) { A_SetTics(5); }
 
-				A_MonsterCrisisCheck(); // Single Shot / Multiple Projectiles [Shotgun Style]
-
+				A_MonsterCrisisCheck();
 				A_CrisisSpawnProjectile("RoachBall","RoachBallCrisis", 32.0, -4.0, 1.0); 
 				A_CrisisSpawnProjectile("RoachBall","RoachBallCrisis", 32.0, 4.0, -1.0); 
 			}
@@ -291,7 +290,7 @@ class Devil : AetheriusMonsterZSC
 		mass 120;
 		speed 10;
 		painchance 160;
-		+DONTHURTSPECIES
+		+DontHarmClass
 		seesound "monster/dvlsit";
 		painsound "monster/dvlpai";
 		deathsound "monster/dvldth";

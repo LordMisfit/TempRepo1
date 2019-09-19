@@ -1,13 +1,24 @@
 
 // MAPINFO for "Strange Aeons v.5"
 
-defaultmap {nojump}
+defaultmap 
+{
+  AllowJump
+  AllowCrouch
+  AllowFreelook
+}
 clearepisodes
 
 DoomEdNums
 {
-  30128 = Roach //New	
-  30120 = Devil //New	
+  30128 = Roach	
+  30120 = Devil
+  3201 = RapidFireTrooper
+  15488 = UndeadPriest
+  15489 = UndeadHunter
+  10560 = Grell
+  26000 = NightmareNew
+  31994 = SlimeWorm
 }
 
 Gameinfo
