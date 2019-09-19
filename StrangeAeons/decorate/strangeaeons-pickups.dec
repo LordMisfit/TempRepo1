@@ -56,6 +56,8 @@ Actor AK47Checker : AetheriusCustomInventory replaces AK47
 	}
 }
 
+actor ImpalerBowFakeReady : PlaceholderItem { } // Checks to see if your current selected weapon is "Hellcore Class" [for HUD displays]
+actor ImpalerBowRealReady : PlaceholderItem { } // Checks to see if your current selected weapon is "Hellcore Class" [for HUD displays]
 ACTOR ImpalerXBow : FloraWeapon replaces Chainsaw
 {
 	Inventory.PickupMessage "You got the Impaler!"
@@ -92,12 +94,32 @@ ACTOR ImpalerXBow : FloraWeapon replaces Chainsaw
 			CBOW E 0 A_JumpIfNoAmmo("FakeReady")
 			CBOW EF 5
 		RealReady:
-			CBOW A 1 A_WeaponReady(WRF_ALLOWUSER1)
+			CBOW A 1
+			{
+				A_SetInventory("ImpalerBowRealReady",1);
+				A_SetInventory("ImpalerBowFakeReady",0);
+				A_WeaponReady(WRF_ALLOWUSER1);
+			}
 			Loop
 		FakeReady:
-			CBOW E 1 A_WeaponReady(WRF_ALLOWUSER1)
+			CBOW E 1 
+			{
+				A_SetInventory("ImpalerBowFakeReady",1);
+				A_SetInventory("ImpalerBowRealReady",0);
+				A_WeaponReady(WRF_ALLOWUSER1);
+			}
 			Loop
 		Fire:
+			TNT1 A 0
+			{
+				if (A_UseManaAttack(1,2) == 0) 
+				{ 
+					if (CountInv("ImpalerBowFakeReady",AAPTR_PLAYER1) > 0) { return state("FakeReady"); }
+					else if (CountInv("ImpalerBowRealReady",AAPTR_PLAYER1) > 0) { return state("RealReady"); }
+					return state("Ready");
+				}
+				return state("");
+			}
 			CBOW B 6
 			{
 				if (CallACS("MiscVarCheckDECORATE",10031) >= 1) { A_SetTics(5); }
@@ -106,7 +128,13 @@ ACTOR ImpalerXBow : FloraWeapon replaces Chainsaw
 
 				CallACS("StartTensionCountDown");
 				A_SpreadAuraFireProjectile("SonicNail",0);
-				A_Recoil(1);
+
+				if (CallACS("MiscVarCheckDECORATE",10031) <= 0) { A_Recoil(1.75); }
+				if (CallACS("MiscVarCheckDECORATE",10031) == 1) { A_Recoil(1.5); }
+				if (CallACS("MiscVarCheckDECORATE",10031) == 2) { A_Recoil(1.25); }
+				if (CallACS("MiscVarCheckDECORATE",10031) == 3) { A_Recoil(1.0); }
+				if (CallACS("MiscVarCheckDECORATE",10031) == 4) { A_Recoil(0.75); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 5) { A_Recoil(0.5); }
 			}
 			CBOW C 8 
 			{
@@ -146,6 +174,88 @@ ACTOR ImpalerXBow : FloraWeapon replaces Chainsaw
 				if (CallACS("MiscVarCheckDECORATE",10031) >= 5) { A_SetTics(6); }
 			}
 			Goto RealReady
+
+		AltFire:
+			TNT1 A 0
+			{
+				if (A_UseManaAttack(10,2) == 0) 
+				{ 
+					if (CountInv("ImpalerBowFakeReady",AAPTR_PLAYER1) > 0) { return state("FakeReady"); }
+					else if (CountInv("ImpalerBowRealReady",AAPTR_PLAYER1) > 0) { return state("RealReady"); }
+					return state("Ready");
+				}
+				return state("");
+			}
+			CBOW B 6
+			{
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 1) { A_SetTics(5); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 3) { A_SetTics(4); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 5) { A_SetTics(3); }
+
+				CallACS("StartTensionCountDown");
+				A_SpreadAuraFireProjectile("SonicNail",0,0,"",0,0,0,0); 
+				A_SpreadAuraFireProjectile("SonicNail",2.5,0,"",0,0,0,1.25);
+				A_SpreadAuraFireProjectile("SonicNail",-2.5,0,"",0,0,0,1.25);
+				A_SpreadAuraFireProjectile("SonicNail",2.5,0,"",0,0,0,-1.25);
+				A_SpreadAuraFireProjectile("SonicNail",-2.5,0,"",0,0,0,-1.25);
+				A_SpreadAuraFireProjectile("SonicNail",5.0,0,"",0,0,0,0);
+				A_SpreadAuraFireProjectile("SonicNail",-5.0,0,"",0,0,0,0);
+
+				if (CallACS("MiscVarCheckDECORATE",10031) <= 0) { A_Recoil(1.75); }
+				if (CallACS("MiscVarCheckDECORATE",10031) == 1) { A_Recoil(1.5); }
+				if (CallACS("MiscVarCheckDECORATE",10031) == 2) { A_Recoil(1.25); }
+				if (CallACS("MiscVarCheckDECORATE",10031) == 3) { A_Recoil(1.0); }
+				if (CallACS("MiscVarCheckDECORATE",10031) == 4) { A_Recoil(0.75); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 5) { A_Recoil(0.5); }
+			}
+			CBOW C 8 
+			{
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 1) { A_SetTics(7); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 2) { A_SetTics(random(6,7)); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 3) { A_SetTics(6); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 4) { A_SetTics(5); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 5) { A_SetTics(4); }
+
+				A_PlaySound("Weapon/XBowLoad", CHAN_WEAPON);
+			}
+			CBOW D 5
+			{
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 1) { A_SetTics(4); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 3) { A_SetTics(3); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 5) { A_SetTics(2); }
+			}
+			CBOW E 5 
+			{
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 1) { A_SetTics(4); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 3) { A_SetTics(3); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 5) { A_SetTics(2); }
+				A_CheckReload;
+			}
+			CBOW F 5
+			{
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 1) { A_SetTics(4); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 3) { A_SetTics(3); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 5) { A_SetTics(2); }
+			}
+			CBOW A 12
+			{
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 1) { A_SetTics(11); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 2) { A_SetTics(random(9,10)); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 3) { A_SetTics(random(8,9)); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 4) { A_SetTics(random(7,8)); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 5) { A_SetTics(6); }
+			}
+			Goto RealReady
+
+		// KICK END
+		KickEnd:
+			TNT1 A 0
+			{
+				A_KickBonusOff;
+				if (CountInv("ImpalerBowFakeReady",AAPTR_PLAYER1) > 0) { return state("FakeReady"); }
+				else if (CountInv("ImpalerBowRealReady",AAPTR_PLAYER1) > 0) { return state("RealReady"); }
+				return state("Ready");
+			}
 	}	
 }
 

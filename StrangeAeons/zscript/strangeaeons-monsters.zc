@@ -8,6 +8,10 @@ class Roach : AetheriusMonsterZSC
 
 	Default
 	{
+		//$Angled
+		//$Color 12
+		//$Category "Strange Aeons Monsters"
+		Tag "Roach";
 		Health 150;
 		GibHealth 250;
 		Radius 19;
@@ -281,9 +285,12 @@ class Devil : AetheriusMonsterZSC
 {
 	Default
 	{
-		//$Category SEMonsters
+		//$Angled
+		//$Color 12
+		//$Category "Strange Aeons Monsters"
 		obituary "%o was fried by a Devil.";
 		hitobituary "%o was flayed by a Devil.";
+		Tag "Devil Imp";
 		health 60;
 		radius 20;
 		height 56;
@@ -470,6 +477,9 @@ Class Grell : AetheriusMonsterZSC
 {
 	Default
 	{
+		//$Angled
+		//$Color 12
+		//$Category "Strange Aeons Monsters"
 		Tag "Grell";
 		health 300;
 		radius 24;
@@ -619,7 +629,6 @@ Class GrellBall : AetheriusEffectProjectile
 		Height 16;
 		Speed 15;
 		Damage 4;
-		PoisonDamage 32;
 		Renderstyle "Add";
 		DeathSound "grell/projhit";
 		Alpha 0.67;

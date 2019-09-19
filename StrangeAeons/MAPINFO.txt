@@ -134,12 +134,11 @@ map E1M7 "Halls of Madness"
 map E1M8 "Deathedral"
 {
 	levelnum = 8
-	next = "EndGame1"
+	next = "E2M1"
 	secretnext = "E1M9"
 	sky1 = "SASKY1"
 	cluster = 1
 	par = 60
-	nointermission
 	nosoundclipping
 	baronspecial
 	specialaction_lowerfloor
@@ -239,12 +238,11 @@ map E2M7 "Underworld Gate"
 map E2M8 "Siege of Pnath"
 {
 	levelnum = 18
-	next = Endsequence,"E2End"
+	next = "E3M1"
 	secretnext = "E2M9"
 	sky1 = "SASKY3"
 	cluster = 2
 	par = 30
-	nointermission
 	nosoundclipping
 	cyberdemonspecial
 	specialaction_lowerfloor
@@ -344,12 +342,11 @@ map E3M7 "Proving Grounds"
 map E3M8 "Flytrap"
 {
 	levelnum = 28
-	next = Endsequence,"E3End"
+	next = "E4M1"
 	secretnext = "E3M9"
 	sky1 = "SASKY3"
 	cluster = 3
 	par = 30
-	nointermission
 	nosoundclipping
 	spidermastermindspecial
 	specialaction_lowerfloor
@@ -442,11 +439,10 @@ map E4M7 "Devil Canyon"
 map E4M8 "The Crawling Chaos"
 {
 	levelnum = 38
-	next = Endsequence,"E4End"
+	next = "E5M1"
 	secretnext = "E4M9"
 	sky1 = "SASKY4"
 	cluster = 4
-	nointermission
 	nosoundclipping
 	music = "BGMINTRO"
 }
@@ -686,7 +682,7 @@ cluster 5
                    "a frantic parent from sharing your loss. Not",
                    "a bad way to check out. Reflecting on this,",
                    "you smile, allowing the icy waters to engulf",
-				   "you and reunite you with David at long last."
+                   "you and reunite you with David at long last."
 }
 
 //E2 End

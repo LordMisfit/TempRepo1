@@ -678,6 +678,7 @@ actor SlimeWorm : AetheriusMonsterZSC 31994
 {
 	//$Category SEMonsters
 	obituary "%o was devoured by a flayworm."
+	Tag "Flayworm"
 	health 120
 	painchance 90
 	Painchance "Fist", 135 // Fist attacks have a +50% chance of stunning an enemy
