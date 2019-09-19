@@ -8,26 +8,12 @@ defaultmap
   AllowFreelook
 }
 clearepisodes
-
-DoomEdNums
+episode S1M0
 {
-  30128 = Roach	
-  30120 = Devil
-  3201 = RapidFireTrooper
-  15488 = UndeadPriest
-  15489 = UndeadHunter
-  10560 = Grell
-  26000 = NightmareNew
-  31994 = SlimeWorm
+ name = "StrangeAeons"
+ key = "D"
 }
-
-Gameinfo
-{
-  PlayerClasses = "TravelerPlayer"
-  titlemusic = "BGMINTRO"
-  intermissionmusic = "BGMINTER"
-}
-
+/*
 // Episodes
 Episode e1m1
 {
@@ -52,6 +38,36 @@ Episode e4m1
 Episode e5m1
 {
     Name = "Out of the Aeons"
+}
+*/
+
+DoomEdNums
+{
+  30128 = Roach	
+  30120 = Devil
+  3201 = RapidFireTrooper
+  15488 = UndeadPriest
+  15489 = UndeadHunter
+  10560 = Grell
+  26000 = NightmareNew
+  31994 = SlimeWorm
+}
+
+Gameinfo
+{
+  PlayerClasses = "TravelerPlayer"
+  titlemusic = "BGMINTRO"
+  intermissionmusic = "BGMINTER"
+}
+
+map S1M0 "Skip Map"
+{
+  levelnum = 1050
+  next = "E1M1"
+  cluster = 3232
+  par = 1
+  sucktime = 1
+  NoIntermission
 }
 
 map E1M1 "The Traveler"
