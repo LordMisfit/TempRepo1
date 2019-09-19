@@ -1081,69 +1081,6 @@ Actor RainDrop 30001
 	}
 }
 
-//=====================================================================
-//
-//     Undead Hunter
-//        -Icytux
-//
-//=====================================================================
-
-actor UndeadHunter 15489
-{
-	//$Category SEMonsters
-	obituary "%o was killed and stuffed by the Men of Leng."
-	health 30
-	radius 22
-	height 56
-	mass 100
-	speed 10
-	painchance 70
-	activesound "shotguy/active" //if use in something else than doom, you have to provide theese sounds yourself.
-	attacksound "shotguy/attack"
-	painsound "undeadhunter/pain"
-	deathsound "undeadhunter/death"
-	seesound "undeadhunter/activate"
-	dropitem "Shotgun" 256
-	MONSTER
-	+FLOORCLIP
-	+DONTHURTSPECIES
-	states
-	{
-		Spawn:
-			DEHU AB 10 A_Look
-			loop
-		See:
-			DEHU AABBCCDD 2 A_Chase
-			loop
-		Missile:
-			DEHU E 4 A_FaceTarget
-			DEHU F 4 bright A_SPosAttack
-			DEHU E 8
-			goto See
-		Pain:
-			DEHU G 2
-			DEHU G 2 A_Pain
-			goto See
-		Death:
-			DEHU H 5
-			DEHU I 5 A_Scream
-			DEHU J 5 A_NoBlocking
-			DEHU KLM 5
-			DEHU N -1
-			stop
-		XDeath:
-			DEHU O 5 A_XScream
-			DEHU P 5 A_PlaySound("undeadhunter/xdeath")
-			DEHU Q 5 A_NoBlocking
-			DEHU RSTUV 5
-			DEHU W -1
-			stop
-		Raise:
-			DEHU MLKJIH 3
-			goto See
-	}
-}
-
 /*
 actor Devil : DoomImp 30120
 {
@@ -1215,7 +1152,7 @@ actor Devil : DoomImp 30120
 */
 
 // Grell -- by NMN (w/DECORATE by Xaser)
-
+/*
 actor Grell 10560
 {
 	//$Category SEMonsters
@@ -1325,6 +1262,7 @@ ACTOR Barbtrail
 			Stop 
 	}
 }
+*/
 
 Actor Fleshspawn 10558
 {
@@ -3474,86 +3412,6 @@ ACTOR magicPuff
 			SHOK ABCABCABC 3 Bright A_FadeOut(0.10) 
 			stop
 	}
-}
-
-//Submitted: Captain Toenail
-//Decorate: Captain Toenail
-//GLDEFs: Captain Toenail
-//Sounds: Free Radical Design
-//Sprites: Raven Software
-//Sprite Edit: Captain Toenail
-
-actor UndeadPriest 15488
-{
-	//$Category SEMonsters
-	obituary "%o was bagged by a Leng Chieftain."
-	health 100
-	gibhealth 50
-	radius 20
-	height 56
-	mass 125
-	speed 10
-	painchance 70
-	dropitem "Shell" 96
-	dropitem "Shell" 128
-	decal BulletChip
-	painsound "undeadhunter/pain"
-	deathsound "undeadhunter/death"
-	seesound "undeadhunter/activate"
-	DamageFactor "UndeadPriest", 0
-	MONSTER
-	+FLOORCLIP
-	states
-	{
-		Spawn:
-			UNDP A 10 A_Look
-			loop
-		See:
-			UNDP A 0 A_Jump (32, "Run")
-			UNDP AABBCCDD 3 A_Chase
-			loop
-		Run:
-			UNDP A 0 A_Jump (24, "See")
-			UNDP AABBCCDD 2 A_Chase
-			loop
-		Missile:
-			UNDP E 10 A_FaceTarget
-			UNDP F 0 bright A_CustomBulletAttack (7, 7, 5, 2, PriestPuff)
-			UNDP F 5 bright A_PlaySoundEx ("UndeadPriest/Shoot","SoundSlot6")
-			UNDP E 2 A_SentinelRefire
-			UNDP E 10 A_FaceTarget
-			UNDP F 0 bright A_CustomBulletAttack (7, 7, 5, 3, PriestPuff)
-			UNDP F 5 bright A_PlaySoundEx ("UndeadPriest/Shoot2","SoundSlot7")
-			UNDP E 10
-			goto See
-		Pain:
-			UNDP G 3
-			UNDP G 3 A_Pain
-			goto See
-		Death:
-			UNDP H 6
-			UNDP I 6 A_Scream
-			UNDP JK 6
-			UNDP L 6 A_NoBlocking
-			UNDP M 6
-			UNDP N -1
-			Stop
-		XDeath:
-			UNDP O 5 A_XScream
-			UNDP P 5
-			UNDP R 5 A_NoBlocking
-			UNDP STUVW 5
-			UNDP X -1
-			Stop
-		Raise:
-			UNDP NMLKJIH 6
-			goto See
-	}
-}
-
-Actor PriestPuff : BulletPuff
-{
-	DamageType UndeadPriest
 }
 
 // Evil Tentacle//

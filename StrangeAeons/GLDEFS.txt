@@ -1996,12 +1996,6 @@ flickerlight BPUFF2
     chance 0.8
 }
 
-object PriestPuff
-{
-    frame PUFFA { light BPUFF1 }
-    frame PUFFB { light BPUFF2 }
-}
-
 // Zombies
 flickerlight2 ZOMBIEATK
 {
