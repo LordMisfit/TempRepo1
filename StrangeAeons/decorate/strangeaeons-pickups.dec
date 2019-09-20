@@ -113,7 +113,7 @@ ACTOR ImpalerXBow : FloraWeapon replaces Chainsaw
 		Fire:
 			TNT1 A 0
 			{
-				if (A_UseManaAttack(1,2) == 0) 
+				if (A_UseManaAttack(1,2,1) == 0) 
 				{ 
 					if (CountInv("ImpalerBowFakeReady",AAPTR_PLAYER1) > 0) { return state("FakeReady"); }
 					else if (CountInv("ImpalerBowRealReady",AAPTR_PLAYER1) > 0) { return state("RealReady"); }
@@ -179,7 +179,7 @@ ACTOR ImpalerXBow : FloraWeapon replaces Chainsaw
 		AltFire:
 			TNT1 A 0
 			{
-				if (A_UseManaAttack(10,2) == 0) 
+				if (A_UseManaAttack(10,2,1) == 0) 
 				{ 
 					if (CountInv("ImpalerBowFakeReady",AAPTR_PLAYER1) > 0) { return state("FakeReady"); }
 					else if (CountInv("ImpalerBowRealReady",AAPTR_PLAYER1) > 0) { return state("RealReady"); }
