@@ -240,18 +240,17 @@ Class RoachBallCrisis : RoachBall
 		DamageFunction ((Random(5,8) * random(1,8)) * CallACS("CrisisMultiplier"));
 	}
 
-	int crisistimer;
 	States
 	{
 		Spawn:
 			RCHB AAAABBBB 1 Bright 
 			{
 				A_SpawnItemEx("RoachBallTrail", -(Vel.X/1.2), -(Vel.Y/1.2), (Vel.Z/1.2*-1), (Vel.X/1.2), (Vel.Y/1.2), (Vel.Z/1.2), -Angle, SXF_ABSOLUTEPOSITION | SXF_ABSOLUTEVELOCITY | SXF_CLIENTSIDE);
-				crisistimer++;
-				if (crisistimer >= 2)
-				{
-					A_GenerateCrisisParticle();
-					crisistimer = 0;
+				user_crisistimer += 1;
+				if (user_crisistimer >= 2) 
+				{ 
+					A_GenerateCrisisParticle(); 
+					user_crisistimer = 0;
 				}
 			}
 			Loop;

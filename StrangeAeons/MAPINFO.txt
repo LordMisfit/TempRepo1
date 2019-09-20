@@ -51,6 +51,8 @@ DoomEdNums
   10560 = Grell
   26000 = NightmareNew
   31994 = SlimeWorm
+  31997 = DemonWizard
+  3118 = GlaakiSpawn
 }
 
 Gameinfo
