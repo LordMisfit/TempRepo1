@@ -1,14 +1,7 @@
 
 // MAPINFO for "Strange Aeons v.5"
 
-defaultmap 
-{
-  AllowJump
-  AllowCrouch
-  AllowFreelook
-}
 clearepisodes
-
 episode E1M0
 {
  name = "Strange Aeons"
@@ -32,18 +25,8 @@ DoomEdNums
 
 Gameinfo
 {
-  titlemusic = "BGMINTRO"
-  intermissionmusic = "BGMINTER"
-}
-
-map E1M0 "Skip Map"
-{
-  levelnum = 1050
-  next = "E1M1"
-  cluster = 3232
-  par = 1
-  sucktime = 1
-  NoIntermission
+ titlemusic = "BGMINTRO"
+ intermissionmusic = "BGMINTER"
 }
 
 map E1M1 "The Traveler"
