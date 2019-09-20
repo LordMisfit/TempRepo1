@@ -1747,7 +1747,7 @@ Color 0.2 0.5 0.05
 Size 24
 }
 
-Object ShadowBeast_Ball1
+Object ShadowBeastBall1
 {
 Frame BDP2A { Light SBeastBall11 }
 Frame BDP2B { Light SBeastBall11 }
@@ -1759,7 +1759,7 @@ Frame BDP2G { Light SBeastBall15 }
 Frame BDP2H { Light SBeastBall16 }
 }
 
-Object ShadowBeast_BallFire
+Object ShadowBeastBallFire
 {
 Frame BDP2A { Light SBeastBall11 }
 Frame BDP2B { Light SBeastBall11 }
@@ -1803,7 +1803,7 @@ Color 0.1 0.4 0.0
 Size 16
 }
 
-Object ShadowBeast_Ball2
+Object ShadowBeastBall2
 {
 Frame BDP1D { Light SBeastBall21 }
 Frame BDP1E { Light SBeastBall21 }
@@ -1813,7 +1813,7 @@ Frame BDP1H { Light SBeastBall24 }
 Frame BDP1I { Light SBeastBall25 }
 }
 
-Object ShadowBeast_Ball3
+Object ShadowBeastBall3
 {
 Frame BDP1D { Light SBeastBall21 }
 Frame BDP1E { Light SBeastBall21 }
@@ -1874,7 +1874,7 @@ Size 8
 Offset 0 32 0
 }
 
-Object ShadowBeast_Creature
+Object ShadowBeastCreature
 {
 Frame BDSPA { Light SBeastCreature1 }
 Frame BDSPB { Light SBeastCreature1 }

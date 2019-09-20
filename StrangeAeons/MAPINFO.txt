@@ -8,38 +8,12 @@ defaultmap
   AllowFreelook
 }
 clearepisodes
-episode S1M0
+
+episode E1M0
 {
- name = "StrangeAeons"
+ name = "Strange Aeons"
  key = "D"
 }
-/*
-// Episodes
-Episode e1m1
-{
-    Name = "Shattered City"
-}
-
-Episode e2m1
-{
-    Name = "Stagnant Fortress"
-}
-
-Episode e3m1
-{
-    Name = "Land That Time Forgot"
-}
-
-Episode e4m1
-{
-    Name = "Plateau of Leng"
-}
-
-Episode e5m1
-{
-    Name = "Out of the Aeons"
-}
-*/
 
 DoomEdNums
 {
@@ -53,16 +27,16 @@ DoomEdNums
   31994 = SlimeWorm
   31997 = DemonWizard
   3118 = GlaakiSpawn
+  30123 = ShadowBeast
 }
 
 Gameinfo
 {
-  PlayerClasses = "TravelerPlayer"
   titlemusic = "BGMINTRO"
   intermissionmusic = "BGMINTER"
 }
 
-map S1M0 "Skip Map"
+map E1M0 "Skip Map"
 {
   levelnum = 1050
   next = "E1M1"
@@ -708,8 +682,8 @@ Intermission E2End
 {
   Image
   {
-  Background = "VICTORY2"
-  Music = "BGMINTRO"
+    Background = "VICTORY2"
+    Music = "BGMINTRO"
   }
 }
 
@@ -718,8 +692,8 @@ Intermission E3End
 {
   Image
   {
-  Background = "PFUB2"
-  Music = "D_BUNNY"
+    Background = "PFUB2"
+    Music = "D_BUNNY"
   }
 }
 
@@ -728,8 +702,8 @@ Intermission E4End
 {
   Image
   {
-  Background = "ENDPIC"
-  Music = "BGMINTRO"
+    Background = "ENDPIC"
+    Music = "BGMINTRO"
   }
 }
 
@@ -738,11 +712,11 @@ Intermission E5End
 {
   Scroller
   {
-  Background = "FINAL1"
-  Background2 = "FINAL2"
-  ScrollDirection = up
-  InitialDelay = 4
-  ScrollTime = 20
-  Music = "D_BUNNY"
+    Background = "FINAL1"
+    Background2 = "FINAL2"
+    ScrollDirection = up
+    InitialDelay = 4
+    ScrollTime = 20
+    Music = "D_BUNNY"
   }
 }
