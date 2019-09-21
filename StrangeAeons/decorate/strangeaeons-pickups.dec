@@ -66,6 +66,7 @@ actor ImpalerBowRealReady : PlaceholderItem { } // Checks to see if your current
 ACTOR ImpalerXBow : FloraWeapon replaces Chainsaw
 {
 	Inventory.PickupMessage "You got the Impaler!"
+	Tag "Impaler Crossbow"
 	Weapon.UpSound "Weapon/XBowLoad"
 	Weapon.KickBack 20
 	Weapon.SelectionOrder 2500
@@ -74,8 +75,16 @@ ACTOR ImpalerXBow : FloraWeapon replaces Chainsaw
 	States
 	{
 		Spawn:
-			CBOW Z -1
-			Stop
+			CBOW Z 0
+			{
+				if (CountInv("ImpalerXBow",AAPTR_PLAYER1) > 0)
+				{
+					A_SpawnItemEx("DualImpalerXBow");
+					A_FadeOut(1,1);
+				}
+			}
+			CBOW Z 1
+			loop
 		Select:
 			CBOW E 1
 			{
@@ -290,6 +299,260 @@ ACTOR ImpalerXBow : FloraWeapon replaces Chainsaw
 			goto FakeReady
 		User4Real:
 			CBOW A 5
+			{
+				A_GiveInventory("ImpalerBowZoom",1);
+				if (CountInv("ImpalerBowZoom") == 1) { A_ZoomFactor(1.5); A_Print("1.5x Zoom"); }
+				else if (CountInv("ImpalerBowZoom") == 2) { A_ZoomFactor(2.0); A_Print("2x Zoom"); }
+				else if (CountInv("ImpalerBowZoom") == 3) { A_ZoomFactor(4.0); A_Print("4x Zoom"); }
+				else if (CountInv("ImpalerBowZoom") == 4) { A_ZoomFactor(1.0); A_SetInventory("ImpalerBowZoom",0); A_Print("No Zoom"); }
+			}
+			goto RealReady
+	}	
+}
+ACTOR DualImpalerXBow : ImpalerXBow
+{
+	Inventory.PickupMessage "You got the Impaler!"
+	Tag "Dual Impaler Crossbows"
+	Weapon.UpSound "Weapon/XBowLoad"
+	Weapon.KickBack 20
+	Weapon.SelectionOrder 2500
+	Weapon.Slotnumber 2
+	+WEAPON.NOALERT
+	States
+	{
+		Spawn:
+			CBOW Z -1
+			Stop
+		Select:
+			DCRB E 1
+			{
+				if (CountInv("ImpalerBowZoom") == 1) { A_ZoomFactor(1.5); A_Print("1.5x Zoom"); }
+				else if (CountInv("ImpalerBowZoom") == 2) { A_ZoomFactor(2.0); A_Print("2x Zoom"); }
+				else if (CountInv("ImpalerBowZoom") == 3) { A_ZoomFactor(4.0); A_Print("4x Zoom"); }
+				else if (CountInv("ImpalerBowZoom") == 4) { A_ZoomFactor(1.0); A_SetInventory("ImpalerBowZoom",0); A_Print("No Zoom"); }
+
+				A_DVDSRaise(CallACS("MiscVarCheckDECORATE",10031)*3);
+				A_DVDSRaise(CallACS("MiscVarCheckDECORATE",10032)*7.5);
+				A_DVDSRaise(CallACS("MiscVarCheckDECORATE",10035)*2);
+				A_DVDSRaise(CallACS("MiscVarCheckDECORATE",10036)*5);
+				A_DVDSRaise(18);
+			}
+			Loop
+		Deselect:
+			DCRB E 1
+			{
+				A_ZoomFactor(1.0,ZOOM_INSTANT);
+
+				A_DVDSLower(CallACS("MiscVarCheckDECORATE",10031)*3);
+				A_DVDSLower(CallACS("MiscVarCheckDECORATE",10032)*7.5);
+				A_DVDSLower(CallACS("MiscVarCheckDECORATE",10035)*2);
+				A_DVDSLower(CallACS("MiscVarCheckDECORATE",10036)*5);
+				A_DVDSLower(18);
+			}
+			Loop
+		Ready:
+			DCRB E 0 A_JumpIfNoAmmo("FakeReady")
+			DCRB EF 5
+		RealReady:
+			DCRB A 1
+			{
+				A_SetInventory("ImpalerBowRealReady",1);
+				A_SetInventory("ImpalerBowFakeReady",0);
+				A_WeaponReady(WRF_ALLOWUSER1|WRF_ALLOWUSER4);
+			}
+			Loop
+		FakeReady:
+			DCRB E 1 
+			{
+				A_SetInventory("ImpalerBowFakeReady",1);
+				A_SetInventory("ImpalerBowRealReady",0);
+				A_WeaponReady(WRF_ALLOWUSER1|WRF_ALLOWUSER4);
+			}
+			Loop
+		Fire:
+			TNT1 A 0
+			{
+				if (A_UseManaAttack(2,2,1) == 0) 
+				{ 
+					if (CountInv("ImpalerBowFakeReady",AAPTR_PLAYER1) > 0) { return state("FakeReady"); }
+					else if (CountInv("ImpalerBowRealReady",AAPTR_PLAYER1) > 0) { return state("RealReady"); }
+					return state("Ready");
+				}
+				return state("");
+			}
+			DCRB B 6
+			{
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 1) { A_SetTics(5); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 3) { A_SetTics(4); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 5) { A_SetTics(3); }
+
+				CallACS("StartTensionCountDown");
+				A_SetAngle(angle-4.0);
+				A_SpreadAuraFireProjectile("SonicNail",0);
+				A_SetAngle(angle+8.0);
+				A_SpreadAuraFireProjectile("SonicNail",0);
+				A_SetAngle(angle-4.0);
+
+				if (CallACS("MiscVarCheckDECORATE",10031) <= 0) { A_Recoil(1.75); }
+				if (CallACS("MiscVarCheckDECORATE",10031) == 1) { A_Recoil(1.5); }
+				if (CallACS("MiscVarCheckDECORATE",10031) == 2) { A_Recoil(1.25); }
+				if (CallACS("MiscVarCheckDECORATE",10031) == 3) { A_Recoil(1.0); }
+				if (CallACS("MiscVarCheckDECORATE",10031) == 4) { A_Recoil(0.75); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 5) { A_Recoil(0.5); }
+			}
+			DCRB C 8 
+			{
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 1) { A_SetTics(7); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 2) { A_SetTics(random(6,7)); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 3) { A_SetTics(6); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 4) { A_SetTics(5); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 5) { A_SetTics(4); }
+
+				A_PlaySound("Weapon/XBowLoad", CHAN_WEAPON);
+				A_PlaySound("Weapon/XBowLoad", CHAN_WEAPON);
+			}
+			DCRB D 5
+			{
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 1) { A_SetTics(4); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 3) { A_SetTics(3); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 5) { A_SetTics(2); }
+			}
+			DCRB E 5 
+			{
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 1) { A_SetTics(4); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 3) { A_SetTics(3); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 5) { A_SetTics(2); }
+				A_CheckReload;
+			}
+			DCRB F 5
+			{
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 1) { A_SetTics(4); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 3) { A_SetTics(3); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 5) { A_SetTics(2); }
+			}
+			DCRB A 12
+			{
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 1) { A_SetTics(11); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 2) { A_SetTics(random(9,10)); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 3) { A_SetTics(random(8,9)); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 4) { A_SetTics(random(7,8)); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 5) { A_SetTics(6); }
+			}
+			Goto RealReady
+
+		AltFire:
+			TNT1 A 0
+			{
+				if (A_UseManaAttack(20,2,1) == 0) 
+				{ 
+					if (CountInv("ImpalerBowFakeReady",AAPTR_PLAYER1) > 0) { return state("FakeReady"); }
+					else if (CountInv("ImpalerBowRealReady",AAPTR_PLAYER1) > 0) { return state("RealReady"); }
+					return state("Ready");
+				}
+				return state("");
+			}
+			DCRB B 6
+			{
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 1) { A_SetTics(5); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 3) { A_SetTics(4); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 5) { A_SetTics(3); }
+
+				CallACS("StartTensionCountDown");
+				A_SetAngle(angle-4.0);
+				A_SpreadAuraFireProjectile("SonicNail",0,0,"",0,0,0,0); 
+				A_SpreadAuraFireProjectile("SonicNail",2.5,0,"",0,0,0,1.25);
+				A_SpreadAuraFireProjectile("SonicNail",-2.5,0,"",0,0,0,1.25);
+				A_SpreadAuraFireProjectile("SonicNail",2.5,0,"",0,0,0,-1.25);
+				A_SpreadAuraFireProjectile("SonicNail",-2.5,0,"",0,0,0,-1.25);
+				A_SpreadAuraFireProjectile("SonicNail",5.0,0,"",0,0,0,0);
+				A_SpreadAuraFireProjectile("SonicNail",-5.0,0,"",0,0,0,0);
+				A_SetAngle(angle+8.0);
+				A_SpreadAuraFireProjectile("SonicNail",0,0,"",0,0,0,0); 
+				A_SpreadAuraFireProjectile("SonicNail",2.5,0,"",0,0,0,1.25);
+				A_SpreadAuraFireProjectile("SonicNail",-2.5,0,"",0,0,0,1.25);
+				A_SpreadAuraFireProjectile("SonicNail",2.5,0,"",0,0,0,-1.25);
+				A_SpreadAuraFireProjectile("SonicNail",-2.5,0,"",0,0,0,-1.25);
+				A_SpreadAuraFireProjectile("SonicNail",5.0,0,"",0,0,0,0);
+				A_SpreadAuraFireProjectile("SonicNail",-5.0,0,"",0,0,0,0);
+				A_SetAngle(angle-4.0);
+
+				if (CallACS("MiscVarCheckDECORATE",10031) <= 0) { A_Recoil(4.375); }
+				if (CallACS("MiscVarCheckDECORATE",10031) == 1) { A_Recoil(3.75); }
+				if (CallACS("MiscVarCheckDECORATE",10031) == 2) { A_Recoil(3.125); }
+				if (CallACS("MiscVarCheckDECORATE",10031) == 3) { A_Recoil(2.5); }
+				if (CallACS("MiscVarCheckDECORATE",10031) == 4) { A_Recoil(1.875); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 5) { A_Recoil(1.25); }
+			}
+			DCRB C 8 
+			{
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 1) { A_SetTics(7); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 2) { A_SetTics(random(6,7)); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 3) { A_SetTics(6); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 4) { A_SetTics(5); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 5) { A_SetTics(4); }
+
+				A_PlaySound("Weapon/XBowLoad", CHAN_WEAPON);
+				A_PlaySound("Weapon/XBowLoad", CHAN_WEAPON);
+			}
+			DCRB D 5
+			{
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 1) { A_SetTics(4); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 3) { A_SetTics(3); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 5) { A_SetTics(2); }
+			}
+			DCRB E 5 
+			{
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 1) { A_SetTics(4); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 3) { A_SetTics(3); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 5) { A_SetTics(2); }
+				A_CheckReload;
+			}
+			DCRB F 5
+			{
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 1) { A_SetTics(4); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 3) { A_SetTics(3); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 5) { A_SetTics(2); }
+			}
+			DCRB A 12
+			{
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 1) { A_SetTics(11); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 2) { A_SetTics(random(9,10)); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 3) { A_SetTics(random(8,9)); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 4) { A_SetTics(random(7,8)); }
+				if (CallACS("MiscVarCheckDECORATE",10031) >= 5) { A_SetTics(6); }
+			}
+			Goto RealReady
+
+		// KICK END
+		KickEnd:
+			TNT1 A 0
+			{
+				A_KickBonusOff;
+				if (CountInv("ImpalerBowFakeReady",AAPTR_PLAYER1) > 0) { return state("FakeReady"); }
+				else if (CountInv("ImpalerBowRealReady",AAPTR_PLAYER1) > 0) { return state("RealReady"); }
+				return state("Ready");
+			}
+		// Zoom :V
+
+		User4:
+			DCRB A 0
+			{
+				if (CountInv("ImpalerBowFakeReady",AAPTR_PLAYER1) > 0) { return state("User4Fake"); }
+				else if (CountInv("ImpalerBowRealReady",AAPTR_PLAYER1) > 0) { return state("User4Real"); }
+				return state("Ready");
+			}
+		User4Fake:
+			DCRB E 5
+			{
+				A_GiveInventory("ImpalerBowZoom",1);
+				if (CountInv("ImpalerBowZoom") == 1) { A_ZoomFactor(1.5); A_Print("1.5x Zoom"); }
+				else if (CountInv("ImpalerBowZoom") == 2) { A_ZoomFactor(2.0); A_Print("2x Zoom"); }
+				else if (CountInv("ImpalerBowZoom") == 3) { A_ZoomFactor(4.0); A_Print("4x Zoom"); }
+				else if (CountInv("ImpalerBowZoom") == 4) { A_ZoomFactor(1.0); A_SetInventory("ImpalerBowZoom",0); A_Print("No Zoom"); }
+			}
+			goto FakeReady
+		User4Real:
+			DCRB A 5
 			{
 				A_GiveInventory("ImpalerBowZoom",1);
 				if (CountInv("ImpalerBowZoom") == 1) { A_ZoomFactor(1.5); A_Print("1.5x Zoom"); }
