@@ -5,7 +5,7 @@ ACTOR TravelerPlayer : DoomPlayer
 	Player.StartItem "Fist"
 	//Player.StartItem ClassID 1
 	Player.Weaponslot 1, "Fist"
-	Player.Weaponslot 2, "ScepterofSouls","ImpalerXBow"
+	Player.Weaponslot 2, "ScepterofSouls","ImpalerXBow","DualImpalerXBow"
 	Player.Weaponslot 3, "Shotgun"
 	Player.Weaponslot 4, "AK47"
 	Player.Weaponslot 5, "RocketLauncher"

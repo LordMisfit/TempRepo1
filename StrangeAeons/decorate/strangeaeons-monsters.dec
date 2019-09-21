@@ -778,7 +778,6 @@ actor SlimeBall1 : DoomImpBall
 		height 4
 		speed 14
 		damage 4
-		poisondamage 15
 		seesound none
 		deathsound "slimeball/splat"
 		scale 0.5
