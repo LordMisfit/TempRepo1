@@ -21,6 +21,8 @@ DoomEdNums
   31997 = DemonWizard
   3118 = GlaakiSpawn
   30123 = ShadowBeast
+  2112 = BeamRevenant
+  11300 = StarSpawn
 }
 
 Gameinfo
