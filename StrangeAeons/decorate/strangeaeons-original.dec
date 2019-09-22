@@ -1728,7 +1728,7 @@ ACTOR RageSphere : PowerupGiver 12572
 }
 
 //SPHERE ITEM
-Actor MutantSphere : CustomInventory 13365
+Actor MutantSphere : CustomInventory // 13365
 {
 	//$Category powerups
 	//$Sprite MUSPA0

@@ -649,3 +649,7 @@ ACTOR NailSpark : MageWandSmoke
 	}
 }
 
+Actor DivinationSphereSpawner : RandomSpawner2 13365
+{
+	DropItem "DivinationSphere", 256
+}

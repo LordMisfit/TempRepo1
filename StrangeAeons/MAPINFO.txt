@@ -23,6 +23,7 @@ DoomEdNums
   30123 = ShadowBeast
   2112 = BeamRevenant
   11300 = StarSpawn
+  13365 = DivinationSphereSpawner	
 }
 
 Gameinfo
