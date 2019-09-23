@@ -38,6 +38,7 @@ DoomEdNums
   13365 = DivinationSphereSpawner	
   30127 = VulgarNew
   10558 = Fleshspawn
+  9494 = Dhole
 }
 
 Gameinfo
