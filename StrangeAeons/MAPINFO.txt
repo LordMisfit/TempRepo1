@@ -8,6 +8,18 @@ episode E1M0
  key = "D"
 }
 
+gameinfo
+{
+ InfoPage = "HELP1"
+ AddInfoPage = "GENHELP", "STATHELP", "FLORA-1", "FLORA-2", "FLORA-3", "FLORA-4", "FLORA-5"
+ TitlePage = "TITLEPI0"
+ CreditPage = "CREDIT"
+ AddCreditPage = "CREDIT2"
+ borderflat = "FIGHT1"
+ drawreadthis = true
+ titletime = 6
+}
+
 DoomEdNums
 {
   30128 = Roach	
