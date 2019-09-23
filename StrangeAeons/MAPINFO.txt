@@ -22,6 +22,15 @@ gameinfo
 
 DoomEdNums
 {
+  31893 = PurpleTentacle
+  7801 = Nyarlathotep	
+  31995 = Skeleton
+  26001 = StarVampire
+  19998 = LengSpiderling
+  19999 = LengSpider
+  29998 = SpiderGodling	
+  29999 = SpiderGod	
+  10077 = DShambler
   30128 = Roach	
   30120 = Devil
   3201 = RapidFireTrooper
