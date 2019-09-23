@@ -36,6 +36,8 @@ DoomEdNums
   2112 = BeamRevenant
   11300 = StarSpawn
   13365 = DivinationSphereSpawner	
+  30127 = VulgarNew
+  10558 = Fleshspawn
 }
 
 Gameinfo
