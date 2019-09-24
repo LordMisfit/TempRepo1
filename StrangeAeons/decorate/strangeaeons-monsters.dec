@@ -4713,3 +4713,346 @@ actor PurpleTentacle : AetheriusMonsterZSC 31893
 	}
 }
 
+// :V
+actor Nyarlathotep : AetheriusMonsterZSC 7801
+{
+	//$Angled
+	//$Color 12
+	//$Category "Strange Aeons Monsters"
+	spawnid 171
+	obituary "%o was smote by the hand of The Crawling Chaos."
+	tag "\cfNyarlathotep, The Crawling Chaos\c-"
+	health 80000 // 4000
+	radius 20
+	height 80
+	meleeDamage 3
+	mass 100
+	speed 30
+	painchance 100
+	Painchance "Fist", 150 // Fist attacks have a +50% chance of stunning an enemy
+	Painchance "Kick", 250 // Kick attacks have a +150% chance of stunning an enemy
+	Painchance "Gauntlets", 100 // Fist attacks have a +50% chance of stunning an enemy
+	DamageFactor "Crush", 2.0
+	SEESOUND "wizard/sight"
+	painsound "wizard/pain"
+	deathsound "wizard/death"
+	activesound "wizard/active"
+	MONSTER
+	+FLOAT
+	+NOGRAVITY
+	+NOTARGET
+	+STEALTH
+	+NOINFIGHTING
+	-SOLID
+	+BOSS
+	+BOSSDEATH
+	states
+	{
+		Spawn:
+			LMWZ E 10 A_Look
+			loop
+
+		See:
+			LMWZ EEFFEEFF 1 
+			{
+				A_FastChase;
+			}
+			loop
+
+		Missile:
+			LMWZ E 0 A_jump(256,"wraiths","FloorShot","magic")
+			goto See
+
+		Wraiths:
+			LMWZ E 0 
+			{
+				A_SetShootable;
+			}
+			LMWZ EFG 10 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 200) { A_SetTics(5); }
+				else if (levelbehavior > 0 && user_monsterlevel > 160) { A_SetTics(6); }
+				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(7); }
+				else if (levelbehavior > 0 && user_monsterlevel > 80) { A_SetTics(8); }
+				else if (levelbehavior > 0 && user_monsterlevel > 40) { A_SetTics(9); }
+				A_FaceTarget;
+			}
+			TNT1 AAAAA 0 
+			{
+				A_MonsterCrisisCheck;
+				A_CrisisSpawnItemEx("ShadowBeastCreature", 0, 0, random(16,48), random(0,8), random(0,8), random(0,8), random(0,359), 0);
+			}
+			LMWZ G 5
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 270) { A_SetTics(2); }
+				else if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(4); }
+			}
+			LMWZ E 5 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 270) { A_SetTics(2); }
+				else if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(4); }
+				A_UnSetShootable;
+			}
+			LMWZ E 1 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 240) { A_SetTics(0); }
+				A_PlaySound("wizard/tele");
+			}
+			Goto See
+		FloorShot:
+			LMWZ E 0 
+			{
+				A_SetShootable;
+			}
+			LMWZ F 10 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 200) { A_SetTics(5); }
+				else if (levelbehavior > 0 && user_monsterlevel > 160) { A_SetTics(6); }
+				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(7); }
+				else if (levelbehavior > 0 && user_monsterlevel > 80) { A_SetTics(8); }
+				else if (levelbehavior > 0 && user_monsterlevel > 40) { A_SetTics(9); }
+				A_FaceTarget;
+			}
+			LMWZ G 0 
+			{
+				A_MonsterCrisisCheck;
+				A_CrisisSpawnProjectile("FloorShot", "FloorShotCrisis", 60, 0, 0);
+			}
+			LMWZ GGG 10 bright 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 200) { A_SetTics(5); }
+				else if (levelbehavior > 0 && user_monsterlevel > 160) { A_SetTics(6); }
+				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(7); }
+				else if (levelbehavior > 0 && user_monsterlevel > 80) { A_SetTics(8); }
+				else if (levelbehavior > 0 && user_monsterlevel > 40) { A_SetTics(9); }
+				A_FaceTarget;
+			}
+			LMWZ E 5 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 270) { A_SetTics(2); }
+				else if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(4); }
+				A_UnSetShootable;
+			}
+			LMWZ E 1 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 240) { A_SetTics(0); }
+				A_PlaySound("wizard/tele");
+			}
+			goto See
+		Magic:
+			LMWZ E 0 
+			{
+				A_SetShootable;
+			}
+			LMWZ E 10 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 200) { A_SetTics(5); }
+				else if (levelbehavior > 0 && user_monsterlevel > 160) { A_SetTics(6); }
+				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(7); }
+				else if (levelbehavior > 0 && user_monsterlevel > 80) { A_SetTics(8); }
+				else if (levelbehavior > 0 && user_monsterlevel > 40) { A_SetTics(9); }
+				A_FaceTarget;
+			}
+			LMWZ E 4 bright 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(2); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(3); }
+				A_MonsterCrisisCheck;
+				A_CrisisSpawnProjectile("MagicBlast", "MagicBlastCrisis", 90, 30, 0);
+				A_FaceTarget;
+			}
+			LMWZ E 4 bright 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(2); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(3); }
+				A_MonsterCrisisCheck;
+				A_CrisisSpawnProjectile("MagicBlast", "MagicBlastCrisis", 90, -30, 0);
+				A_FaceTarget;
+			}
+			LMWZ E 4 bright 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(2); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(3); }
+				A_MonsterCrisisCheck;
+				A_CrisisSpawnProjectile("MagicBlast", "MagicBlastCrisis", 55, -30, 0);
+				A_FaceTarget;
+			}
+			LMWZ E 4 bright 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(2); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(3); }
+				A_MonsterCrisisCheck;
+				A_CrisisSpawnProjectile("MagicBlast", "MagicBlastCrisis", 55, 30, 0);
+				A_FaceTarget;
+			}
+			LMWZ E 5 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 270) { A_SetTics(2); }
+				else if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(4); }
+				A_UnSetShootable;
+			}
+			LMWZ E 1 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 240) { A_SetTics(0); }
+				A_PlaySound("wizard/tele");
+			}
+			goto See
+
+		Pain:
+			LMWZ I 3
+			LMWZ I 5 A_DVDSPain
+			LMWZ I 0 A_PlaySound ("wizard/tele")
+			Goto See
+		Pain.Fist:
+			LMWZ I 3
+			LMWZ I 5 A_DVDSPain
+			LMWZ II 3
+			LMWZ I 0 A_PlaySound ("wizard/tele")
+			Goto See
+		Pain.Kick:
+			LMWZ I 3
+			LMWZ I 5 A_DVDSPain
+			LMWZ IIII 3
+			LMWZ I 0 A_PlaySound ("wizard/tele")
+			Goto See
+		Pain.Eldritch:
+		Pain.Sceptre:
+			LMWZ I 3
+			LMWZ I 5 A_DVDSPain
+			LMWZ IIIIIIII 3
+			LMWZ I 0 A_PlaySound ("wizard/tele")
+			Goto See
+
+		Death:
+			TNT1 A 0 A_DVDSNormalDeath(-2,0,1)
+			LMWZ J 6 A_Scream
+			LMWZ K 6 A_NoBlocking
+			LMWZ LMNO 6
+			LMWZ P 0 A_BossDeath
+			LMWZ P -1
+			Stop
+	}
+}
+
+ACTOR dragontrail
+{
+	Radius 0
+	Height 1
+	Speed 0
+	PROJECTILE
+	RENDERSTYLE ADD
+	ALPHA 1
+	States
+	{
+		Spawn:
+			NULL A 2 Bright
+			BOOM ABC 2 Bright
+			Stop 
+	}
+}
+
+ACTOR FloorShot : AetheriusProjectileZSC
+{
+	Radius 5
+	Height 5
+	Speed 15
+	ReactionTime 175
+	Damage (11 * random(1,8))
+	ExplosionDamage 10
+	ExplosionRadius 128
+	DamageType fire
+	RenderStyle ADD
+	Alpha 1
+	PROJECTILE
+	DONTHURTSHOOTER
+	+FRIENDLY
+	+SEEKERMISSILE
+	+THRUGHOST
+	+FLOORHUGGER  
+	-NOGRAVITY
+	Seesound "weapons/diasht"
+	DeathSound "weapons/boom1"   
+	States
+	{
+		Spawn:      
+			NULL A 1 Bright A_SeekerMissile(0,3)
+			NULL A 0 Bright 
+			NULL A 0 Bright A_CustomMissile("floorPuff",0,0,0,0)
+			loop
+		Death:
+			NUCK A 4 Bright A_Explode
+			NUCK B 4 Bright 
+			NUCK CDE 3 Bright
+			stop
+	}
+}
+
+ACTOR FloorPuff
+{
+	Radius 1
+	Height 1
+	Speed 0
+	RENDERSTYLE ADD
+	DamageType fire
+	ALPHA 1
+	PROJECTILE
+	DONTHURTSHOOTER
+	+FRIENDLY
+	+FLOORHUGGER
+	-NOGRAVITY
+	States
+	{
+		Spawn:
+			FLOR ABCDEFGH 3 Bright 
+			stop
+	}
+}
+
+
+ACTOR MagicBlast : AetheriusProjectileZSC
+{
+	Radius 8
+	Height 8
+	Speed 25
+	Damage (5 * random(1,8))
+	PROJECTILE
+	RENDERSTYLE ADD
+	ALPHA 1
+	DamageType Fire
+	+THRUGHOST
+	SeeSound "monster/dknmsl"
+	States
+	{
+		Spawn:
+			SHOK A 2 Bright A_CStaffMissileSlither
+			SHOK A 0 A_SpawnItem("magicPuff",0,0)
+			SHOK B 2 Bright A_CStaffMissileSlither
+			SHOK B 0 A_SpawnItem("magicPuff",0,0)
+			SHOK C 2 Bright A_BishopMissileWeave
+			SHOK C 0 A_SpawnItem("magicPuff",0,0)	  
+			loop
+		Death:
+			SHOK DEF 4 Bright
+			stop
+	}
+}
+
+ACTOR magicPuff
+{
+	Radius 1
+	Height 1
+	Speed 0
+	RENDERSTYLE ADD
+	ALPHA 1
+	PROJECTILE
+	States
+	{
+		Spawn:
+			SHOK ABCABCABC 3 Bright A_FadeOut(0.10) 
+			stop
+	}
+}
