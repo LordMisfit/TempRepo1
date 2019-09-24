@@ -460,118 +460,12 @@ Actor FakeLengSpider 19991
 	}
 }
 
-ACTOR StarVampire 26001
-{
-	//$Category SEMonsters
-	Health 60
-	Radius 20
-	Height 56
-	Speed 15
-	PainChance 144
-	MONSTER 
-	+STEALTH
-	+NOGRAVITY
-	+FLOAT
-	RenderStyle Add
-	Alpha 0.4
-	SeeSound "starvamp/sight"
-	PainSound "starvamp/pain"
-	DeathSound "starvamp/death"
-	ActiveSound "starvamp/active"
-	MeleeSound "starvamp/melee"
-	HitObituary "%o was drained by a star vampire."
-	MeleeDamage 4
-	States
-	{
-		Spawn:
-			VAMP AB 10 A_Look
-			Loop
-		See:
-			VAMP AABBCCDD 3 A_Chase
-			Loop
-		Melee:
-			VAMP EF 9 A_FaceTarget
-			VAMP G 6 A_MeleeAttack
-			Goto See
-		Pain:
-			VAMP H 10 A_Pain
-			Goto See
-		Death:
-			VAMP I 3 A_ScreamAndUnblock
-			VAMP JKLM 5
-			VAMP N -1
-			Stop
-	}
-}
-
-actor Skeleton 31995
-{
-	//$Category SEMonsters
-	hitobituary "%o was boned by a skeleton."
-	health 100
-	painchance 180
-	speed 10
-	radius 24
-	height 56
-	mass 100
-	scale 0.9
-	seesound "skelsit"
-	painsound "skelpai"
-	deathsound "skeldth"
-	MONSTER
-	+NOBLOOD
-	-COUNTKILL
-	states
-	{
-		Spawn:
-			SKLT R 10 A_Look
-			loop 
-		See:
-			SKLT AABBCCDDEEFF 2 A_Chase
-			loop
-		Melee:
-			SKLT GH 4 A_FaceTarget 
-			SKLT I 4 A_playsound("skelatt",chan_auto)  
-			SKLT J 4 A_CustomMeleeAttack(random(1,6)*4,"swordhit",none)     
-			SKLT K 4 A_FaceTarget    
-			goto See
-		Pain:
-			SKLT L 2
-			SKLT L 2 A_Pain
-			goto See
-		Death:
-			SKLT M 0 A_Jump(192,7)
-			SKLT M 4 A_Scream
-			SKLT N 4 A_Fall
-			SKLT O 8 A_Noblocking
-			SKLT P 12  
-			SKLT Q -1 
-			stop
-		SKLT M 4 A_Scream
-			SKLT N 4 A_Fall
-			SKLT O 8 A_Noblocking
-			SKLT P 12  
-			SKLT Q 0 A_Jump(192,4)
-			SKLT Q 0 A_Jump(128,4)
-			SKLT Q 0 A_Jump(96,4)
-			SKLT Q 0 A_Jump(64,4)
-			SKLT Q 115
-			SKLT Q 115
-			SKLT Q 115
-			SKLT Q 115
-			SKLT Q 115
-			SKLT Q -1 Thing_Raise(0)
-		Raise:
-			SKLT PONM 4
-			goto see
-	}
-}
-
 actor Nyarlathotep 7801
 {
 	//$Category SEMonsters
 	spawnid 171
-	obituary "%o was smote by the High Priest Not To Be Described."
+	obituary "%o was smote by the hand of The Crawling Chaos."
+	tag "\cfNyarlathotep, The Crawling Chaos\c-"
 	health 4000
 	radius 20
 	height 80
@@ -761,56 +655,6 @@ ACTOR magicPuff
 		Spawn:
 			SHOK ABCABCABC 3 Bright A_FadeOut(0.10) 
 			stop
-	}
-}
-
-// Evil Tentacle//
-
-actor PurpleTentacle 31893
-{
-	//$Category SEMonsters
-	obituary "%o feels great, stronger, more aggressive."
-	health 120
-	painchance 90
-	speed 10
-	radius 20
-	height 56
-	mass 100
-	seesound "slimeworm/sight"
-	attacksound "slimeworm/melee"
-	painsound "slimeworm/pain"
-	deathsound "slimeworm/death"
-	activesound "slimeworm/active"
-	bloodcolor green
-	MONSTER
-	+FLOORCLIP
-	-COUNTKILL
-	states
-	{
-		Spawn:
-			TENT A 10 A_Look
-			loop
-		See:
-			TENT AABBCCDD 2 Fast A_Chase
-			loop
-		Melee:
-			TENT FG 6 A_FaceTarget
-			TENT H 6 A_SargAttack
-			goto See
-		Pain:
-			TENT I 2
-			TENT I 2 A_Pain
-			goto See
-		Death:
-			TENT I 8
-			TENT J 8 A_Scream
-			TENT K 4
-			TENT L 4 A_NoBlocking
-			TENT L -1
-			stop
-		Raise:
-			TENT MLKJI 5
-			goto See
 	}
 }
 
