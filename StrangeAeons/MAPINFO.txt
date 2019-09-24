@@ -22,6 +22,7 @@ gameinfo
 
 DoomEdNums
 {
+  11111 = ScepterOfSouls
   31893 = PurpleTentacle
   7801 = Nyarlathotep	
   31995 = Skeleton
@@ -49,7 +50,7 @@ DoomEdNums
   10558 = Fleshspawn
   9494 = Dhole
 }
-
+		
 Gameinfo
 {
  titlemusic = "BGMINTRO"

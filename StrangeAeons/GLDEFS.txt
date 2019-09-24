@@ -2159,43 +2159,6 @@ Map BMRFTRF5
 DisableFullBright
 }
 
-Pointlight SoulScepterAmmo1
-{
-Color 1.0 1.0 1.0
-Size 12
-}
-
-Pointlight SoulScepterHefty1
-{
-Color 1.0 1.0 1.0
-Size 20
-}
-
-Pointlight SoulScepterHefty2
-{
-Color 1.0 1.0 1.0
-Size 24
-}
-
-Pointlight SoulScepterHefty3
-{
-Color 1.0 1.0 1.0
-Size 28
-}
-
-Object SoulScepterAmmo
-{
-Frame SSPA { Light SoulScepterAmmo1 }
-}
-
-Object SoulScepterHefty
-{
-Frame SSPAE { Light SoulScepterHefty1 }
-Frame SSPAF { Light SoulScepterHefty2 }
-Frame SSPAG { Light SoulScepterHefty3 }
-Frame SSPAH { Light SoulScepterHefty2 }
-}
-
 Pointlight ElectroBlast1
 {
 Color 0.0 1.0 1.0
