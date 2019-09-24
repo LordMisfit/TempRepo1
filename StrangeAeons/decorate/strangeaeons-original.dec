@@ -5,12 +5,13 @@ ACTOR TravelerPlayer : DoomPlayer
 	Player.StartItem "Fist"
 	//Player.StartItem ClassID 1
 	Player.Weaponslot 1, "Fist"
-	Player.Weaponslot 2, "ScepterofSouls","ImpalerXBow","DualImpalerXBow"
+	Player.Weaponslot 2, "ImpalerXBow","DualImpalerXBow"
 	Player.Weaponslot 3, "Shotgun"
 	Player.Weaponslot 4, "AK47"
 	Player.Weaponslot 5, "RocketLauncher"
 	Player.Weaponslot 6, "Yithgun"
 	Player.Weaponslot 7, "BFG9000"
+	Player.Weaponslot 9, "ScepterofSouls","DualScepterofSouls"
 }
 
 Actor NewMummy : Mummy replaces Mummy //This is just a demo for the soul-sucking

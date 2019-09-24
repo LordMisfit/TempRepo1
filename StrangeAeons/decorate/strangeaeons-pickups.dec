@@ -732,7 +732,7 @@ Actor ScepterOfSouls : FloraWeapon 11111
 			SLSP G 2 Bright
 			{
 				if (CallACS("MiscVarCheckDECORATE",10033) >= 3) { A_SetTics(1); }
-				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(65,1), 1, 1, "SoulScepterPuff", 256);
+				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(65,1), 1, 1, "SoulScepterPuff", A_GetSoulSceptreRange(128));
 			}
 			SLSP H 2 Bright
 			{
@@ -741,7 +741,7 @@ Actor ScepterOfSouls : FloraWeapon 11111
 			SLSP I 2 Bright
 			{
 				if (CallACS("MiscVarCheckDECORATE",10033) >= 3) { A_SetTics(1); }
-				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(65,1), 1, 1, "SoulScepterPuff", 256);
+				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(65,1), 1, 1, "SoulScepterPuff", A_GetSoulSceptreRange(128));
 			}
 			SLSP J 2 Bright
 			{
@@ -790,7 +790,7 @@ Actor ScepterOfSouls : FloraWeapon 11111
 			SLSP G 2 Bright 
 			{
 				if (CallACS("MiscVarCheckDECORATE",10033) >= 3) { A_SetTics(1); }
-				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(66,1), 1, 1, "SoulScepterPowerPuff", 256);
+				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(66,1), 1, 1, "SoulScepterPowerPuff", A_GetSoulSceptreRange(128));
 			}
 			SLSP H 2 Bright
 			{
@@ -799,7 +799,7 @@ Actor ScepterOfSouls : FloraWeapon 11111
 			SLSP I 2 Bright
 			{
 				if (CallACS("MiscVarCheckDECORATE",10033) >= 3) { A_SetTics(1); }
-				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(66,1), 1, 1, "SoulScepterPowerPuff", 256);
+				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(66,1), 1, 1, "SoulScepterPowerPuff", A_GetSoulSceptreRange(128));
 			}
 			SLSP J 2 Bright
 			{
@@ -808,7 +808,7 @@ Actor ScepterOfSouls : FloraWeapon 11111
 			SLSP K 2 Bright
 			{
 				if (CallACS("MiscVarCheckDECORATE",10033) >= 3) { A_SetTics(1); }
-				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(66,1), 1, 1, "SoulScepterPowerPuff", 256);
+				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(66,1), 1, 1, "SoulScepterPowerPuff", A_GetSoulSceptreRange(128));
 			}
 			SLSP K 0 Bright 
 			{
@@ -909,8 +909,8 @@ Actor DualScepterOfSouls : FloraWeapon 11112
 			SLS2 G 2 Bright
 			{
 				if (CallACS("MiscVarCheckDECORATE",10033) >= 3) { A_SetTics(1); }
-				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(67,1), 1, 1, "DualSoulScepterPuff", 256);
-				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(67,1), 1, 1, "DualSoulScepterPuff", 256);
+				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(67,1), 1, 1, "DualSoulScepterPuff", A_GetSoulSceptreRange(128));
+				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(67,1), 1, 1, "DualSoulScepterPuff", A_GetSoulSceptreRange(128));
 			}
 			SLS2 H 2 Bright
 			{
@@ -919,8 +919,8 @@ Actor DualScepterOfSouls : FloraWeapon 11112
 			SLS2 I 2 Bright
 			{
 				if (CallACS("MiscVarCheckDECORATE",10033) >= 3) { A_SetTics(1); }
-				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(67,1), 1, 1, "DualSoulScepterPuff", 256);
-				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(67,1), 1, 1, "DualSoulScepterPuff", 256);
+				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(67,1), 1, 1, "DualSoulScepterPuff", A_GetSoulSceptreRange(128));
+				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(67,1), 1, 1, "DualSoulScepterPuff", A_GetSoulSceptreRange(128));
 			}
 			SLS2 J 2 Bright
 			{
@@ -929,8 +929,8 @@ Actor DualScepterOfSouls : FloraWeapon 11112
 			SLS2 K 2 Bright 
 			{
 				if (CallACS("MiscVarCheckDECORATE",10033) >= 3) { A_SetTics(1); }
-				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(67,1), 1, 1, "DualSoulScepterPuff", 256);
-				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(67,1), 1, 1, "DualSoulScepterPuff", 256);
+				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(67,1), 1, 1, "DualSoulScepterPuff", A_GetSoulSceptreRange(128));
+				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(67,1), 1, 1, "DualSoulScepterPuff", A_GetSoulSceptreRange(128));
 			}
 			SLSP K 0 Bright 
 			{
@@ -970,8 +970,8 @@ Actor DualScepterOfSouls : FloraWeapon 11112
 			SLS2 G 2 Bright 
 			{
 				if (CallACS("MiscVarCheckDECORATE",10033) >= 3) { A_SetTics(1); }
-				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(68,1), 1, 1, "DualSoulScepterPowerPuff", 256);
-				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(68,1), 1, 1, "DualSoulScepterPowerPuff", 256);
+				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(68,1), 1, 1, "DualSoulScepterPowerPuff", A_GetSoulSceptreRange(128));
+				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(68,1), 1, 1, "DualSoulScepterPowerPuff", A_GetSoulSceptreRange(128));
 			}
 			SLS2 H 2 Bright
 			{
@@ -980,8 +980,8 @@ Actor DualScepterOfSouls : FloraWeapon 11112
 			SLS2 I 2 Bright
 			{
 				if (CallACS("MiscVarCheckDECORATE",10033) >= 3) { A_SetTics(1); }
-				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(68,1), 1, 1, "DualSoulScepterPowerPuff", 256);
-				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(68,1), 1, 1, "DualSoulScepterPowerPuff", 256);
+				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(68,1), 1, 1, "DualSoulScepterPowerPuff", A_GetSoulSceptreRange(128));
+				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(68,1), 1, 1, "DualSoulScepterPowerPuff", A_GetSoulSceptreRange(128));
 			}
 			SLS2 J 2 Bright
 			{
@@ -990,8 +990,8 @@ Actor DualScepterOfSouls : FloraWeapon 11112
 			SLS2 K 2 Bright
 			{
 				if (CallACS("MiscVarCheckDECORATE",10033) >= 3) { A_SetTics(1); }
-				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(68,1), 1, 1, "DualSoulScepterPowerPuff", 256);
-				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(68,1), 1, 1, "DualSoulScepterPowerPuff", 256);
+				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(68,1), 1, 1, "DualSoulScepterPowerPuff", A_GetSoulSceptreRange(128));
+				A_SpreadAuraCustomPunch(A_GetPlayerAttackDamage(68,1), 1, 1, "DualSoulScepterPowerPuff", A_GetSoulSceptreRange(128));
 			}
 			SLSP K 0 Bright 
 			{
