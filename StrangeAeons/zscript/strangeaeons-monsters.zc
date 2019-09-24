@@ -492,14 +492,23 @@ Class Grell : AetheriusMonsterZSC
 		Painchance "Gauntlets", 192; // Fist attacks have a +50% chance of stunning an enemy
 		Painchance "Eldritch", 150;
 		DamageFactor "Eldritch", 2.5;
+		Damagefactor "Stomp", 2.5;
+		Damagefactor "Trample", 2.5;
+		DamageFactor "Melee", 2.5;
+		DamageFactor "Fist", 2.5;
+		DamageFactor "Kick", 2.5;
+		DamageFactor "Gauntlets", 2.5;
+		DamageFactor "Chainsaw", 2.5;
+		DamageFactor "Sceptre", 2.5;
 		seesound "grell/sight";
 		painsound "grell/pain";
 		deathsound "grell/death";
 		activesound "grell/active";
 		Monster;
-		+DROPOFF
+		+FLOAT
 		+NOGRAVITY
 		+DONTHARMCLASS
+		+DROPOFF
 	}
 	
 	States

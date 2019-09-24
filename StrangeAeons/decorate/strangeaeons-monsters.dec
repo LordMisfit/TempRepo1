@@ -1997,6 +1997,7 @@ ACTOR BeamRevenant : DSRevenant 2112
 				else if (levelbehavior > 0 && user_monsterlevel > 80) { A_SetTics(8); }
 				else if (levelbehavior > 0 && user_monsterlevel > 40) { A_SetTics(9); }
 
+				A_MonsterCrisisCheck;
 				A_CrisisSpawnProjectile("Revrailshot", "RevrailshotCrisis", 60, 0, random(-2,2),0);
 			}
 			RASK K 10 
@@ -2225,6 +2226,8 @@ actor StarSpawn : AetheriusMonsterZSC replaces BaronofHell 11300
 				else if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(5); }
 				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(6); }
 				else if (levelbehavior > 0 && user_monsterlevel > 60) { A_SetTics(7); }
+
+				A_MonsterCrisisCheck;
 				A_CrisisSpawnProjectile("DeepOneBall","DeepOneBallCrisis",96,32);
 			}
 			CUTH K 0 bright 
@@ -3232,21 +3235,30 @@ ACTOR Dhole : AetheriusMonsterZSC replaces Cyberdemon 9494
 			DHOL K 2 
 			{
 				if (levelbehavior > 0 && user_monsterlevel > 300) { A_SetTics(1); }
+
+				A_MonsterCrisisCheck;
 				A_CrisisSpawnProjectile("GrellBall", "GrellBallCrisis", 80, 0, -8, 0);
+
 				A_SetInventory("GlaakiPeekDefense",0);
 				A_SetInventory("GlaakiBiteVulnerability",1);
 			}
 			DHOL K 2 
 			{
 				if (levelbehavior > 0 && user_monsterlevel > 300) { A_SetTics(1); }
+
+				A_MonsterCrisisCheck;
 				A_CrisisSpawnProjectile("GrellBall", "GrellBallCrisis", 90, 0, 0, 0);
+
 				A_SetInventory("GlaakiPeekDefense",0);
 				A_SetInventory("GlaakiBiteVulnerability",1);
 			}
 			DHOL K 2 
 			{
 				if (levelbehavior > 0 && user_monsterlevel > 300) { A_SetTics(1); }
+
+				A_MonsterCrisisCheck;
 				A_CrisisSpawnProjectile("GrellBall", "GrellBallCrisis", 80, 0, 8, 0);
+
 				A_SetInventory("GlaakiPeekDefense",0);
 				A_SetInventory("GlaakiBiteVulnerability",1);
 			}
@@ -3437,6 +3449,7 @@ Actor DShambler : AetheriusMonsterZSC 10077
 					if (random(1,16) == 1) { return state("Missile"); }
 					return state("");
 				}
+				return state("");
 			}
 			Goto See
 		Melee:
@@ -3580,3 +3593,784 @@ Actor WraithTeleporting : Inventory
 {
 	Inventory.MaxAmount 3
 }
+
+ACTOR SpiderGod : AetheriusMonsterZSC replaces SpiderMastermind 29999
+{
+	//$Angled
+	//$Color 12
+	//$Category "Strange Aeons Monsters"
+	Tag "The Spinner in Darkness"
+	Radius 72
+	Height 120
+	Health 4000
+	Speed 35
+	mass 999999
+	meleerange 76
+	meleedamage 12
+	painchance 10
+	Painchance "Fist", 15 // Fist attacks have a +50% chance of stunning an enemy
+	Painchance "Kick", 25 // Kick attacks have a +150% chance of stunning an enemy
+	Painchance "Gauntlets", 15 // Fist attacks have a +50% chance of stunning an enemy
+	DamageFactor "Crush", 0.2
+	Painchance "Eldritch", 30
+	DamageFactor "Eldritch", 2.5
+	translation "152:159=216:223,9:9=223:223,76:70=216:223,129:132=216:223"
+	BloodColor Orange
+	scale 2.0
+	SeeSound "spider2/sight"
+	DeathSound "spider2/death"
+	PainSound "spider2/pain"
+	ActiveSound "spider2/active"
+	MeleeSound "misc/gibbed"
+	Obituary "%o was immolated by the Spinner in Darkness."
+	HitObituary "%o was devoured by the Spinner in Darkness."
+	Dropitem SpiderGodling
+	MONSTER
+	+BOSS
+	+NORADIUSDMG
+	+MISSILEMORE
+	+MISSILEEVENMORE
+	+DONTHURTSPECIES
+	+NOTARGET
+	+FLOORCLIP
+	States
+	{
+		Spawn:
+			SPI2 AAAAAAAAAA 10 A_Look
+			SPI2 A 0 A_Playsound("spider/step")
+			SPI2 U 50 ThrustThingZ( 0, 100, 0, 1)
+			SPI2 A 0 Radius_Quake(9,64,0,16,0)
+			SPI2 A 0 A_Playsound("spider/land")
+			loop
+		See:
+			SPI2 ABCD 2 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 60) { A_ChangeFlag("AVOIDMELEE",1); }
+				if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(1); }
+				A_Chase;
+
+				chasetimer++;
+				if (chasetimer >= 4)
+				{
+					A_playsound("spider/step");
+					chasetimer = 0;
+				}
+			}
+			loop
+
+		Melee:
+			SPI2 E 5 
+			{
+				A_Facetarget;
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(4); }
+				A_CrisisMeleeAttack(random(1,10)*12,"misc/gibbed","misc/gibbed","Melee",true);
+			}
+			SPI2 A 13 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(7); }
+				else if (levelbehavior > 0 && user_monsterlevel > 150) { A_SetTics(8); }
+				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(9); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(10); }
+				else if (levelbehavior > 0 && user_monsterlevel > 60) { A_SetTics(11); }
+				else if (levelbehavior > 0 && user_monsterlevel > 30) { A_SetTics(12); }
+				A_Facetarget;
+			}
+			goto see
+
+		Missile:
+			MNTR V 0 A_Jump (82,29)
+			MNTR V 0 A_Jump (32,18)
+			SPI2 U 5 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(4); }
+				A_Facetarget;
+			}
+			TNT1 A 0 A_jumpifcloser(1024,15)
+			SPI2 E 0 A_Facetarget
+			MNTR E 0 A_Playsound ("spider/step")
+			SPI2 UUUUUUUUUU 5 
+			{
+				A_MonsterCrisisCheck; // SkullAttack
+				if(user_canusecrisisatk == 1)
+				{
+					A_PlayCrisisAtkSound;
+					A_SkullAttack(25);
+					A_CustomMeleeAttack(random(1,8)*2,"none","none","Melee",true);
+				}
+				else
+				{
+					A_SkullAttack(20);
+				}
+			}
+			SPI2 A 1 
+			{
+				A_Playsound ("spider/land");
+				if (levelbehavior > 0 && user_monsterlevel > 240) { A_SetTics(0); }
+				A_Stop;
+			}
+			goto see
+			SPI2 U 5 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(4); }
+				A_Facetarget;
+			}
+			SPI2 X 2 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 240) { A_SetTics(1); }
+				A_MonsterCrisisCheck;
+				A_CrisisSpawnProjectile("FlameShot", "FlameShotCrisis", 54, 0, -8, 0);
+			}
+			SPI2 X 2
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 240) { A_SetTics(1); }
+				A_MonsterCrisisCheck;
+				A_CrisisSpawnProjectile("FlameShot", "FlameShotCrisis", 54, 0, 0, 0);
+			}
+			SPI2 X 2
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 240) { A_SetTics(1); }
+				A_MonsterCrisisCheck;
+				A_CrisisSpawnProjectile("FlameShot", "FlameShotCrisis", 54, 0, 8, 0);
+			}
+			SPI2 X 3 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(2); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(3); }
+				A_Facetarget;
+			}
+			SPI2 U 5
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(4); }
+				A_Facetarget;
+			}
+			goto see
+			SPI2 E 5
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(4); }
+				A_Facetarget;
+			}
+			SPI2 EEE 6 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(4); }
+				else if (levelbehavior > 0 && user_monsterlevel > 60) { A_SetTics(5); }
+				A_ThrowGrenade("LengSpiderling", 85, 10, 20);
+			}
+			SPI2 E 5
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(4); }
+				A_Facetarget;
+			}
+			goto see
+			SPI2 E 5
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(4); }
+				A_Facetarget;
+			}
+			SPI2 U 5 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(4); }
+				A_Playsound("spider2/sight");
+			}
+			SPI2 X 2 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 240) { A_SetTics(1); }
+				A_Facetarget;
+				A_MonsterCrisisCheck;
+				A_CrisisSpawnProjectile("GrellBall", "GrellBallCrisis", 54, 0, -8, 0);
+			}
+			SPI2 X 2 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 240) { A_SetTics(1); }
+				A_Facetarget;
+				A_MonsterCrisisCheck;
+				A_CrisisSpawnProjectile("GrellBall", "GrellBallCrisis", 54, 0, 0, 0);
+			}
+			SPI2 X 2 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 240) { A_SetTics(1); }
+				A_Facetarget;
+				A_MonsterCrisisCheck;
+				A_CrisisSpawnProjectile("GrellBall", "GrellBallCrisis", 54, 0, 8, 0);
+			}
+			SPI2 U 5
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(4); }
+				A_Facetarget;
+			}
+			goto see
+
+		Pain:
+			SPI2 E 2 A_SetTics(random(0,2))
+			SPI2 E 2 A_DVDSPain
+			SPI2 EEE 6 
+			{
+				A_Facetarget;
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(4); }
+				else if (levelbehavior > 0 && user_monsterlevel > 60) { A_SetTics(5); }
+				A_ThrowGrenade("LengSpiderling", 85, 10, 20);
+			}
+			goto see
+		Pain.Fist:
+			SPI2 E 2 A_SetTics(random(0,2))
+			SPI2 E 2 A_DVDSPain
+			SPI2 EE 2
+			SPI2 EEE 6 
+			{
+				A_Facetarget;
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(4); }
+				else if (levelbehavior > 0 && user_monsterlevel > 60) { A_SetTics(5); }
+				A_ThrowGrenade("LengSpiderling", 85, 10, 20);
+			}
+			goto see
+		Pain.Kick:
+			SPI2 E 2 A_SetTics(random(0,2))
+			SPI2 E 2 A_DVDSPain
+			SPI2 EEEE 2
+			SPI2 EEE 6 
+			{
+				A_Facetarget;
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(4); }
+				else if (levelbehavior > 0 && user_monsterlevel > 60) { A_SetTics(5); }
+				A_ThrowGrenade("LengSpiderling", 85, 10, 20);
+			}
+			goto see
+		Pain.Sceptre:
+		Pain.Eldritch:
+			SPI2 E 2 A_SetTics(random(0,2))
+			SPI2 E 2 A_DVDSPain
+			SPI2 EEEEEEEEEEEE 2
+			SPI2 EEE 6 
+			{
+				A_Facetarget;
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(4); }
+				else if (levelbehavior > 0 && user_monsterlevel > 60) { A_SetTics(5); }
+				A_ThrowGrenade("LengSpiderling", 85, 10, 20);
+			}
+			goto See
+
+		Death:
+			TNT1 A 0 A_DVDSNormalDeath(-2,0,1)
+			MNTR A 0 A_Die
+			MNTR A 0 A_Fall
+			SPI2 F 8 bright A_Pain
+			SPI2 G 18 bright A_Scream
+			SPI2 HIJKL 3 bright
+			SPI2 M -1 A_BossDeath
+			stop
+		Raise:
+			stop
+	}
+}
+
+ACTOR FlameShot : FatShotNew
+{
+	DamageType "Fire"
+	Damage (8 * random(1,8))
+	Speed 25
+	SeeSound "skeleton/attack"
+	Decal Scorch
+	States
+	{
+		Spawn:
+			SBAL ABC 5 BRIGHT
+			loop
+		Death:
+			SBAL DEFGH 3 BRIGHT
+			stop
+	}
+}
+
+ACTOR FlameShotCrisis : FatShotCrisis
+{
+	DamageType "Fire"
+	Damage ((8 * CallACS("CrisisMultiplier")) * random(1,8))
+	Speed 25
+	SeeSound "skeleton/attack"
+	Decal Scorch
+	States
+	{
+		Spawn:
+			SBAL AAAAABBBBBCCCCC 1 BRIGHT
+			{
+				user_crisistimer += 1;
+				if (user_crisistimer >= 2) 
+				{ 
+					A_GenerateCrisisParticle(); 
+					user_crisistimer = 0;
+				}
+			}
+			loop
+		Death:
+			SBAL DEFGH 3 BRIGHT
+			stop
+	}
+}
+
+Actor HellRipper : FatShotNew
+{
+	DamageType "Fire"
+	Damage (30 * random(1,8))
+	Speed 50
+	Explosionradius 64
+	ExplosionDamage 50
+	SeeSound "skeleton/attack"
+	Decal Scorch
+	States
+	{
+		Spawn:
+			TNT1 A 1 Bright A_CustomMissile("ArchvileFire2",0,0,90,0)
+			TNT1 A 0 Bright A_CustomMissile("ArchvileFire2",0,0,-90,0)
+			TNT1 A 0 A_JumpIf (z-floorz<24,1)
+			loop
+			TNT1 A 0 A_Explode
+			TNT1 A 0 ThrustThingZ (0, random(2,3), 0, 0)
+			loop
+		Death:
+			TNT1 B 5 A_Burst("ArchvileFire2")
+			stop
+	}
+}
+
+Actor HellRipperCrisis : HellRipper
+{
+	DamageType "Fire"
+	Damage ((30 * random(1,8)) * CallACS("CrisisMultiplier"))
+	Speed 50
+	Explosionradius 64
+	ExplosionDamage 50
+	SeeSound "skeleton/attack"
+	Decal Scorch
+	States
+	{
+		Spawn:
+			TNT1 A 1 Bright 
+			{
+				A_CustomMissile("ArchvileFire2",0,0,90,0);
+				A_CustomMissile("ArchvileFire2",0,0,-90,0);
+				user_crisistimer += 1;
+				if (user_crisistimer >= 2) 
+				{ 
+					A_GenerateCrisisParticle(); 
+					user_crisistimer = 0;
+				}
+			}
+			TNT1 A 0 A_JumpIf (z-floorz<24,1)
+			loop
+			TNT1 A 0 A_Explode
+			TNT1 A 0 ThrustThingZ (0, random(2,3), 0, 0)
+			loop
+		Death:
+			TNT1 B 5 A_Burst("ArchvileFire2")
+			stop
+	}
+}
+
+Actor ArchvileFire2 : ArchvileFireNew
+{
+	Damage (5 * random(1,8))
+	Speed 4
+}
+
+Actor ArchvileFire2Crisis : ArchvileFireCrisis
+{
+	Damage ((5 * random(1,8)) * CallACS("CrisisMultiplier"))
+	Speed 4
+}
+
+ACTOR LengSpider : AetheriusMonsterZSC 19999
+{
+	//$Angled
+	//$Color 12
+	//$Category "Strange Aeons Monsters"
+	Tag "Leng Spider"
+	health 150
+	radius 32
+	height 56
+	speed 12
+	Painchance 200
+	Painchance "Fist", 255 // Fist attacks have a +50% chance of stunning an enemy
+	Painchance "Kick", 255 // Kick attacks have a +150% chance of stunning an enemy
+	Painchance "Gauntlets", 255 // Fist attacks have a +50% chance of stunning an enemy
+	DamageFactor "Crush", 6.4
+	Painchance "Eldritch", 255
+	DamageFactor "Eldritch", 2.5
+	Obituary "%o was devoured by a Leng Spider."
+	HitObituary "%o was devoured by a Leng Spider."
+	SeeSound "spider2/sight"
+	MeleeSound "misc/gibbed"
+	PainSound "spider2/pain"
+	translation 1
+	translation "96:111=64:79"
+	scale 1.0
+	meleedamage 6
+	MONSTER
+	+NOTARGET
+	States
+	{
+		Spawn:
+			GAYS A 1 A_Look
+			loop
+		See:
+			GAYS ABCD 1 
+			{
+				A_Chase;
+			}
+			loop
+		Melee:
+			GAYS E 5 
+			{
+				A_Facetarget;
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(4); }
+				A_CrisisMeleeAttack(random(1,10)*6,"misc/gibbed","misc/gibbed","Melee",true);
+			}
+			GAYS E 13 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(7); }
+				else if (levelbehavior > 0 && user_monsterlevel > 150) { A_SetTics(8); }
+				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(9); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(10); }
+				else if (levelbehavior > 0 && user_monsterlevel > 60) { A_SetTics(11); }
+				else if (levelbehavior > 0 && user_monsterlevel > 30) { A_SetTics(12); }
+				A_Facetarget;
+			}
+			goto see
+
+		Pain:
+			GAYS A 2 A_SetTics(random(0,2))
+			GAYS A 2 A_DVDSPain
+			GAYS A 2
+			goto see
+		Pain.Fist:
+			GAYS A 2 A_SetTics(random(0,2))
+			GAYS A 2 A_DVDSPain
+			GAYS AAA 2
+			goto see
+		Pain.Kick:
+			GAYS A 2 A_SetTics(random(0,2))
+			GAYS A 2 A_DVDSPain
+			GAYS AAAAA 2
+			goto see
+		Pain.Sceptre:
+		Pain.Eldritch:
+			GAYS A 2 A_SetTics(random(0,2))
+			GAYS A 2 A_DVDSPain
+			GAYS AAAAAAAAAAAAA 2
+			goto See
+
+		Death:
+			TNT1 A 0 A_DVDSNormalDeath(-2,0,1)
+			GAYR FEDC 5 A_Setfloorclip
+			GAYR B 5 A_Scream
+			GAYR A 5 A_Die
+			GAYR A 0 A_Fall
+			GAYR A -1
+			stop
+
+		Ice:
+			"####" # 0 A_DVDSIceDeath(-2,0,1)
+			GAYS A 5 A_GenericFreezeDeath
+			GAYS A 1 A_FreezeDeathChunks
+			wait
+	}
+}
+
+Actor SpiderGodling : SpiderGod 29998
+{
+	//$Angled
+	//$Color 12
+	//$Category "Strange Aeons Monsters"
+	Tag "Spinner's Spawn"
+	Obituary "%o was immolated by the Spinner's spawn."
+	HitObituary "%o was devoured by the Spinner's spawn."
+	Health 1000
+	Height 42
+	Radius 56
+	Speed 32
+	MeleeRange 42
+	MeleeDamage 8
+	Painchance 30
+	Painchance "Fist", 45 // Fist attacks have a +50% chance of stunning an enemy
+	Painchance "Kick", 75 // Kick attacks have a +150% chance of stunning an enemy
+	Painchance "Gauntlets", 45 // Fist attacks have a +50% chance of stunning an enemy
+	DamageFactor "Crush", 6.4
+	Painchance "Eldritch", 150
+	DamageFactor "Eldritch", 2.5
+	Dropitem LengspiderLing
+	Scale 1.0
+	Painchance 10
+	-MISSILEEVENMORE
+	-NOTARGET
+	-BOSS
+	States
+	{
+		Spawn:
+			SPI2 AAAAAAAAAA 10 A_Look
+			loop
+		See:
+			SPI2 ABCD 2
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 60) { A_ChangeFlag("AVOIDMELEE",1); }
+				if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(1); }
+				A_Chase;
+			}
+			loop
+		Missile:
+			TNT1 A 0 A_jumpifcloser(1024,14)
+			SPI2 E 0 A_Facetarget
+			MNTR E 0 A_Playsound ("spider/step")
+			SPI2 UUUUUUUUUU 5 
+			{
+				A_MonsterCrisisCheck; // SkullAttack
+				if(user_canusecrisisatk == 1)
+				{
+					A_PlayCrisisAtkSound;
+					A_SkullAttack(25);
+					A_CustomMeleeAttack(random(1,8)*8,"none","none","Melee",true);
+				}
+				else
+				{
+					A_SkullAttack(20);
+				}
+			}
+			MNTR A 0 A_Playsound ("spider/land")
+			SPI2 A 1 A_stop
+			MNTR V 0 A_Jump (82,11)
+			MNTR V 0 A_Jump (32,5)
+			SPI2 U 5 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(4); }
+				A_Facetarget;
+			}
+			SPI2 X 2 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 240) { A_SetTics(1); }
+				A_MonsterCrisisCheck;
+				A_CrisisSpawnProjectile("GrellBall", "GrellBallCrisis", 16, 0, 0, 0);
+			}
+			SPI2 X 3 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 240) { A_SetTics(1); }
+				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(2); }
+				A_Facetarget;
+			}
+			SPI2 U 5
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(4); }
+				A_Facetarget;
+			}
+			goto see
+			SPI2 E 5
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(4); }
+				A_Facetarget;
+			}
+			SPI2 EEE 6 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(4); }
+				else if (levelbehavior > 0 && user_monsterlevel > 60) { A_SetTics(5); }
+				A_ThrowGrenade("LengSpiderling", 85, 10, 20);
+			}
+			SPI2 E 5
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(4); }
+				A_Facetarget;
+			}
+			goto see
+			SPI2 E 5
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(4); }
+				A_Facetarget;
+			}
+			SPI2 U 5 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(4); }
+				A_Playsound("spider2/sight");
+				A_Facetarget;
+			}
+			SPI2 X 5 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(4); }
+				A_MonsterCrisisCheck;
+				A_CrisisSpawnProjectile("HellRipper2", "HellRipper2Crisis", 56, 0, 0, 0);
+			}
+			SPI2 X 17 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 225) { A_SetTics(8); }
+				else if (levelbehavior > 0 && user_monsterlevel > 200) { A_SetTics(9); }
+				else if (levelbehavior > 0 && user_monsterlevel > 175) { A_SetTics(10); }
+				else if (levelbehavior > 0 && user_monsterlevel > 150) { A_SetTics(11); }
+				else if (levelbehavior > 0 && user_monsterlevel > 125) { A_SetTics(12); }
+				else if (levelbehavior > 0 && user_monsterlevel > 100) { A_SetTics(13); }
+				else if (levelbehavior > 0 && user_monsterlevel > 75) { A_SetTics(14); }
+				else if (levelbehavior > 0 && user_monsterlevel > 50) { A_SetTics(15); }
+				else if (levelbehavior > 0 && user_monsterlevel > 25) { A_SetTics(16); }
+				A_Facetarget;
+			}
+			SPI2 X 2 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 240) { A_SetTics(1); }
+				A_MonsterCrisisCheck;
+				A_CrisisSpawnProjectile("GrellBall", "GrellBallCrisis", 16, 0, -8, 0);
+			}
+			SPI2 X 2 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 240) { A_SetTics(1); }
+				A_MonsterCrisisCheck;
+				A_CrisisSpawnProjectile("GrellBall", "GrellBallCrisis", 16, 0, 0, 0);
+			}
+			SPI2 X 2 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 240) { A_SetTics(1); }
+				A_MonsterCrisisCheck;
+				A_CrisisSpawnProjectile("GrellBall", "GrellBallCrisis", 16, 0, 8, 0);
+			}
+			SPI2 U 5
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(4); }
+				A_Facetarget;
+			}
+			goto see
+
+		Pain:
+			SPI2 E 2 A_SetTics(random(0,2))
+			SPI2 E 2 A_DVDSPain
+			SPI2 EEE 6 
+			{
+				A_Facetarget;
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(4); }
+				else if (levelbehavior > 0 && user_monsterlevel > 60) { A_SetTics(5); }
+				A_ThrowGrenade("LengSpiderling", 85, 10, 20);
+			}
+			goto see
+		Pain.Fist:
+			SPI2 E 2 A_SetTics(random(0,2))
+			SPI2 E 2 A_DVDSPain
+			SPI2 EE 2
+			SPI2 EEE 6 
+			{
+				A_Facetarget;
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(4); }
+				else if (levelbehavior > 0 && user_monsterlevel > 60) { A_SetTics(5); }
+				A_ThrowGrenade("LengSpiderling", 85, 10, 20);
+			}
+			goto see
+		Pain.Kick:
+			SPI2 E 2 A_SetTics(random(0,2))
+			SPI2 E 2 A_DVDSPain
+			MNTR E 0 A_Facetarget
+			SPI2 EEEE 2
+			SPI2 EEE 6 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(4); }
+				else if (levelbehavior > 0 && user_monsterlevel > 60) { A_SetTics(5); }
+				A_ThrowGrenade("LengSpiderling", 85, 10, 20);
+			}
+			goto see
+		Pain.Sceptre:
+		Pain.Eldritch:
+			SPI2 E 2 A_SetTics(random(0,2))
+			SPI2 E 2 A_DVDSPain
+			SPI2 EEEEEEEEEEEE 2
+			SPI2 EEE 6 
+			{
+				A_Facetarget;
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(4); }
+				else if (levelbehavior > 0 && user_monsterlevel > 60) { A_SetTics(5); }
+				A_ThrowGrenade("LengSpiderling", 85, 10, 20);
+			}
+			goto See
+
+		Death:
+			TNT1 A 0 A_DVDSNormalDeath(-2,0,1)
+			MNTR A 0 A_Die
+			MNTR A 0 A_Fall
+			SPI2 F 8 bright A_Pain
+			SPI2 G 18 bright A_Scream
+			SPI2 HIJKL 3 bright
+			SPI2 M -1 A_BossDeath
+			stop
+
+		Raise:
+			stop
+	}
+}
+
+Actor LengSpiderling : LengSpider 19998
+{
+	//$Angled
+	//$Color 12
+	//$Category "Strange Aeons Monsters"
+	Tag "Leng Spiderling"
+	Obituary "%o was eaten by a Leng Spiderling."
+	HitObituary "%o was eaten by a Leng Spiderling."
+	Health 40
+	Radius 20
+	Height 24
+	Scale 0.5
+	Translation 2
+	Meleedamage 3
+	DamageFactor "Crush", 8.0
+	-NOTARGET
+	
+	States
+	{
+		Melee:
+			GAYS E 5 
+			{
+				A_Facetarget;
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(4); }
+				A_CrisisMeleeAttack(random(1,10)*3,"misc/gibbed","misc/gibbed","Melee",true);
+			}
+			GAYS E 13 
+			{
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(7); }
+				else if (levelbehavior > 0 && user_monsterlevel > 150) { A_SetTics(8); }
+				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(9); }
+				else if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(10); }
+				else if (levelbehavior > 0 && user_monsterlevel > 60) { A_SetTics(11); }
+				else if (levelbehavior > 0 && user_monsterlevel > 30) { A_SetTics(12); }
+				A_Facetarget;
+			}
+			goto see
+	}
+}
+
+Actor HellRipper2 : HellRipper
+{
+	Damage (12 * random(1,8))
+}
+
+Actor HellRipper2Crisis : HellRipperCrisis
+{
+	Damage ((12 * random(1,8)) * CallACS("CrisisMultiplier"))
+}
+

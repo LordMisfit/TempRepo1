@@ -653,3 +653,10 @@ Actor DivinationSphereSpawner : RandomSpawner2 13365
 {
 	DropItem "DivinationSphere", 256
 }
+
+Actor YithGunReplacer : RandomSpawner2 replaces Yithgun
+{
+	DropItem "DiarisLongbow", 256, 4
+	DropItem "EvilWarriorShield", 256, 4
+	DropItem "SapphireWandNew", 256, 4
+}
