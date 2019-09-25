@@ -1070,6 +1070,7 @@ Actor SoulScepterPuff2 : AetheriusPuffZSC
 	Radius 1
 	Height 1
 	+NoInteraction
+	DamageType "Eldritch"
 	States
 	{
 		Spawn:
