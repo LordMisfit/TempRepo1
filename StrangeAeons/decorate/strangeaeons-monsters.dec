@@ -5057,3 +5057,50 @@ ACTOR magicPuff
 			stop
 	}
 }
+
+ACTOR Spiderbaby : DSRailArachnotron replaces DSRailArachnotron
+{
+	Health 300 // 600
+	Radius 22 // 64
+	Height 64
+	Mass 300 // 600
+	Speed 10 // 12
+	DamageFactor "Crush", 5.2
+	DamageFactor "Fire", 0.75
+	DamageFactor "Thunder", 1.75
+	DamageFactor "Holy", 2 // Demons = +200% Holy Damage
+	Painchance "Holy", 150 // Demons = +300% Pain Chance
+	PainChance 50
+	Painchance "Fist", 75 // Fist attacks have a +50% chance of stunning an enemy
+	Painchance "Kick", 125 // Kick attacks have a +150% chance of stunning an enemy
+	Painchance "Gauntlets", 75 // Fist attacks have a +50% chance of stunning an enemy
+	Painchance "Fire", 37
+	Painchance "Thunder", 87
+	Damage 30
+	Monster
+	+FLOORCLIP
+	SeeSound "baby/sight"
+	PainSound "baby/pain"
+	DeathSound "baby/death"
+	ActiveSound "baby/active"
+	Obituary "%o was splattered by a spiderbaby."
+	Decal RedRailScorch
+	Species "Arachnotron"
+	Tag "Arachnotron"
+	
+	States
+	{
+		See:
+			RSPI A 0
+			RSPI A 20
+			RSPI AABBCCDDEEFF 3
+			{
+				user_walksound++;
+				if (levelbehavior > 0 && user_monsterlevel > 60) { A_ChangeFlag("AVOIDMELEE",1); }
+				if (levelbehavior > 0 && user_monsterlevel > 90) { A_SetTics(2); }
+				if (user_walksound == 1) { A_BabyMetal; } else { A_Chase; }
+				if (user_walksound >= 6) { user_walksound = 0; }
+			}
+			goto See+2
+	}
+}

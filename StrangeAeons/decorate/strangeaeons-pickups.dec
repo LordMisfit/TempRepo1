@@ -852,7 +852,7 @@ Actor DualScepterOfSouls : FloraWeapon 11112
 	Tag "Dual Scepters of Souls"
 	Weapon.SelectionOrder 2400
 	Weapon.Slotnumber 9
-	Weapon.SlotPriority 1.8
+	Weapon.SlotPriority 2
 	//Weapon.SisterWeapon "ScepterOfSouls~Powered"
 	Weapon.KickBack 0
 	AttackSound "Weapons/SoulScepter/Hit"
