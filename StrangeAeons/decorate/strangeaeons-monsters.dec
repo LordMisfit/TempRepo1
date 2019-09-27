@@ -1306,6 +1306,9 @@ ACTOR ShadowBeast : AetheriusMonsterZSC replaces BaronOfHell 30123
 	MONSTER
 	+FloorClip
 	+BOSSDEATH
+	dropitem Backpack 2
+	dropitem Backpack 2
+
 	states
 	{
 		Spawn:
@@ -3124,6 +3127,9 @@ ACTOR Dhole : AetheriusMonsterZSC replaces Cyberdemon 9494
 	SeeSound "dholsee"
 	DeathSound "dholdie"
 	Obituary "%o was flattened by a dhole."
+	dropitem Backpack 2
+	dropitem Backpack 2
+
 	States
 	{
 		Spawn:
@@ -3633,6 +3639,9 @@ ACTOR SpiderGod : AetheriusMonsterZSC replaces SpiderMastermind 29999
 	+DONTHURTSPECIES
 	+NOTARGET
 	+FLOORCLIP
+	dropitem Backpack 2
+	dropitem Backpack 2
+
 	States
 	{
 		Spawn:
@@ -4019,6 +4028,9 @@ ACTOR LengSpider : AetheriusMonsterZSC 19999
 	meleedamage 6
 	MONSTER
 	+NOTARGET
+	dropitem Backpack 2
+	dropitem Backpack 2
+
 	States
 	{
 		Spawn:
@@ -4116,6 +4128,9 @@ Actor SpiderGodling : SpiderGod 29998
 	-MISSILEEVENMORE
 	-NOTARGET
 	-BOSS
+	dropitem Backpack 2
+	dropitem Backpack 2
+
 	States
 	{
 		Spawn:
@@ -4339,6 +4354,8 @@ Actor LengSpiderling : LengSpider 19998
 	Meleedamage 3
 	DamageFactor "Crush", 8.0
 	-NOTARGET
+	dropitem Backpack 2
+	dropitem Backpack 2
 	
 	States
 	{
@@ -4642,6 +4659,9 @@ actor PurpleTentacle : AetheriusMonsterZSC 31893
 	MONSTER
 	+FLOORCLIP
 	-COUNTKILL
+	dropitem Backpack 2
+	dropitem Backpack 2
+
 	states
 	{
 		Spawn:
@@ -4747,6 +4767,11 @@ actor Nyarlathotep : AetheriusMonsterZSC 7801
 	-SOLID
 	+BOSS
 	+BOSSDEATH
+	dropitem Backpack 256
+	dropitem Backpack 128
+	dropitem Backpack 64
+	dropitem Backpack 32
+
 	states
 	{
 		Spawn:
