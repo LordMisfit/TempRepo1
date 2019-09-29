@@ -1,5 +1,5 @@
 // Roach
-class Roach : AetheriusMonsterZSC
+class RoachBase : AetheriusMonsterZSC
 {
 	private class<Inventory> LDLPreload, LDLToken, LDLCheck, MiscCheck, MiscCheck2, MiscCheck3, MiscCheck4;
 	int check1;

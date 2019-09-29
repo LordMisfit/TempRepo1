@@ -4803,8 +4803,8 @@ actor Nyarlathotep : AetheriusMonsterZSC 7801
 	Painchance "Sceptre", 255
 	DamageFactor "Crush", 2.0
 	DamageFactor "Eldritch", 2.5
-	DamageFactor "Holy", 2.5
-	DamageFactor "Sceptre", 2.5
+	DamageFactor "Holy", 5.0
+	DamageFactor "Sceptre", 5.0
 	SEESOUND "wizard/sight"
 	painsound "wizard/pain"
 	deathsound "wizard/death"
@@ -4984,6 +4984,7 @@ actor Nyarlathotep : AetheriusMonsterZSC 7801
 			Goto See
 		Pain.Eldritch:
 		Pain.Sceptre:
+		Pain.Holy:
 			LMWZ I 3
 			LMWZ I 5 A_DVDSPain
 			LMWZ IIIIIIII 3
@@ -5243,4 +5244,8 @@ ACTOR Spiderbaby : DSRailArachnotron replaces DSRailArachnotron
 			}
 			goto See+2
 	}
+}
+
+actor Roach : RoachBase replaces Cybruiser
+{
 }
