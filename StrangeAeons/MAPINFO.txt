@@ -463,7 +463,7 @@ map E4M9 "Maniac Mansion"
 // Bonus Episode 5
 map E5M1 "Rigorous Mortis"
 {
-	levelnum = 1
+	levelnum = 41
 	next = "E5M2"
 	secretnext = "E5M9"
 	sky1 = "SASKY2"
@@ -474,7 +474,7 @@ map E5M1 "Rigorous Mortis"
 
 map E5M2 "Drought Station Acheron"
 {
-	levelnum = 2
+	levelnum = 42
 	next = "E5M3"
 	secretnext = "E5M9"
 	sky1 = "SASKY4"
@@ -485,7 +485,7 @@ map E5M2 "Drought Station Acheron"
 
 map E5M3 "The Vaults of Zin"
 {
-	levelnum = 3
+	levelnum = 43
 	next = "E5M4"
 	secretnext = "E5M9"
 	sky1 = "SASKY2"
@@ -496,7 +496,7 @@ map E5M3 "The Vaults of Zin"
 
 map E5M4 "Man Flesh Processing"
 {
-	levelnum = 4
+	levelnum = 44
 	next = "E5M5"
 	secretnext = "E5M9"
 	sky1 = "SASKY2"
@@ -507,7 +507,7 @@ map E5M4 "Man Flesh Processing"
 
 map E5M5 "Valley of Death"
 {
-	levelnum = 5
+	levelnum = 45
 	next = "E5M6"
 	secretnext = "E5M9"
 	sky1 = "SASKY2"
@@ -518,7 +518,7 @@ map E5M5 "Valley of Death"
 
 map E5M6 "Cthonian Planet"
 {
-	levelnum = 6
+	levelnum = 46
 	next = "E5M7"
 	secretnext = "E5M9"
 	sky1 = "SASKY2"
@@ -529,7 +529,7 @@ map E5M6 "Cthonian Planet"
 
 map E5M7 "The House of Dagon"
 {
-	levelnum = 7
+	levelnum = 47
 	next = "E5M8"
 	secretnext = "E5M9"
 	sky1 = "SASKY4"
@@ -540,7 +540,7 @@ map E5M7 "The House of Dagon"
 
 map E5M8 "R'lyeh Rising"
 {
-	levelnum = 8
+	levelnum = 48
 	next = Endsequence,"E5End"
 	secretnext = "E5M9"
 	sky1 = "SASKY4"
@@ -555,7 +555,7 @@ map E5M8 "R'lyeh Rising"
 
 map E5M9 "Mysterious Island"
 {
-	levelnum = 9
+	levelnum = 49
 	next = "E5M4"
 	secretnext = "E5M4"
 	sky1 = "SASKY2"
