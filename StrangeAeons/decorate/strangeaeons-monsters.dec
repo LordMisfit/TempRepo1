@@ -3601,6 +3601,7 @@ Actor WraithTeleporting : Inventory
 	Inventory.MaxAmount 3
 }
 
+// Atlach-Nacha
 ACTOR SpiderGod : AetheriusMonsterZSC replaces SpiderMastermind 29999
 {
 	//$Angled
@@ -3609,9 +3610,9 @@ ACTOR SpiderGod : AetheriusMonsterZSC replaces SpiderMastermind 29999
 	Tag "The Spinner in Darkness"
 	Radius 72
 	Height 120
-	Health 4000
+	Health 40000
 	Speed 35
-	mass 999999
+	mass 1000000
 	meleerange 76
 	meleedamage 12
 	painchance 10
@@ -3625,6 +3626,10 @@ ACTOR SpiderGod : AetheriusMonsterZSC replaces SpiderMastermind 29999
 	DamageFactor "Crush", 0.2
 	Painchance "Eldritch", 30
 	DamageFactor "Eldritch", 2.5
+	Painchance "Sceptre", 30
+	DamageFactor "Sceptre", 2.5
+	Painchance "Holy", 30
+	DamageFactor "Holy", 2.5
 	translation "152:159=216:223,9:9=223:223,76:70=216:223,129:132=216:223"
 	BloodColor Orange
 	scale 2.0
@@ -3875,6 +3880,7 @@ ACTOR SpiderGod : AetheriusMonsterZSC replaces SpiderMastermind 29999
 			}
 			goto see
 		Pain.Sceptre:
+		Pain.Holy:
 		Pain.Eldritch:
 			SPI2 E 2 A_SetTics(random(0,2))
 			SPI2 E 2 A_DVDSPain
@@ -4136,10 +4142,11 @@ Actor SpiderGodling : SpiderGod 29998
 	Tag "Spinner's Spawn"
 	Obituary "%o was immolated by the Spinner's spawn."
 	HitObituary "%o was devoured by the Spinner's spawn."
-	Health 1000
+	Health 10000
 	Height 42
 	Radius 56
 	Speed 32
+	mass 250000
 	MeleeRange 42
 	MeleeDamage 8
 	Painchance 30
@@ -4153,7 +4160,7 @@ Actor SpiderGodling : SpiderGod 29998
 	DamageFactor "Crush", 6.4
 	Painchance "Eldritch", 150
 	DamageFactor "Eldritch", 2.5
-	Dropitem LengspiderLing
+	Dropitem LengSpiderling
 	Scale 1.0
 	Painchance 10
 	-MISSILEEVENMORE
