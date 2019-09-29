@@ -2142,10 +2142,10 @@ actor StarSpawn : AetheriusMonsterZSC replaces BaronofHell 11300
 	obituary "%o was driven mad by the Spawn of Cthulhu."
 	hitobituary "%o was flayed by the Spawn of Cthulhu."
 	Tag "Spawn of Cthulhu"
-	health 1500
+	health 30000 // 1500
 	radius 36
 	height 128
-	mass 1000
+	mass 20000
 	speed 20
 	scale 2.5
 	BloodColor "dark green"
@@ -3615,6 +3615,10 @@ ACTOR SpiderGod : AetheriusMonsterZSC replaces SpiderMastermind 29999
 	meleerange 76
 	meleedamage 12
 	painchance 10
+	Painchance "Ice", 3
+	DamageFactor "Ice", 0.3
+	Painchance "Fire", 33
+	DamageFactor "Fire", 3.33
 	Painchance "Fist", 15 // Fist attacks have a +50% chance of stunning an enemy
 	Painchance "Kick", 25 // Kick attacks have a +150% chance of stunning an enemy
 	Painchance "Gauntlets", 15 // Fist attacks have a +50% chance of stunning an enemy
@@ -3831,6 +3835,19 @@ ACTOR SpiderGod : AetheriusMonsterZSC replaces SpiderMastermind 29999
 				A_ThrowGrenade("LengSpiderling", 85, 10, 20);
 			}
 			goto see
+		Pain.Fire:
+			SPI2 E 2 A_SetTics(random(0,2))
+			SPI2 E 2 A_DVDSPain
+			SPI2 EEE 2
+			SPI2 EEE 6 
+			{
+				A_Facetarget;
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(4); }
+				else if (levelbehavior > 0 && user_monsterlevel > 60) { A_SetTics(5); }
+				if (random(1,8) <= 1) { A_ThrowGrenade("LengSpiderling", 85, 10, 20); }
+			}
+			goto see
 		Pain.Fist:
 			SPI2 E 2 A_SetTics(random(0,2))
 			SPI2 E 2 A_DVDSPain
@@ -4012,6 +4029,10 @@ ACTOR LengSpider : AetheriusMonsterZSC 19999
 	height 56
 	speed 12
 	Painchance 200
+	Painchance "Ice", 60
+	DamageFactor "Ice", 0.3
+	Painchance "Fire", 255
+	DamageFactor "Fire", 3.33
 	Painchance "Fist", 255 // Fist attacks have a +50% chance of stunning an enemy
 	Painchance "Kick", 255 // Kick attacks have a +150% chance of stunning an enemy
 	Painchance "Gauntlets", 255 // Fist attacks have a +50% chance of stunning an enemy
@@ -4084,6 +4105,11 @@ ACTOR LengSpider : AetheriusMonsterZSC 19999
 			GAYS A 2 A_DVDSPain
 			GAYS AAAAAAAAAAAAA 2
 			goto See
+		Pain.Fire:
+			GAYS A 2 A_SetTics(random(0,2))
+			GAYS A 2 A_DVDSPain
+			GAYS AAAAAA 2
+			goto see
 
 		Death:
 			TNT1 A 0 A_DVDSNormalDeath(-2,0,1)
@@ -4117,6 +4143,10 @@ Actor SpiderGodling : SpiderGod 29998
 	MeleeRange 42
 	MeleeDamage 8
 	Painchance 30
+	Painchance "Ice", 9
+	DamageFactor "Ice", 0.3
+	Painchance "Fire", 100
+	DamageFactor "Fire", 3.33
 	Painchance "Fist", 45 // Fist attacks have a +50% chance of stunning an enemy
 	Painchance "Kick", 75 // Kick attacks have a +150% chance of stunning an enemy
 	Painchance "Gauntlets", 45 // Fist attacks have a +50% chance of stunning an enemy
@@ -4299,10 +4329,10 @@ Actor SpiderGodling : SpiderGod 29998
 		Pain.Kick:
 			SPI2 E 2 A_SetTics(random(0,2))
 			SPI2 E 2 A_DVDSPain
-			MNTR E 0 A_Facetarget
 			SPI2 EEEE 2
 			SPI2 EEE 6 
 			{
+				A_Facetarget;
 				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
 				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(4); }
 				else if (levelbehavior > 0 && user_monsterlevel > 60) { A_SetTics(5); }
@@ -4323,6 +4353,19 @@ Actor SpiderGodling : SpiderGod 29998
 				A_ThrowGrenade("LengSpiderling", 85, 10, 20);
 			}
 			goto See
+		Pain.Fire:
+			SPI2 E 2 A_SetTics(random(0,2))
+			SPI2 E 2 A_DVDSPain
+			SPI2 EEEEEEEE 2
+			SPI2 EEE 6 
+			{
+				A_Facetarget;
+				if (levelbehavior > 0 && user_monsterlevel > 180) { A_SetTics(3); }
+				else if (levelbehavior > 0 && user_monsterlevel > 120) { A_SetTics(4); }
+				else if (levelbehavior > 0 && user_monsterlevel > 60) { A_SetTics(5); }
+				if (random(1,8) <= 1) { A_ThrowGrenade("LengSpiderling", 85, 10, 20); }
+			}
+			goto see
 
 		Death:
 			TNT1 A 0 A_DVDSNormalDeath(-2,0,1)
@@ -4347,9 +4390,10 @@ Actor LengSpiderling : LengSpider 19998
 	Tag "Leng Spiderling"
 	Obituary "%o was eaten by a Leng Spiderling."
 	HitObituary "%o was eaten by a Leng Spiderling."
-	Health 40
-	Radius 20
-	Height 24
+	health 50 // 150
+	radius 20 // 32
+	height 24 // 56
+	speed 9 // 12
 	Scale 0.5
 	Translation 2
 	Meleedamage 3
@@ -4920,6 +4964,7 @@ actor Nyarlathotep : AetheriusMonsterZSC 7801
 			}
 			goto See
 
+		Pain.Charm: goto See
 		Pain:
 			LMWZ I 3
 			LMWZ I 5 A_DVDSPain
