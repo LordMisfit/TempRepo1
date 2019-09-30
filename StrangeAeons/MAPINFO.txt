@@ -22,9 +22,10 @@ gameinfo
 
 DoomEdNums
 {
+  7801 = Nyarlathotep	
+  7802 = NyarlathotepLesser
   11111 = ScepterOfSouls
   31893 = PurpleTentacle
-  7801 = Nyarlathotep	
   31995 = Skeleton
   26001 = StarVampire
   19998 = LengSpiderling

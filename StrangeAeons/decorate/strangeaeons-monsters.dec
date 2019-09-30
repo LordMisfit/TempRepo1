@@ -4795,10 +4795,10 @@ actor Nyarlathotep : AetheriusMonsterZSC 7801
 	spawnid 171
 	obituary "%o was smote by the hand of The Crawling Chaos."
 	tag "\cfNyarlathotep, The Crawling Chaos\c-"
-	health 80000 // 4000
 	radius 20
 	height 80
 	meleeDamage 3
+	health 80000 // 4000
 	mass 100000
 	speed 30
 	painchance 100
@@ -4820,9 +4820,7 @@ actor Nyarlathotep : AetheriusMonsterZSC 7801
 	+FLOAT
 	+NOGRAVITY
 	+NOTARGET
-	+STEALTH
 	+NOINFIGHTING
-	-SOLID
 	+BOSS
 	+BOSSDEATH
 	dropitem Backpack 256
@@ -5007,6 +5005,26 @@ actor Nyarlathotep : AetheriusMonsterZSC 7801
 			LMWZ P -1
 			Stop
 	}
+}
+
+ACTOR NyarlathotepLesser : Nyarlathotep 7802
+{
+	health 8000 // 4000
+	mass 10000
+	speed 20
+	Alpha 0.8
+	RenderStyle "Add"
+	painchance 200
+	Painchance "Fist", 255 // Fist attacks have a +50% chance of stunning an enemy
+	Painchance "Kick", 255 // Kick attacks have a +150% chance of stunning an enemy
+	Painchance "Gauntlets", 255 // Fist attacks have a +50% chance of stunning an enemy
+	Painchance "Eldritch", 255
+	Painchance "Holy", 255
+	Painchance "Sceptre", 255
+	DamageFactor "Crush", 2.0
+	DamageFactor "Eldritch", 2.5
+	DamageFactor "Holy", 5.0
+	DamageFactor "Sceptre", 5.0
 }
 
 ACTOR dragontrail
