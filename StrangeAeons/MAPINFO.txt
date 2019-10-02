@@ -572,6 +572,28 @@ cluster 1
 {
 	flat = "ENDBACK1"
 	music = "BGMINTRO"
+       entertext = "It all started with a trip to Earth, some time in",
+                   "recent days. You were on a shopping excursion, int-",
+                   "erested in more curiosities on the world you only",
+                   "saved over ten years ago.",
+                   "",
+                   "You found interest in an odd platinum colored stone-",
+                   "like tablet, which inscriptions of creatures of odd",
+                   "nature and indiscipherable runes. The man running the",
+                   "shop sells it to you for an extremely low price, be-",
+                   "lieving it to be mumbo-jumbo from 'eldritch' fairy",
+                   "tales, but you take it anyways.",
+                   "",
+                   "After returning to your rented hotel room for the",
+                   "night and falling asleep, you then suddenly awaken,",
+                   "but not inside your hotel room, but inside of a",
+                   "small, ominous house. You note the stone tablet you",
+                   "bought earlier is lying on a table in the next room.",
+                   "",
+                   "Feeling your power temporarily diminished [AGAIN],",
+                   "you sigh to yourself, and wonder what terrible force",
+                   "is up to their antics THIS time..."
+
         exittext = "What in the multiverse is this realm? You note of",
                    "all these broken apart 'islands' in the sky, as if",
                    "one landmass floated in the aether before being",
