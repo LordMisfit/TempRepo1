@@ -572,27 +572,27 @@ cluster 1
 {
 	flat = "ENDBACK1"
 	music = "BGMINTRO"
-        exittext = "",
+        exittext = "What in the multiverse is this realm? You note of",
+                   "all these broken apart 'islands' in the sky, as if",
+                   "one landmass floated in the aether before being",
+                   "shattered to bits.",
                    "",
+                   "Not long after this, you contact the likes of Xeno-",
+                   "latias, your 'HaSatan's Majordomo', and also one",
+                   "responsible for your 'Doom Wars' history 'tests'",
+                   "of the past. You ask him tersely if he's also some-",
+                   "how responsible for this.",
                    "",
+                   "Noting where you are, he states firmly that he has",
+                   "absolutely nothing to do with this, but takes note",
+                   "of that tablet you bought earlier at the baazar on",
+                   "Earth, and says he wants to learn more about it, and",
+                   "that you should use the Sceptre to contact Empyrea",
+                   "for extra assistance.",
                    "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   ""
+                   "Startled by his insistance of the latter, you realize",
+                   "he's really not his usually jokey self. You sigh as",
+                   "you continue exploring these shattered islands..."
 }
 cluster 2
 {
@@ -809,7 +809,7 @@ cluster 10
 {
 	flat = "ENDBACK5"
 	music = "BGMINTRO"
-        exittext = "As the final Cthulhu avatar wails in its death",
+        exittext = "As the Star Spawn of Cthulhu wail in their death",
                    "throes, you notice the six tablets disintergrat-",
                    "ing into nothingness, their purpose finally com-",
                    "plete, and the sunken city of R'lyeh, begins to",
