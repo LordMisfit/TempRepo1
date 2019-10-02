@@ -616,7 +616,7 @@ cluster 2
                    "",
                    "You are ferried to your destination, a dilapidated",
                    "fortress of rusted metal. You are then wished luck",
-                   "in your so-far still blind travels in this world...",
+                   "in your so-far still blind travels in these realms...",
                    "",
                    "You note you may very well need it..."
 }
@@ -625,27 +625,28 @@ cluster 3
 {
 	flat = "ENDBACK2"
 	music = "BGMINTRO"
-        exittext = "",
+        exittext = "Though you've met your fair share of terrible, eld-",
+                   "ritch beings in these iron factories of blood and",
+                   "death, you've also taken note quickly of these...",
+                   "friendly Revenants? Though they possess beams inst-",
+                   "ead of the rockets they're known for.",
                    "",
+                   "One of the surviving 'Revenants' explains that they",
+                   "are more commonly known as 'Ghouls' to this realm's",
+                   "inhabitants, and unlike most Revenants you know, have",
+                   "no disdain for mortals, happily fighting alongside",
+                   "them against the eldritch abominations in this realm.",
                    "",
+                   "Xenos was surprised that beings of similar nature to",
+                   "Revenants are even roaming these realms, but he and",
+                   "Empyrea have also noted that your second collected",
+                   "stone tablet is still not the last you might find,",
+                   "mentioning the tablets seem to be pieces of a prop-",
+                   "hecy or 'story' of sorts.",
                    "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   ""
+                   "Prophecy, eh? You know that in the face of one like",
+                   "yourself, prophecies don't usually pan out as expect-",
+                   "ed... You are called the 'Eater of Fate', after all..."
 }
 cluster 4
 {
