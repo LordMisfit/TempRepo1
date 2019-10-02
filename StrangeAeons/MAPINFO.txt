@@ -679,27 +679,27 @@ cluster 5
 {
 	flat = "ENDBACK3"
 	music = "BGMINTRO"
-        exittext = "",
+        exittext = "These ruins, very ancient and Egyptian in nature, have",
+                   "only been home to dreaded eldritch spiders, more Dholes,",
+                   "and more of your commonly accquainted Leng beings. The",
+                   "spiders, though you are not arachnophobic after your many",
+                   "encounters with the likes of the Darkmoon Cult or 'The",
+                   "Source', are a lot more agile and speedy than ones you've",
+                   "faced before, and in some ways smarter.",
                    "",
+                   "Empyrea has noted this too, and recalls in these elder",
+                   "realms of a spider 'goddess', known as Atlach-Nacha, who",
+                   "as stories have told, longs to escape into our physical",
+                   "realm. Xenos then wonders if Atlach-Nacha is responsible",
+                   "for all of this, and warns you of a potential meeting",
+                   "with the elder spider goddess.",
                    "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   ""
+                   "Though you are well versed in how to fight and more per-",
+                   "mantly defeat beings of eldritch nature like the Eternals",
+                   "wardened over by Mantorok, you know that the motives of",
+                   "these beings are seldom ever understood by mortals, be",
+                   "they human or not. You move on, ready for an massive",
+                   "encounter of the '8-legged freak' variety..."
 }
 cluster 6
 {
@@ -731,27 +731,28 @@ cluster 7
 {
 	flat = "ENDBACK4"
 	music = "BGMINTRO"
-        exittext = "",
+        exittext = "As you smash and blast your magics through the beings",
+                   "of what you know have identified as Leng proper, you",
+                   "have been informed by Xenos and Empyrea that the dark",
+                   "magicks of Nyarlathotep, 'The Crawling Chaos, and the",
+                   "son of Azathoth, the 'The Whispering Darkness', is the",
+                   "being who summoned you to the frosty tundra of Leng.",
                    "",
+                   "For what purpose 'ol' Nyarly' wants with you, it can't",
+                   "be good. He has been known to be one of the more cunn-",
+                   "ing and malvolent elder beings, though not necessarily",
+                   "one at the very top like his more menacing father...",
                    "",
+                   "Empyrea also adds that Nyarlathotep is possibly in",
+                   "possession of a FIFTH tablet, and perhaps he was the",
+                   "true puppet master, promising beings like Atlach-Nacha",
+                   "their freedom to dominate Earth should they take you",
+                   "out...",
                    "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   "",
-                   ""
+                   "Perhaps he's well aware of your feats and wants to",
+                   "put an end to you in order to bring an era of fear",
+                   "back to the universe, but you must find him, and if",
+                   "necessary, destroy him, hopefully for good this time."
 }
 cluster 8
 {
